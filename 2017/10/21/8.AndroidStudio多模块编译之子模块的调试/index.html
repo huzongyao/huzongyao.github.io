@@ -179,14 +179,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/Android学习/">
-                    Android学习 <span class="right">7 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
                     OpenCV学习 <span class="right">1 篇</span></a>
                 </a>
@@ -195,8 +187,32 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">7 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
                     PlatformIO学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -213,22 +229,6 @@
             <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/Java学习/">
-                    Java学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -309,12 +309,12 @@
 
 
             <div class="entry red-link-context">
-                <p>我们构建规模较大的Android工程时为了复用和分工协作，会使用到多模块构建应用程序。有时候一个App的编译也依赖于多个子模块，这样的App通常由一个app模块和若干个library模块组成。我们通过compile project(‘:library’)的方式就可以引入子模块供我们所用。但这种情况下有个问题，主模块引入的library默认情况下总是以release方式编译。<br><a id="more"></a></p>
+                <p>我们构建规模较大的Android工程时为了复用和分工协作，会使用到多模块构建应用程序。有时候一个App的编译也依赖于多个子模块，这样的App通常由一个app模块和若干个library模块组成。我们通过compile project(‘:library’)的方式就可以引入子模块供我们所用。但这种情况下有个问题，主模块引入的library默认情况下总是以release方式编译。<br><span id="more"></span></p>
 <h2 id="子模块无法调试和打印LOG"><a href="#子模块无法调试和打印LOG" class="headerlink" title="子模块无法调试和打印LOG"></a>子模块无法调试和打印LOG</h2><p>这就意味着，不管app模块是以debug还是release方式编译，子模块的BuildConfig.DEBUG的值永远是false，且log不得输出，更重要的是release版本中本地代码无法断点调试。<br>相关现象的英文描述引用：<br>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. </p>
 <h3 id="1-子模块发布debug版本"><a href="#1-子模块发布debug版本" class="headerlink" title="1.子模块发布debug版本"></a>1.子模块发布debug版本</h3><p>要解决这个问题，最直接的就是指定子模块固定发布debug版本供其他模块引用，You can control which variant gets published:</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">      defaultPublishConfig <span class="string">"debug"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">      defaultPublishConfig <span class="string">&quot;debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果有Flavor，也需要指定Flavor：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">"flavor1Debug"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">&quot;flavor1Debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样以后，子模块发布的版本总是被指定为debug版本，调试也可以正常进行了。</p>
 <h3 id="2-根据主模块切换编译方式"><a href="#2-根据主模块切换编译方式" class="headerlink" title="2.根据主模块切换编译方式"></a>2.根据主模块切换编译方式</h3><p>上一种办法，通过添加 defaultPublishConfig “debug” 解决了调试问题，这样虽然再debug状态下好使了，但是在发release版本的时候会导致DEBUG仍然为true。<br>除非手动修改defaultPublishConfig “release”，我们想实现其随app模块的切换自动切换呢。</p>
 <ul>
@@ -324,11 +324,11 @@
 <ul>
 <li>App</li>
 </ul>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    releaseCompile <span class="keyword">project</span>(path: <span class="string">':library'</span>, configuration: <span class="string">'release'</span>)</span><br><span class="line">    debugCompile <span class="keyword">project</span>(path: <span class="string">':library'</span>, configuration: <span class="string">'debug'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    releaseCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;release&#x27;</span>)</span><br><span class="line">    debugCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这些配置也很容易理解，就是让子模块生成多个arr包，主模块根据需要来决定编译时引用哪一个。</p>
 <h3 id="3-更多参考资料"><a href="#3-更多参考资料" class="headerlink" title="3.更多参考资料"></a>3.更多参考资料</h3><ul>
-<li><a href="https://github.com/akaita/AndroidNativeLibrary" target="_blank" rel="noopener">https://github.com/akaita/AndroidNativeLibrary</a></li>
-<li><a href="http://www.akaita.com/post/android-native-library-module-debug/" target="_blank" rel="noopener">http://www.akaita.com/post/android-native-library-module-debug/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/akaita/AndroidNativeLibrary">https://github.com/akaita/AndroidNativeLibrary</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.akaita.com/post/android-native-library-module-debug/">http://www.akaita.com/post/android-native-library-module-debug/</a></li>
 </ul>
 
                 

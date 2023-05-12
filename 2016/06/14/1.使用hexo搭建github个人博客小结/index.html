@@ -179,14 +179,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/Android学习/">
-                    Android学习 <span class="right">7 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
                     OpenCV学习 <span class="right">1 篇</span></a>
                 </a>
@@ -195,8 +187,32 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">7 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
                     PlatformIO学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -213,22 +229,6 @@
             <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/Java学习/">
-                    Java学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -311,13 +311,13 @@
 
 
             <div class="entry red-link-context">
-                <p>在GitHub上搭建静态站点依赖于官方提供的<a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages机制</a>，然而手动编写静态的html页面会因为布局和样式造成很多重复的工作，而如果是采用MarkDown语法来编写，能满足很多文档和博客编写的需求，却需要一种方式把MarkDown语法转成普通html，通过模板来定制生成的html样式。<br><a id="more"></a></p>
+                <p>在GitHub上搭建静态站点依赖于官方提供的<a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages机制</a>，然而手动编写静态的html页面会因为布局和样式造成很多重复的工作，而如果是采用MarkDown语法来编写，能满足很多文档和博客编写的需求，却需要一种方式把MarkDown语法转成普通html，通过模板来定制生成的html样式。<br><span id="more"></span></p>
 <h2 id="MarkDown到html转换"><a href="#MarkDown到html转换" class="headerlink" title="MarkDown到html转换"></a>MarkDown到html转换</h2><ul>
-<li><a href="http://jekyll.bootcss.com/" target="_blank" rel="noopener">jekyll</a></li>
+<li><a target="_blank" rel="noopener" href="http://jekyll.bootcss.com/">jekyll</a></li>
 </ul>
 <p>GitHub官方推荐的方式，基于Ruby<br>jekyll是一个简单的免费的Blog生成工具，类似WordPress。但是和WordPress又有很大的不同，原因是jekyll只是一个生成静态网页的工具，不需要数据库支持。但是可以配合第三方服务,例如Disqus。最关键的是jekyll可以免费部署在Github上，而且可以绑定自己的域名。</p>
 <ul>
-<li><a href="https://hexo.io/" target="_blank" rel="noopener">hexo</a></li>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/">hexo</a></li>
 </ul>
 <p>本博客时用的方式，基于Nodejs<br>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 <h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><h3 id="1-安装NodeJs"><a href="#1-安装NodeJs" class="headerlink" title="1.安装NodeJs"></a>1.安装NodeJs</h3><p>我在Ubuntu系统使用了源码编译安装：下载源码解压后进去执行编译安装命令</p>
@@ -325,16 +325,15 @@
 <h3 id="2-安装NPM"><a href="#2-安装NPM" class="headerlink" title="2.安装NPM"></a>2.安装NPM</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://npmjs.org/install.sh | sudo sh</span><br></pre></td></tr></table></figure>
 <h3 id="3-使用-npm-即可完成-Hexo-的安装"><a href="#3-使用-npm-即可完成-Hexo-的安装" class="headerlink" title="3.使用 npm 即可完成 Hexo 的安装"></a>3.使用 npm 即可完成 Hexo 的安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <h3 id="4-新建站点"><a href="#4-新建站点" class="headerlink" title="4.新建站点"></a>4.新建站点</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-<h3 id="5-命令"><a href="#5-命令" class="headerlink" title="5.命令"></a>5.命令</h3><p>其他命令可参考<a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="noopener">官方网站</a>,常用命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n</span><br><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
-<h3 id="6-配置主题"><a href="#6-配置主题" class="headerlink" title="6.配置主题"></a>6.配置主题</h3><p>默认的主题是landscape，可以自己<a href="https://hexo.io/themes/" target="_blank" rel="noopener">选择修改</a><br>我使用的主题是<a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a></p>
+<h3 id="5-命令"><a href="#5-命令" class="headerlink" title="5.命令"></a>5.命令</h3><p>其他命令可参考<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands.html">官方网站</a>,常用命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n</span><br><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-配置主题"><a href="#6-配置主题" class="headerlink" title="6.配置主题"></a>6.配置主题</h3><p>默认的主题是landscape，可以自己<a target="_blank" rel="noopener" href="https://hexo.io/themes/">选择修改</a><br>我使用的主题是<a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
 <h3 id="7-部署"><a href="#7-部署" class="headerlink" title="7.部署"></a>7.部署</h3><p>部署之前需要先安装git插件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
 <p>需要先在_config.yml中配置远程github地址例如：<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/huzongyao/huzongyao.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure></p>
 <p>部署命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
 <h3 id="8-新建博客"><a href="#8-新建博客" class="headerlink" title="8.新建博客"></a>8.新建博客</h3><p>博客系统搭建完成后，以后写博客就简单多了，使用命令行创建：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n 博客标题</span><br></pre></td></tr></table></figure></p>
-<p>系统会在source/_post/目录生成 博客标题.md文件，头部的注释会指定博客的一些信息如标题，分类，标题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2016-06-14 09:53:09</span><br><span class="line">categories:</span><br><span class="line">- Sports</span><br><span class="line">- Baseball</span><br><span class="line">tags:</span><br><span class="line">- Injury</span><br><span class="line">- Fight</span><br><span class="line">- Shocking</span><br></pre></td></tr></table></figure></p>
+<p>系统会在source/_post/目录生成 博客标题.md文件，头部的注释会指定博客的一些信息如标题，分类，标题<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2016-06-14 09:53:09</span><br><span class="line">categories:</span><br><span class="line">- Sports</span><br><span class="line">- Baseball</span><br><span class="line">tags:</span><br><span class="line">- Injury</span><br><span class="line">- Fight</span><br><span class="line">- Shocking</span><br></pre></td></tr></table></figure></p>
 <p>每次编辑完成后执行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure></p>
-<p>这时如果没有报错，就可以用浏览器打开<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>预览最终站点效果，确认无误后使用部署命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
-<p>大功告成了！</p>
+<p>这时如果没有报错，就可以用浏览器打开<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a>预览最终站点效果，确认无误后使用部署命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure><br>大功告成了！</p>
 
                 
 <p class="red-link-context">

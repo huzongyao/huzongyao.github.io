@@ -179,14 +179,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/Android学习/">
-                    Android学习 <span class="right">7 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
                     OpenCV学习 <span class="right">1 篇</span></a>
                 </a>
@@ -195,8 +187,32 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">7 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
                     PlatformIO学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -213,22 +229,6 @@
             <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/Java学习/">
-                    Java学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -309,25 +309,24 @@
 
 
             <div class="entry red-link-context">
-                <p>如果你想在Android Studio中引入一个library到你的项目，只需添加一行compile代码到模块的build.gradle文件中，远程依赖可以节省工程文件大小，避免了大量本地jar包类库占据代码空间，而且类库版本更新也很方便。<br>如果我们有一个开源类库需要提供给别人来用，就可以采用下面的方式来发布。<br><a id="more"></a></p>
-<h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p>首先要在<a href="https://bintray.com" target="_blank" rel="noopener">bintray</a>注册个账号，并在设置里获取API Key</p>
+                <p>如果你想在Android Studio中引入一个library到你的项目，只需添加一行compile代码到模块的build.gradle文件中，远程依赖可以节省工程文件大小，避免了大量本地jar包类库占据代码空间，而且类库版本更新也很方便。<br>如果我们有一个开源类库需要提供给别人来用，就可以采用下面的方式来发布。<br><span id="more"></span></p>
+<h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p>首先要在<a target="_blank" rel="noopener" href="https://bintray.com">bintray</a>注册个账号，并在设置里获取API Key</p>
 <h3 id="修改Gradle脚本"><a href="#修改Gradle脚本" class="headerlink" title="修改Gradle脚本"></a>修改Gradle脚本</h3><ul>
 <li><p>修改根目录下build.gradle</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:2.3.1'</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.novoda:bintray-release:0.3.4'</span> <span class="comment">//添加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">task</span> clean(type: <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> rootProject.buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle:2.3.1&#x27;</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.novoda:bintray-release:0.3.4&#x27;</span> <span class="comment">//添加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">task</span> clean(type: <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> rootProject.buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>修改要上传的类库模块的build.gradle</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.library'</span></span><br><span class="line">apply plugin: <span class="string">'com.novoda.bintray-release'</span><span class="comment">//添加</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">"25.0.0"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        abortOnError <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加</span></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">'huzongyao'</span><span class="comment">//bintray.com用户名</span></span><br><span class="line">    groupId = <span class="string">'com.hzy'</span><span class="comment">//jcenter上的路径</span></span><br><span class="line">    artifactId = <span class="string">'nsgif'</span><span class="comment">//项目名称</span></span><br><span class="line">    publishVersion = <span class="string">'1.0.0'</span><span class="comment">//版本号</span></span><br><span class="line">    desc = <span class="string">'an android gif decoder based on libnsgif'</span><span class="comment">//描述</span></span><br><span class="line">    website = <span class="string">'http://huzongyao.github.io/'</span><span class="comment">//网站</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.novoda.bintray-release&#x27;</span><span class="comment">//添加</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;25.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        abortOnError <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加</span></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;huzongyao&#x27;</span><span class="comment">//bintray.com用户名</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.hzy&#x27;</span><span class="comment">//jcenter上的路径</span></span><br><span class="line">    artifactId = <span class="string">&#x27;nsgif&#x27;</span><span class="comment">//项目名称</span></span><br><span class="line">    publishVersion = <span class="string">&#x27;1.0.0&#x27;</span><span class="comment">//版本号</span></span><br><span class="line">    desc = <span class="string">&#x27;an android gif decoder based on libnsgif&#x27;</span><span class="comment">//描述</span></span><br><span class="line">    website = <span class="string">&#x27;http://huzongyao.github.io/&#x27;</span><span class="comment">//网站</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>执行编译上传脚本</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=huzongyao -PbintrayKey=XXXXXXXXXXXXXXXXXXXXXXXXXX -PdryRun=true</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 <p>dryRun参数说明只编译不上传，确定要上传的时候设置为false</p>
-<ul>
-<li>添加到JCenter<br>上传成功以后到bintray网站就可以看到这个类库的信息了，用以下方式就可以在android studio中引用该类库，但是还是报错。<br>这是只需要在网页右边点Add to jcenter，审核通过以后就可以正常使用了。<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'com.hzy:nsgif:1.0.0'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加到JCenter<br>上传成功以后到bintray网站就可以看到这个类库的信息了，用以下方式就可以在android studio中引用该类库，但是还是报错。<br>这是只需要在网页右边点Add to jcenter，审核通过以后就可以正常使用了。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;com.hzy:nsgif:1.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样之后就大功告成了，之后版本更新，也采用同样的方式即可。</p>
 </li>
 </ul>
-<p>这样之后就大功告成了，之后版本更新，也采用同样的方式即可。</p>
 
                 
 <p class="red-link-context">
