@@ -1,14 +1,14 @@
 ---
-title: 基于WebAssembly使用C++提高前端网络安全性的实践
-date: 2023-05-12 09:12:14
+title: 基于WebAssembly的前端网络安全实践
+date: 2023-05-12 13:41:21
 tags:
-- 前端
-- Vue
-
+  - 前端
+  - Vue
 categories:
-- 技术博客
-- 前端学习
+  - 技术博客
+  - 前端学习
 ---
+
 
 WebAssembly（缩写为Wasm）是一种用于基于堆栈的虚拟机的二进制指令格式。Wasm 被设计为编程语言的可移植编译目标，支持在 Web 上部署客户端和服务器应用程序。
 <!--more-->
@@ -140,7 +140,3 @@ emconfigure ./Configure gcc
 make -j32
 ```
 过一会儿生成文件libcrypto.a，以及include下的头文件就是我们需要的
-
-
-
-
