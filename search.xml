@@ -4,8 +4,8 @@
   
     
     <entry>
-      <title><![CDATA[基于WebAssembly使用C++提高前端网络安全性的实践]]></title>
-      <url>https://huzongyao.github.io/2023/05/12/17.%25E5%259F%25BA%25E4%25BA%258EWebAssembly%25E4%25BD%25BF%25E7%2594%25A8C++%25E6%258F%2590%25E9%25AB%2598%25E5%2589%258D%25E7%25AB%25AF%25E7%25BD%2591%25E7%25BB%259C%25E5%25AE%2589%25E5%2585%25A8%25E6%2580%25A7%25E7%259A%2584%25E5%25AE%259E%25E8%25B7%25B5/</url>
+      <title><![CDATA[基于WebAssembly的前端网络安全实践]]></title>
+      <url>https://huzongyao.github.io/2023/05/12/17-%25E5%259F%25BA%25E4%25BA%258EWebAssembly%25E7%259A%2584%25E5%2589%258D%25E7%25AB%25AF%25E7%25BD%2591%25E7%25BB%259C%25E5%25AE%2589%25E5%2585%25A8%25E5%25AE%259E%25E8%25B7%25B5/</url>
       <content type="html"><![CDATA[<p>WebAssembly（缩写为Wasm）是一种用于基于堆栈的虚拟机的二进制指令格式。Wasm 被设计为编程语言的可移植编译目标，支持在 Web 上部署客户端和服务器应用程序。<br><span id="more"></span></p>
 <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>WebAssembly是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。<br>它设计的目的不是为了手写代码而是为诸如 C、C++和Rust等低级源语言提供一个高效的编译目标。</p>
 <ul>
