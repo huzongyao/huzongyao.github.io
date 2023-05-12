@@ -1,4 +1,4 @@
-name: CI
+name: GitHub Pages Deploy
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Configuration environment
         env:
-          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
+          HEXO_DEPLOY_PRI: ${{secrets.HEXO_PRIVATE}}
         run: |
           sudo timedatectl set-timezone "Asia/Shanghai"
           mkdir -p ~/.ssh/
