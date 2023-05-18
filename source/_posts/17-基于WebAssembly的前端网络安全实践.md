@@ -3,7 +3,7 @@ title: 基于WebAssembly的前端网络安全实践
 date: 2023-05-12 13:41:21
 tags:
   - 前端
-  - Vue
+  - WebAssembly
 categories:
   - 技术博客
   - 前端学习
