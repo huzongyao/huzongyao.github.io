@@ -7,7 +7,7 @@
 
     
 
-    <title>第 2 页 | HuZongYao的博客</title>
+    <title>安卓7.0以上设备网络抓包笔记 | HuZongYao的博客</title>
     <meta name="author" content="huzongyao">
     
     <meta name="description" content="欢迎访问HuZongYao的博客">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="安卓7.0以上设备网络抓包笔记"/>
     <meta property="og:site_name" content="HuZongYao的个人博客"/>
 
     
@@ -256,407 +256,109 @@
 
 
     <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/Android学习/">Android学习</a>
+
+
         
 
+        
+    </div>
+</nav>
 
-
-<div id="article-list" class="container main-container">
-    
-        <article class="simple-article">
+<article>
     <div class="card">
         <div class="card-content">
+            
+
             <div class="article-title">
                 
     
-        <h1 class="green-link-context"><a href="/2017/11/14/9.Android%E4%BD%BF%E7%94%A8greenDAO%E6%96%B9%E4%BE%BFSQLite%E5%81%9AORM%E5%BC%80%E5%8F%91/">Android使用greenDAO方便SQLite做ORM开发</a></h1>
+        <h1>安卓7.0以上设备网络抓包笔记</h1>
     
 
 
             </div>
+            <time class="red-link-context" datetime="2023-06-13T03:01:29.000Z"><a href="/2023/06/13/19-%E5%AE%89%E5%8D%937-0%E4%BB%A5%E4%B8%8A%E8%AE%BE%E5%A4%87%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E7%AC%94%E8%AE%B0/">2023-06-13</a></time>
 
-            <time class="red-link-context" datetime="2017-11-14T06:44:45.000Z"><a href="/2017/11/14/9.Android%E4%BD%BF%E7%94%A8greenDAO%E6%96%B9%E4%BE%BFSQLite%E5%81%9AORM%E5%BC%80%E5%8F%91/">2017-11-14</a></time>
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
 
             
     <div class="tags-row">
         
             <a href="/tags/android/" class="chip red lighten-1">android</a>
         
-            <a href="/tags/gradle/" class="chip red lighten-1">gradle</a>
-        
     </div>
 
 
+            <div class="toc red-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%B8%B8%E8%A7%84https%E6%8A%93%E5%8C%85"><span class="section table-of-contents-text">常规https抓包</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%AE%89%E5%8D%937-0%E4%BB%A5%E5%90%8Ehttps%E6%8A%93%E5%8C%85"><span class="section table-of-contents-text">安卓7.0以后https抓包</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E4%B8%8D%E5%85%81%E8%AE%B8%E7%94%A8%E6%88%B7%E8%AF%81%E4%B9%A6%E7%9A%84%E6%8A%93%E5%8C%85"><span class="section table-of-contents-text">不允许用户证书的抓包</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E4%BF%AE%E6%94%B9APP%E7%94%A8%E6%88%B7%E8%AF%81%E4%B9%A6%E8%AE%B8%E5%8F%AF"><span class="section table-of-contents-text">修改APP用户证书许可</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#Root%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%AF%81%E4%B9%A6"><span class="section table-of-contents-text">Root用户添加系统证书</span></a></li></ol></li></ol></li></ol>
+</div>
 
-            
-                <div class="entry red-link-context">
-                    <p>ORM是指对象关系映射（Object Relational Mapping，简称ORM）模式是一种为了解决面向对象与关系数据库存在的互不匹配的现象的技术。简单的说，ORM是通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系数据库中。使用它普通的数据库操作不需要去手动编写SQL语句，提高开发效率并减少出错。greenDAO是可以运行在Android平台的一款ORM框架，使用方便，效率也不错，应此很常用。<br>
-                </div>
-            
-        </div>
 
-        
-        <div class="card-action red-link-context">
-            <a href="/2017/11/14/9.Android使用greenDAO方便SQLite做ORM开发/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
+            <div class="entry red-link-context">
+                <p>fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一<br><span id="more"></span><br>fiddler下载地址： <a target="_blank" rel="noopener" href="https://www.telerik.com/download/fiddler">https://www.telerik.com/download/fiddler</a></p>
+<h2 id="常规https抓包"><a href="#常规https抓包" class="headerlink" title="常规https抓包"></a>常规https抓包</h2><p>常规抓https包准备步骤：</p>
+<ol>
+<li>下载抓包证书</li>
+<li>手机Wifi设置代理</li>
+<li>手机导入抓包证书</li>
+</ol>
+<h2 id="安卓7-0以后https抓包"><a href="#安卓7-0以后https抓包" class="headerlink" title="安卓7.0以后https抓包"></a>安卓7.0以后https抓包</h2><p>证书抓包方式，安卓7.0以后证书分为系统证书和用户证书，</p>
+<ol>
+<li>对于允许用户证书的应用，可以采用常规方式抓包</li>
+<li>对于只允许系统证书的应用，需要如下操作</li>
+</ol>
+<h3 id="不允许用户证书的抓包"><a href="#不允许用户证书的抓包" class="headerlink" title="不允许用户证书的抓包"></a>不允许用户证书的抓包</h3><p>不允许用户证书的抓包一般会想到两种方式改成可抓包</p>
+<h4 id="修改APP用户证书许可"><a href="#修改APP用户证书许可" class="headerlink" title="修改APP用户证书许可"></a>修改APP用户证书许可</h4><p>既然不允许用户证书，我们就修改APP，使APP允许用户证书， 一般来说修改安卓Manifest如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span> <span class="attr">android:networkSecurityConfig</span>=<span class="string">&quot;@xml/network_security_config&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>修改network_security_config.xml修改如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;system&quot;</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 允许用户证书--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;user&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当然修改已存在的app，将涉及到反编译，回编，签名等步骤</p>
+<h4 id="Root用户添加系统证书"><a href="#Root用户添加系统证书" class="headerlink" title="Root用户添加系统证书"></a>Root用户添加系统证书</h4><p>第二种方式是修改系统文件，把fiddler证书变成系统证书</p>
+<ol>
+<li>下载抓包证书（常规抓包也需要这个）如：FiddlerRoot.cer</li>
+<li><p>转换成pem格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取新的证书HASH值(命令输出第一行会显示文件hash，如：e5c3944b)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把pem证书文件用hash命名如（e5c3944b.pem）</p>
+</li>
+<li>把新证书拷贝到系统证书目录（需root）：/etc/security/cacerts/</li>
+<li>文件权限改成664，重启手机即可</li>
+</ol>
+<p>一般情况下经过这些修改，就可以正常进行https抓包了</p>
 
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
                 
-    
-        <h1 class="green-link-context"><a href="/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/">AndroidStudio多模块编译之子模块的调试</a></h1>
-    
+
+
+<p class="red-link-context">
+    <a href="/2023/05/18/18-Web%E5%89%8D%E7%AB%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%8F%8AOpenCV%E7%9A%84WebAssembly%E6%8E%A5%E5%85%A5/" rel="next" title="Web前端图像处理及OpenCV的WebAssembly接入">
+    下一篇：Web前端图像处理及OpenCV的WebAssembly接入
+  </a>
+</p>
 
 
             </div>
-
-            <time class="red-link-context" datetime="2017-10-21T06:20:00.000Z"><a href="/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/">2017-10-21</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/android/" class="chip red lighten-1">android</a>
-        
-            <a href="/tags/gradle/" class="chip red lighten-1">gradle</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>我们构建规模较大的Android工程时为了复用和分工协作，会使用到多模块构建应用程序。有时候一个App的编译也依赖于多个子模块，这样的App通常由一个app模块和若干个library模块组成。我们通过compile project(‘:library’)的方式就可以引入子模块供我们所用。但这种情况下有个问题，主模块引入的library默认情况下总是以release方式编译。<br>
-                </div>
-            
+			
         </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2017/10/21/8.AndroidStudio多模块编译之子模块的调试/">阅读全文</a>
-        </ div>
-        
     </div>
 </article>
 
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2017/10/17/7.%E4%BD%BF%E7%94%A8python%E5%BC%80%E5%8F%91completeroms%E7%BD%91%E7%AB%99%E7%88%AC%E8%99%AB/">使用python开发completeroms网站爬虫</a></h1>
-    
 
 
-            </div>
 
-            <time class="red-link-context" datetime="2017-10-17T06:03:45.000Z"><a href="/2017/10/17/7.%E4%BD%BF%E7%94%A8python%E5%BC%80%E5%8F%91completeroms%E7%BD%91%E7%AB%99%E7%88%AC%E8%99%AB/">2017-10-17</a></time>
 
-            
-    <div class="tags-row">
-        
-            <a href="/tags/html/" class="chip red lighten-1">html</a>
-        
-            <a href="/tags/python/" class="chip red lighten-1">python</a>
-        
-            <a href="/tags/dom/" class="chip red lighten-1">dom</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>使用Python开发爬虫是很快速简单灵活的。我在<a target="_blank" rel="noopener" href="http://www.completeroms.com/">completeroms</a>这个网站看到了很全的模拟器游戏下载，包括NES，GBA，GBC等等，偶尔下载几个ROM回味一下童年时代红白机的乐趣也不失为一件很有情调的事。然而该网站没有一个批量下载的功能，只能一个个自己下载，下载一个ROM得点开两个页面，即便手速再快，每次下载之前还得等待10秒。于是，对于想批量下载的羊毛党来说，得弄个爬虫才是真爱了。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2017/10/17/7.使用python开发completeroms网站爬虫/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2017/06/25/6.AndroidStudio%E4%BD%BF%E7%94%A8NDK%E7%BC%96%E8%AF%91%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81/">AndroidStudio使用NDK编译本地代码</a></h1>
-    
-
-
-            </div>
-
-            <time class="red-link-context" datetime="2017-06-25T04:21:59.000Z"><a href="/2017/06/25/6.AndroidStudio%E4%BD%BF%E7%94%A8NDK%E7%BC%96%E8%AF%91%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81/">2017-06-25</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/android/" class="chip red lighten-1">android</a>
-        
-            <a href="/tags/gradle/" class="chip red lighten-1">gradle</a>
-        
-            <a href="/tags/ndk/" class="chip red lighten-1">ndk</a>
-        
-            <a href="/tags/c/" class="chip red lighten-1">c++</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>AndroidStudio支持多种方式调用NDK编译本地代码，默认的Gradle可以支持NDK编译，但如果使用gradle-experimantal，可以提供更好的支持。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2017/06/25/6.AndroidStudio使用NDK编译本地代码/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2017/05/23/5.%E4%BD%BF%E7%94%A8Gradle%E5%8F%91%E5%B8%83Android%E7%B1%BB%E5%BA%93%E5%88%B0JCenter%E7%AC%94%E8%AE%B0/">使用Gradle发布Android类库到JCenter笔记</a></h1>
-    
-
-
-            </div>
-
-            <time class="red-link-context" datetime="2017-05-23T08:14:40.000Z"><a href="/2017/05/23/5.%E4%BD%BF%E7%94%A8Gradle%E5%8F%91%E5%B8%83Android%E7%B1%BB%E5%BA%93%E5%88%B0JCenter%E7%AC%94%E8%AE%B0/">2017-05-23</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/android/" class="chip red lighten-1">android</a>
-        
-            <a href="/tags/gradle/" class="chip red lighten-1">gradle</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>如果你想在Android Studio中引入一个library到你的项目，只需添加一行compile代码到模块的build.gradle文件中，远程依赖可以节省工程文件大小，避免了大量本地jar包类库占据代码空间，而且类库版本更新也很方便。<br>如果我们有一个开源类库需要提供给别人来用，就可以采用下面的方式来发布。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2017/05/23/5.使用Gradle发布Android类库到JCenter笔记/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2017/05/16/4.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Flask%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Python开源Web框架Flask学习笔记</a></h1>
-    
-
-
-            </div>
-
-            <time class="red-link-context" datetime="2017-05-16T02:10:57.000Z"><a href="/2017/05/16/4.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Flask%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2017-05-16</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/html/" class="chip red lighten-1">html</a>
-        
-            <a href="/tags/python/" class="chip red lighten-1">python</a>
-        
-            <a href="/tags/web/" class="chip red lighten-1">web</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2017/05/16/4.Python开源Web框架Flask学习笔记/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2016/07/12/3.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Tornado%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Python开源Web框架Tornado学习笔记</a></h1>
-    
-
-
-            </div>
-
-            <time class="red-link-context" datetime="2016-07-12T11:23:12.000Z"><a href="/2016/07/12/3.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Tornado%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2016-07-12</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/html/" class="chip red lighten-1">html</a>
-        
-            <a href="/tags/python/" class="chip red lighten-1">python</a>
-        
-            <a href="/tags/web/" class="chip red lighten-1">web</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p><a target="_blank" rel="noopener" href="http://www.tornadoweb.org/">Tornado</a>是<a target="_blank" rel="noopener" href="http://blog.friendfeed.com/">FriendFeed</a>使用的可扩展的非阻塞式 web 服务器及其相关工具的开源版本，能让python web服务器搭建变得更加简单快捷。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2016/07/12/3.Python开源Web框架Tornado学习笔记/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2016/06/22/2.Java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/">Java基础学习笔记之多线程</a></h1>
-    
-
-
-            </div>
-
-            <time class="red-link-context" datetime="2016-06-22T03:17:56.000Z"><a href="/2016/06/22/2.Java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/">2016-06-22</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/java/" class="chip red lighten-1">java</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>用多线程只有一个目的，那就是更好的利用cpu的资源，因为所有的多线程代码都可以用单线程来实现。说这个话其实只有一半对，因为反应“多角色”的程序代码，最起码每个角色要给他一个线程吧，否则连实际场景都无法模拟，当然也没法说能用单线程来实现：比如最常见的“生产者，消费者模型”。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2016/06/22/2.Java基础学习笔记之多线程/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-        <article class="simple-article">
-    <div class="card">
-        <div class="card-content">
-            <div class="article-title">
-                
-    
-        <h1 class="green-link-context"><a href="/2016/06/14/1.%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAgithub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B0%8F%E7%BB%93/">使用hexo搭建github个人博客小结</a></h1>
-    
-
-
-            </div>
-
-            <time class="red-link-context" datetime="2016-06-14T01:53:09.000Z"><a href="/2016/06/14/1.%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAgithub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B0%8F%E7%BB%93/">2016-06-14</a></time>
-
-            
-    <div class="tags-row">
-        
-            <a href="/tags/markdown/" class="chip red lighten-1">markdown</a>
-        
-            <a href="/tags/nodejs/" class="chip red lighten-1">nodejs</a>
-        
-            <a href="/tags/html/" class="chip red lighten-1">html</a>
-        
-    </div>
-
-
-
-            
-                <div class="entry red-link-context">
-                    <p>在GitHub上搭建静态站点依赖于官方提供的<a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages机制</a>，然而手动编写静态的html页面会因为布局和样式造成很多重复的工作，而如果是采用MarkDown语法来编写，能满足很多文档和博客编写的需求，却需要一种方式把MarkDown语法转成普通html，通过模板来定制生成的html样式。<br>
-                </div>
-            
-        </div>
-
-        
-        <div class="card-action red-link-context">
-            <a href="/2016/06/14/1.使用hexo搭建github个人博客小结/">阅读全文</a>
-        </ div>
-        
-    </div>
-</article>
-
-    
-
-    <ul class="pagination center-align">
-    <li class="">
-        <a href="/"><i class="fa fa-angle-left"></i></a>
-    </li>
-    
-    
-        <li class="waves-effect"><a href="/">1</a></li>
-    
-        <li class="active red"><a href="/page/2">2</a></li>
-    
-    
-    <li class="disabled">
-        <a href="/"><i class="fa fa-angle-right"></i></a>
-    </li>
- </ul>
 
 </div>
 

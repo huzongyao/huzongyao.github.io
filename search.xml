@@ -4,6 +4,59 @@
   
     
     <entry>
+      <title><![CDATA[安卓7.0以上设备网络抓包笔记]]></title>
+      <url>https://huzongyao.github.io/2023/06/13/19-%25E5%25AE%2589%25E5%258D%25937-0%25E4%25BB%25A5%25E4%25B8%258A%25E8%25AE%25BE%25E5%25A4%2587%25E7%25BD%2591%25E7%25BB%259C%25E6%258A%2593%25E5%258C%2585%25E7%25AC%2594%25E8%25AE%25B0/</url>
+      <content type="html"><![CDATA[<p>fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一<br><span id="more"></span><br>fiddler下载地址： <a href="https://www.telerik.com/download/fiddler">https://www.telerik.com/download/fiddler</a></p>
+<h2 id="常规https抓包"><a href="#常规https抓包" class="headerlink" title="常规https抓包"></a>常规https抓包</h2><p>常规抓https包准备步骤：</p>
+<ol>
+<li>下载抓包证书</li>
+<li>手机Wifi设置代理</li>
+<li>手机导入抓包证书</li>
+</ol>
+<h2 id="安卓7-0以后https抓包"><a href="#安卓7-0以后https抓包" class="headerlink" title="安卓7.0以后https抓包"></a>安卓7.0以后https抓包</h2><p>证书抓包方式，安卓7.0以后证书分为系统证书和用户证书，</p>
+<ol>
+<li>对于允许用户证书的应用，可以采用常规方式抓包</li>
+<li>对于只允许系统证书的应用，需要如下操作</li>
+</ol>
+<h3 id="不允许用户证书的抓包"><a href="#不允许用户证书的抓包" class="headerlink" title="不允许用户证书的抓包"></a>不允许用户证书的抓包</h3><p>不允许用户证书的抓包一般会想到两种方式改成可抓包</p>
+<h4 id="修改APP用户证书许可"><a href="#修改APP用户证书许可" class="headerlink" title="修改APP用户证书许可"></a>修改APP用户证书许可</h4><p>既然不允许用户证书，我们就修改APP，使APP允许用户证书， 一般来说修改安卓Manifest如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span> <span class="attr">android:networkSecurityConfig</span>=<span class="string">&quot;@xml/network_security_config&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>修改network_security_config.xml修改如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;system&quot;</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 允许用户证书--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;user&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当然修改已存在的app，将涉及到反编译，回编，签名等步骤</p>
+<h4 id="Root用户添加系统证书"><a href="#Root用户添加系统证书" class="headerlink" title="Root用户添加系统证书"></a>Root用户添加系统证书</h4><p>第二种方式是修改系统文件，把fiddler证书变成系统证书</p>
+<ol>
+<li>下载抓包证书（常规抓包也需要这个）如：FiddlerRoot.cer</li>
+<li><p>转换成pem格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取新的证书HASH值(命令输出第一行会显示文件hash，如：e5c3944b)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把pem证书文件用hash命名如（e5c3944b.pem）</p>
+</li>
+<li>把新证书拷贝到系统证书目录（需root）：/etc/security/cacerts/</li>
+<li>文件权限改成664，重启手机即可</li>
+</ol>
+<p>一般情况下经过这些修改，就可以正常进行https抓包了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术博客 </category>
+            
+            <category> Android学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Web前端图像处理及OpenCV的WebAssembly接入]]></title>
       <url>https://huzongyao.github.io/2023/05/18/18-Web%25E5%2589%258D%25E7%25AB%25AF%25E5%259B%25BE%25E5%2583%258F%25E5%25A4%2584%25E7%2590%2586%25E5%258F%258AOpenCV%25E7%259A%2584WebAssembly%25E6%258E%25A5%25E5%2585%25A5/</url>
       <content type="html"><![CDATA[<p>OpenCV是一个基于Apache2.0许可（开源）发行的跨平台计算机视觉和机器学习软件库，可以运行在Linux、Windows、Android和Mac OS操作系统上。<br><span id="more"></span><br>它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。<br>有了WebAssembly的应用，OpenCV同时也可以在Web端使用，增强了兼容性和可用性。</p>
