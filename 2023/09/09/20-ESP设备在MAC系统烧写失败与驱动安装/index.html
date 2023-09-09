@@ -7,7 +7,7 @@
 
     
 
-    <title>OpenCV学习 | HuZongYao的博客</title>
+    <title>20.ESP设备在MAC系统烧写失败与驱动安装 | HuZongYao的博客</title>
     <meta name="author" content="huzongyao">
     
     <meta name="description" content="欢迎访问HuZongYao的博客">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="20.ESP设备在MAC系统烧写失败与驱动安装"/>
     <meta property="og:site_name" content="HuZongYao的个人博客"/>
 
     
@@ -257,30 +257,85 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper green">
         <span class="breadcrumb">当前位置（分类目录）</span>
         
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/PlatformIO学习/">PlatformIO学习</a>
+
 
         
-            <a class="breadcrumb" href="/categories/技术博客/OpenCV学习/">OpenCV学习</a>
+
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>20.ESP设备在MAC系统烧写失败与驱动安装</h1>
+    
 
 
-    <div class="collection mt-0">
+            </div>
+            <time class="red-link-context" datetime="2023-09-09T05:30:24.000Z"><a href="/2023/09/09/20-ESP%E8%AE%BE%E5%A4%87%E5%9C%A8MAC%E7%B3%BB%E7%BB%9F%E7%83%A7%E5%86%99%E5%A4%B1%E8%B4%A5%E4%B8%8E%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/">2023-09-09</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
         
-            <a href="/2018/12/01/13.Python-OpenCV%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="collection-item grey-text text-darken-1">
-                <time datetime="2018-12-01T13:55:27.000Z">2018-12-01</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                Python+OpenCV图像处理学习笔记
-            </a>
+            <a href="/tags/esp8266/" class="chip red lighten-1">esp8266</a>
+        
+            <a href="/tags/PlatformIO/" class="chip red lighten-1">PlatformIO</a>
         
     </div>
+
+
+            <div class="toc red-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#ESP32%E8%AE%BE%E5%A4%87%E7%9A%84%E4%B8%B2%E5%8F%A3"><span class="section table-of-contents-text">ESP32设备的串口</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E9%A9%B1%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="section table-of-contents-text">驱动下载安装</span></a></li></ol>
+</div>
+
+
+            <div class="entry red-link-context">
+                <p>ESP32设备经常采用CH340系列串口芯片与电脑进行通信并烧写程序，在MAC电脑上烧写一定不要忘记安装驱动，否则会导致烧写失败<br><span id="more"></span><br>在MAC电脑上连接USB设备大多数情况下是不需要手动安装驱动的，但是CH340系列是一个奇葩。</p>
+<h3 id="ESP32设备的串口"><a href="#ESP32设备的串口" class="headerlink" title="ESP32设备的串口"></a>ESP32设备的串口</h3><p>对于内置USB功能的ESP32C3, S2, S3这些芯片，烧写程序有两种方案，</p>
+<ul>
+<li>第一是直接用芯片自带的USB，这样可以减少外围原件， 降低硬件成本，但问题是设备重启的时候，串口也会断开重连。</li>
+<li>第二种方法是外接一块USB转串口芯片，再连接到单片机的串口上。这样适合于不带USB功能的ESP8266, ESP32等芯片。</li>
+</ul>
+<h3 id="驱动下载安装"><a href="#驱动下载安装" class="headerlink" title="驱动下载安装"></a>驱动下载安装</h3><p>CH340系列串口芯片需要安装驱动，千万不要忘记：<br><a target="_blank" rel="noopener" href="https://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html">https://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html</a><br>下载后解压，安装即可，测试PlatformIO可正常运行。</p>
+
+                
+
+
+<p class="red-link-context">
+    <a href="/2023/06/13/19-%E5%AE%89%E5%8D%937-0%E4%BB%A5%E4%B8%8A%E8%AE%BE%E5%A4%87%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E7%AC%94%E8%AE%B0/" rel="next" title="安卓7.0以上设备网络抓包笔记">
+    下一篇：安卓7.0以上设备网络抓包笔记
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
 
 
 </div>

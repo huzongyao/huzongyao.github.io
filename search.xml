@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title><![CDATA[20.ESP设备在MAC系统烧写失败与驱动安装]]></title>
+      <url>https://huzongyao.github.io/2023/09/09/20-ESP%25E8%25AE%25BE%25E5%25A4%2587%25E5%259C%25A8MAC%25E7%25B3%25BB%25E7%25BB%259F%25E7%2583%25A7%25E5%2586%2599%25E5%25A4%25B1%25E8%25B4%25A5%25E4%25B8%258E%25E9%25A9%25B1%25E5%258A%25A8%25E5%25AE%2589%25E8%25A3%2585/</url>
+      <content type="html"><![CDATA[<p>ESP32设备经常采用CH340系列串口芯片与电脑进行通信并烧写程序，在MAC电脑上烧写一定不要忘记安装驱动，否则会导致烧写失败<br><span id="more"></span><br>在MAC电脑上连接USB设备大多数情况下是不需要手动安装驱动的，但是CH340系列是一个奇葩。</p>
+<h3 id="ESP32设备的串口"><a href="#ESP32设备的串口" class="headerlink" title="ESP32设备的串口"></a>ESP32设备的串口</h3><p>对于内置USB功能的ESP32C3, S2, S3这些芯片，烧写程序有两种方案，</p>
+<ul>
+<li>第一是直接用芯片自带的USB，这样可以减少外围原件， 降低硬件成本，但问题是设备重启的时候，串口也会断开重连。</li>
+<li>第二种方法是外接一块USB转串口芯片，再连接到单片机的串口上。这样适合于不带USB功能的ESP8266, ESP32等芯片。</li>
+</ul>
+<h3 id="驱动下载安装"><a href="#驱动下载安装" class="headerlink" title="驱动下载安装"></a>驱动下载安装</h3><p>CH340系列串口芯片需要安装驱动，千万不要忘记：<br><a href="https://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html">https://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html</a><br>下载后解压，安装即可，测试PlatformIO可正常运行。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术博客 </category>
+            
+            <category> PlatformIO学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> esp8266 </tag>
+            
+            <tag> PlatformIO </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[安卓7.0以上设备网络抓包笔记]]></title>
       <url>https://huzongyao.github.io/2023/06/13/19-%25E5%25AE%2589%25E5%258D%25937-0%25E4%25BB%25A5%25E4%25B8%258A%25E8%25AE%25BE%25E5%25A4%2587%25E7%25BD%2591%25E7%25BB%259C%25E6%258A%2593%25E5%258C%2585%25E7%25AC%2594%25E8%25AE%25B0/</url>
       <content type="html"><![CDATA[<p>fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一<br><span id="more"></span><br>fiddler下载地址： <a href="https://www.telerik.com/download/fiddler">https://www.telerik.com/download/fiddler</a></p>
