@@ -140,3 +140,12 @@ emconfigure ./Configure gcc
 make -j32
 ```
 过一会儿生成文件libcrypto.a，以及include下的头文件就是我们需要的
+
+#### Emscripten结合到CLion
+在Clion中开发C、C++很舒服，但是默认没有支持Wasm。我们想要使用emcmake来进行源代码关联，并编译程序，其实也很简单。
+需要修改一个设置：settings > Build, Execution, Deployment > CMake，创建一个新的配置
+```shell
+-DCMAKE_TOOLCHAIN_FILE=<path_to_emsdk>/emscripten//cmake/Modules/Platform/Emscripten.cmake
+```
+这样就完美解决了代码的关联提示和编译问题，但局限是只能适用于CMake的编译。
+

@@ -1,5 +1,5 @@
 ---
-title: 20.ESP设备在MAC系统烧写失败与驱动安装
+title: ESP设备在MAC系统烧写失败与驱动安装
 date: 2023-09-09 13:30:24
 tags:
   - esp8266
