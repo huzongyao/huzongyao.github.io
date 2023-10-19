@@ -4,6 +4,40 @@
   
     
     <entry>
+      <title><![CDATA[MTK平台安卓ROM修改和刷机相关笔记]]></title>
+      <url>https://huzongyao.github.io/2023/10/19/21-MTK%25E5%25B9%25B3%25E5%258F%25B0%25E5%25AE%2589%25E5%258D%2593ROM%25E4%25BF%25AE%25E6%2594%25B9%25E5%2592%258C%25E5%2588%25B7%25E6%259C%25BA%25E7%259B%25B8%25E5%2585%25B3%25E7%25AC%2594%25E8%25AE%25B0/</url>
+      <content type="html"><![CDATA[<p>MTK相关操作和修改。<br><span id="more"></span><br>记录MTK刷机及修改所用一些工具和技巧。</p>
+<h2 id="Vbmeta关闭avb2-0校验"><a href="#Vbmeta关闭avb2-0校验" class="headerlink" title="Vbmeta关闭avb2.0校验"></a>Vbmeta关闭avb2.0校验</h2><p>vbmeta分区中一般记录了boot, system, vendor镜像校验信息，校验会导致修改过的boot等镜像刷入后无法启动，<br>所以一般需要关闭这个校验。</p>
+<ol>
+<li><p>命令方式(重新刷如vbmeta):</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动修改ROM：使用二进制编辑工具，如HexEditor修改(VsCode也有HexEdit插件，非常方便)。<br>具体修改位置：</p>
+</li>
+</ol>
+<ul>
+<li>第123字节：0x00 -&gt; 0x03</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术博客 </category>
+            
+            <category> Android学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[ESP设备在MAC系统烧写失败与驱动安装]]></title>
       <url>https://huzongyao.github.io/2023/09/09/20-ESP%25E8%25AE%25BE%25E5%25A4%2587%25E5%259C%25A8MAC%25E7%25B3%25BB%25E7%25BB%259F%25E7%2583%25A7%25E5%2586%2599%25E5%25A4%25B1%25E8%25B4%25A5%25E4%25B8%258E%25E9%25A9%25B1%25E5%258A%25A8%25E5%25AE%2589%25E8%25A3%2585/</url>
       <content type="html"><![CDATA[<p>ESP32设备经常采用CH340系列串口芯片与电脑进行通信并烧写程序，在MAC电脑上烧写一定不要忘记安装驱动，否则会导致烧写失败<br><span id="more"></span><br>在MAC电脑上连接USB设备大多数情况下是不需要手动安装驱动的，但是CH340系列是一个奇葩。</p>

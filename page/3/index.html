@@ -7,7 +7,7 @@
 
     
 
-    <title>AndroidStudio使用NDK编译本地代码 | HuZongYao的博客</title>
+    <title>第 3 页 | HuZongYao的博客</title>
     <meta name="author" content="huzongyao">
     
     <meta name="description" content="欢迎访问HuZongYao的博客">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="AndroidStudio使用NDK编译本地代码"/>
+    
     <meta property="og:site_name" content="HuZongYao的个人博客"/>
 
     
@@ -256,106 +256,73 @@
 
 
     <main>
-        <div class="container main-container">
-    <nav class="page-nav hide-on-small-only">
-    <div class="nav-wrapper green">
-        <span class="breadcrumb">当前位置（分类目录）</span>
         
-            
+
+
+
+<div id="article-list" class="container main-container">
     
-    
-    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/Android学习/">Android学习</a>
-
-
-        
-
-        
-    </div>
-</nav>
-
-<article>
+        <article class="simple-article">
     <div class="card">
         <div class="card-content">
-            
-
             <div class="article-title">
                 
     
-        <h1>AndroidStudio使用NDK编译本地代码</h1>
+        <h1 class="green-link-context"><a href="/2016/06/14/1.%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAgithub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B0%8F%E7%BB%93/">使用hexo搭建github个人博客小结</a></h1>
     
 
 
             </div>
-            <time class="red-link-context" datetime="2017-06-25T04:21:59.000Z"><a href="/2017/06/25/6.AndroidStudio%E4%BD%BF%E7%94%A8NDK%E7%BC%96%E8%AF%91%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81/">2017-06-25</a></time>
 
-            <span id="busuanzi_container_page_pv" class="read-times-container">
-    <i class="fa fa-eye"></i>
-    <span id="busuanzi_value_page_pv"></span>
-</span>
+            <time class="red-link-context" datetime="2016-06-14T01:53:09.000Z"><a href="/2016/06/14/1.%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAgithub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B0%8F%E7%BB%93/">2016-06-14</a></time>
 
             
     <div class="tags-row">
         
-            <a href="/tags/android/" class="chip red lighten-1">android</a>
+            <a href="/tags/markdown/" class="chip red lighten-1">markdown</a>
         
-            <a href="/tags/gradle/" class="chip red lighten-1">gradle</a>
+            <a href="/tags/nodejs/" class="chip red lighten-1">nodejs</a>
         
-            <a href="/tags/ndk/" class="chip red lighten-1">ndk</a>
-        
-            <a href="/tags/c/" class="chip red lighten-1">c++</a>
+            <a href="/tags/html/" class="chip red lighten-1">html</a>
         
     </div>
 
 
-            <div class="toc red-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#AndroidStudio%E4%B8%8BNDK%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F"><span class="section table-of-contents-text">AndroidStudio下NDK编译方式</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E4%BD%BF%E7%94%A8%E5%BA%9F%E5%BC%83%E7%9A%84NDK"><span class="section table-of-contents-text">使用废弃的NDK</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E4%BD%BF%E7%94%A8gradle-experimental"><span class="section table-of-contents-text">使用gradle-experimental</span></a></li></ol></li></ol>
-</div>
 
-
-            <div class="entry red-link-context">
-                <p>AndroidStudio支持多种方式调用NDK编译本地代码，默认的Gradle可以支持NDK编译，但如果使用gradle-experimantal，可以提供更好的支持。<br><span id="more"></span></p>
-<h3 id="AndroidStudio下NDK编译方式"><a href="#AndroidStudio下NDK编译方式" class="headerlink" title="AndroidStudio下NDK编译方式"></a>AndroidStudio下NDK编译方式</h3><h4 id="使用废弃的NDK"><a href="#使用废弃的NDK" class="headerlink" title="使用废弃的NDK"></a>使用废弃的NDK</h4><p>普通情况使用废弃的NDK，只需要在gradle.properties中加入配置（如果不加入则报错）：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.useDeprecatedNdk=<span class="keyword">true</span></span><br></pre></td></tr></table></figure>
-<p>这样做只是为了防止gradle编译报错，为了正确编译还需要修改相应模块gradle文件，加入编译配置如：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;25.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">15</span></span><br><span class="line">        targetSdkVersion <span class="number">25</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">&quot;myjni&quot;</span></span><br><span class="line">            ldLibs <span class="string">&quot;log&quot;</span>, <span class="string">&quot;jnigraphics&quot;</span></span><br><span class="line">            abiFilters <span class="string">&quot;armeabi&quot;</span>, <span class="string">&quot;armeabi-v7a&quot;</span></span><br><span class="line">            cFlags <span class="string">&quot;-mtune=atom&quot;</span></span><br><span class="line">            stl <span class="string">&quot;gnustl_shared&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">sourceSets</span>.main &#123;</span><br><span class="line">        jniLibs.srcDir <span class="string">&#x27;src/main/libs&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        x86 &#123;</span><br><span class="line">            ndk &#123;</span><br><span class="line">                abiFilter <span class="string">&quot;x86&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mips &#123;</span><br><span class="line">            ndk &#123;</span><br><span class="line">                abiFilter <span class="string">&quot;mips&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        <span class="string">&#x27;&#x27;</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>如果为提高速度直接用了已编译的lib而暂时不需要编译NDK，可以配置jni不编译：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">sourceSets</span>.main.jni.srcDirs = [] <span class="comment">//disable automatic ndk-build call</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用gradle-experimental"><a href="#使用gradle-experimental" class="headerlink" title="使用gradle-experimental"></a>使用gradle-experimental</h4><p>首先我们需要修改工程的gradle配置为gradle-experimental：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle-experimental:0.9.1&#x27;</span></span><br><span class="line">        <span class="comment">//classpath &#x27;com.android.tools.build:gradle:2.3.1&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后所有的模块配置都要加上model：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&quot;com.android.model.application&quot;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.android.model.library&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>完整的gradle配置:</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.model.library&#x27;</span></span><br><span class="line"></span><br><span class="line">model &#123;</span><br><span class="line">    android &#123;</span><br><span class="line">        compileSdkVersion <span class="number">25</span></span><br><span class="line">        buildToolsVersion <span class="string">&quot;26.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">        defaultConfig &#123;</span><br><span class="line">            minSdkVersion.apiLevel <span class="number">14</span></span><br><span class="line">            targetSdkVersion.apiLevel <span class="number">25</span></span><br><span class="line">            versionCode <span class="number">1</span></span><br><span class="line">            versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">&quot;guetzli&quot;</span></span><br><span class="line">            cppFlags.add(<span class="string">&quot;-std=c++11&quot;</span>)</span><br><span class="line">            ldLibs.addAll([<span class="string">&quot;log&quot;</span>, <span class="string">&quot;z&quot;</span>, <span class="string">&quot;jnigraphics&quot;</span>])</span><br><span class="line">            stl <span class="string">&quot;c++_static&quot;</span></span><br><span class="line">            abiFilters.addAll([<span class="string">&#x27;armeabi&#x27;</span>, <span class="string">&#x27;armeabi-v7a&#x27;</span>])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.buildTypes &#123;</span><br><span class="line">        debug &#123;</span><br><span class="line">            ndk &#123;</span><br><span class="line">                cppFlags.add(<span class="string">&#x27;-DNDK_DEBUG&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            proguardFiles.add(<span class="keyword">file</span>(<span class="string">&#x27;proguard-rules.pro&#x27;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>app 模块的配置也要相应改变：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.model.application&#x27;</span></span><br><span class="line"></span><br><span class="line">model&#123;</span><br><span class="line">    android &#123;</span><br><span class="line">        compileSdkVersion <span class="number">25</span></span><br><span class="line">        buildToolsVersion <span class="string">&quot;26.0.0&quot;</span></span><br><span class="line">        defaultConfig &#123;</span><br><span class="line">            applicationId <span class="string">&quot;com.hzy.guetzli.demo&quot;</span></span><br><span class="line">            minSdkVersion.apiLevel <span class="number">14</span></span><br><span class="line">            targetSdkVersion.apiLevel <span class="number">25</span></span><br><span class="line">            versionCode <span class="number">1</span></span><br><span class="line">            versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.signingConfigs &#123;</span><br><span class="line">        create(<span class="string">&quot;release&quot;</span>) &#123;</span><br><span class="line">            storeFile <span class="keyword">file</span>(<span class="string">&#x27;demokey.jks&#x27;</span>)</span><br><span class="line">            storePassword <span class="string">&#x27;demokey&#x27;</span></span><br><span class="line">            keyAlias <span class="string">&#x27;demokey&#x27;</span></span><br><span class="line">            keyPassword <span class="string">&#x27;demokey&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            useProguard <span class="keyword">true</span></span><br><span class="line">            proguardFiles.add(<span class="keyword">file</span>(<span class="string">&#x27;proguard-rules.pro&#x27;</span>))</span><br><span class="line">            signingConfig = $(<span class="string">&quot;android.signingConfigs.release&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样以后，本地代码就可以编译，而且AndroidStudio还支持本地代码高亮，调试等操作。</p>
-
-                
-<p class="red-link-context">
-    <a href="/2017/10/17/7.%E4%BD%BF%E7%94%A8python%E5%BC%80%E5%8F%91completeroms%E7%BD%91%E7%AB%99%E7%88%AC%E8%99%AB/" rel="next" title="使用python开发completeroms网站爬虫">
-    上一篇：使用python开发completeroms网站爬虫
-  </a>
-</p>
-
-
-
-<p class="red-link-context">
-    <a href="/2017/05/23/5.%E4%BD%BF%E7%94%A8Gradle%E5%8F%91%E5%B8%83Android%E7%B1%BB%E5%BA%93%E5%88%B0JCenter%E7%AC%94%E8%AE%B0/" rel="next" title="使用Gradle发布Android类库到JCenter笔记">
-    下一篇：使用Gradle发布Android类库到JCenter笔记
-  </a>
-</p>
-
-
-            </div>
-			
+            
+                <div class="entry red-link-context">
+                    <p>在GitHub上搭建静态站点依赖于官方提供的<a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages机制</a>，然而手动编写静态的html页面会因为布局和样式造成很多重复的工作，而如果是采用MarkDown语法来编写，能满足很多文档和博客编写的需求，却需要一种方式把MarkDown语法转成普通html，通过模板来定制生成的html样式。<br>
+                </div>
+            
         </div>
+
+        
+        <div class="card-action red-link-context">
+            <a href="/2016/06/14/1.使用hexo搭建github个人博客小结/">阅读全文</a>
+        </ div>
+        
     </div>
 </article>
 
+    
 
-
-
-
+    <ul class="pagination center-align">
+    <li class="">
+        <a href="/page/2/"><i class="fa fa-angle-left"></i></a>
+    </li>
+    
+    
+        <li class="waves-effect"><a href="/">1</a></li>
+    
+        <li class="waves-effect"><a href="/page/2">2</a></li>
+    
+        <li class="active red"><a href="/page/3">3</a></li>
+    
+    
+    <li class="disabled">
+        <a href="/"><i class="fa fa-angle-right"></i></a>
+    </li>
+ </ul>
 
 </div>
 
