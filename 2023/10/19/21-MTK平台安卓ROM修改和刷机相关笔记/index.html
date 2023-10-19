@@ -302,7 +302,7 @@
 
 
             <div class="toc red-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Vbmeta%E5%85%B3%E9%97%ADavb2-0%E6%A0%A1%E9%AA%8C"><span class="section table-of-contents-text">Vbmeta关闭avb2.0校验</span></a></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Vbmeta%E5%85%B3%E9%97%ADavb2-0%E6%A0%A1%E9%AA%8C"><span class="section table-of-contents-text">Vbmeta关闭avb2.0校验</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#MTK%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6MTKClient%E4%BD%BF%E7%94%A8"><span class="section table-of-contents-text">MTK工具软件MTKClient使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#MTK%E5%88%B7%E6%9C%BASPFlashTool"><span class="section table-of-contents-text">MTK刷机SPFlashTool</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#MTK%E5%BC%80%E6%9C%BA%E7%94%BB%E9%9D%A2%E4%BF%AE%E6%94%B9%E5%B7%A5%E5%85%B7LogoBuilder"><span class="section table-of-contents-text">MTK开机画面修改工具LogoBuilder</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#MTK-WWR%E5%88%86%E5%8C%BA%E5%88%87%E5%88%86%E5%8F%8A%E5%88%B7%E6%9C%BA%E5%9B%BA%E4%BB%B6%E5%88%B6%E4%BD%9C%E5%B7%A5%E5%85%B7"><span class="section table-of-contents-text">MTK_WWR分区切分及刷机固件制作工具</span></a></li></ol>
 </div>
 
 
@@ -313,12 +313,25 @@
 <li><p>命令方式(重新刷如vbmeta):</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>手动修改ROM：使用二进制编辑工具，如HexEditor修改(VsCode也有HexEdit插件，非常方便)。<br>具体修改位置：</p>
+<li><p>手动修改ROM：使用二进制编辑工具，如HexEditor修改(VsCode也有HexEdit插件，非常方便)，具体修改位置：</p>
 </li>
 </ol>
 <ul>
 <li>第123字节：0x00 -&gt; 0x03</li>
+<li>修改完成之后刷入vbmeta分区即可，所产生的作用和第一种方式是一样的</li>
 </ul>
+<h2 id="MTK工具软件MTKClient使用"><a href="#MTK工具软件MTKClient使用" class="headerlink" title="MTK工具软件MTKClient使用"></a>MTK工具软件MTKClient使用</h2><p>MTKClient有一个带界面的工具，首次连接需要在开机时按下音量键，连接成功后可以做很多ROM操作</p>
+<ol>
+<li>ROM分区操作（导出、刷入、清空）</li>
+<li>flash操作（对整块flash导出、刷入、清空）</li>
+<li>解除BL锁，回锁</li>
+</ol>
+<h2 id="MTK刷机SPFlashTool"><a href="#MTK刷机SPFlashTool" class="headerlink" title="MTK刷机SPFlashTool"></a>MTK刷机SPFlashTool</h2><p>SPFlashTool是官方刷机软件，有些功能与MTKClient类似，<a target="_blank" rel="noopener" href="https://spflashtool.com/">https://spflashtool.com/</a><br>可以执行固件刷入，导出，flash导出，内存测试等功能</p>
+<h2 id="MTK开机画面修改工具LogoBuilder"><a href="#MTK开机画面修改工具LogoBuilder" class="headerlink" title="MTK开机画面修改工具LogoBuilder"></a>MTK开机画面修改工具LogoBuilder</h2><p>使用这个工具可以修改设备开机第一屏，可以执行解压和重打包任务，解压后我们可以对相关的png图片进行修改，<br>完成后再打包成bin文件即可</p>
+<h2 id="MTK-WWR分区切分及刷机固件制作工具"><a href="#MTK-WWR分区切分及刷机固件制作工具" class="headerlink" title="MTK_WWR分区切分及刷机固件制作工具"></a>MTK_WWR分区切分及刷机固件制作工具</h2><ol>
+<li>分区切割：我们可以用MTKClient或者SPFlashTool导出整块flash数据，再使用WWR来嗅探分区表并切割这些分区，<br>切割后生成的分区文件和分区表文件可以用于SPFlashTool刷机，也可以使用fastboot刷机</li>
+<li>我们使用SPFlashTool来导出分区时通常需要一个分区表txt文件，该工具可以根据芯片型号生成该文件。</li>
+</ol>
 
                 
 
