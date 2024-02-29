@@ -4,6 +4,46 @@
   
     
     <entry>
+      <title><![CDATA[22.红米Note8Pro手机刷机相关笔记]]></title>
+      <url>https://huzongyao.github.io/2024/02/29/22-%25E7%25BA%25A2%25E7%25B1%25B3Note8Pro%25E6%2589%258B%25E6%259C%25BA%25E5%2588%25B7%25E6%259C%25BA%25E7%259B%25B8%25E5%2585%25B3%25E7%25AC%2594%25E8%25AE%25B0/</url>
+      <content type="html"><![CDATA[<p>红米Note8Pro手机刷机相关笔记<br><span id="more"></span><br>该手机是MTK芯片</p>
+<h2 id="系统下载和烧写"><a href="#系统下载和烧写" class="headerlink" title="系统下载和烧写"></a>系统下载和烧写</h2><ol>
+<li>官方下载地址：<a href="https://xiaomirom.com/series/begonia/">https://xiaomirom.com/series/begonia/</a></li>
+<li>下载选项：我下载的时候可以选择国行和海外版，国行没有GP，想要GP需要下载海外版。</li>
+<li>ROM类型：分为fastboot版和recovery版，分别是线刷和卡刷。</li>
+</ol>
+<h2 id="TWRP刷写："><a href="#TWRP刷写：" class="headerlink" title="TWRP刷写："></a>TWRP刷写：</h2><ol>
+<li>安卓11的下载地址：<a href="https://www.pling.com/p/1556853/">https://www.pling.com/p/1556853/</a></li>
+</ol>
+<h2 id="ROOT工具："><a href="#ROOT工具：" class="headerlink" title="ROOT工具："></a>ROOT工具：</h2><ol>
+<li>获取ROOT工具Magisk：<a href="https://github.com/topjohnwu/Magisk">https://github.com/topjohnwu/Magisk</a></li>
+</ol>
+<h2 id="反向周边工具："><a href="#反向周边工具：" class="headerlink" title="反向周边工具："></a>反向周边工具：</h2><ol>
+<li>抓包工具reqable: <a href="https://reqable.com/en-US/download/">https://reqable.com/en-US/download/</a></li>
+<li>抓包代理XSocksDroid：<a href="https://github.com/zhuhai-and/XSocksDroid">https://github.com/zhuhai-and/XSocksDroid</a></li>
+<li>Hook代理Frida：<a href="https://github.com/frida/frida">https://github.com/frida/frida</a></li>
+<li>Frida启动器：<a href="https://github.com/metmit/FridaManager">https://github.com/metmit/FridaManager</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 技术博客 </category>
+            
+            <category> Android学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[MTK平台安卓ROM修改和刷机相关笔记]]></title>
       <url>https://huzongyao.github.io/2023/10/19/21-MTK%25E5%25B9%25B3%25E5%258F%25B0%25E5%25AE%2589%25E5%258D%2593ROM%25E4%25BF%25AE%25E6%2594%25B9%25E5%2592%258C%25E5%2588%25B7%25E6%259C%25BA%25E7%259B%25B8%25E5%2585%25B3%25E7%25AC%2594%25E8%25AE%25B0/</url>
       <content type="html"><![CDATA[<p>MTK相关操作和修改。<br><span id="more"></span><br>记录MTK刷机及修改所用一些工具和技巧。</p>
