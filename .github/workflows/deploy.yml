@@ -6,7 +6,7 @@ on:
       - main  # 更改为你的默认分支
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout  # 检出代码
         uses: actions/checkout@v2
@@ -14,7 +14,7 @@ jobs:
       - name: Setup build  env  # 设置构建环境（如果需要）
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies  # 安装依赖
