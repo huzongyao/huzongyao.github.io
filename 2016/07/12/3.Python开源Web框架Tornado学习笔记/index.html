@@ -1,0 +1,664 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Python开源Web框架Tornado学习笔记 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="Tornado是FriendFeed使用的可扩展的非阻塞式 web 服务器及其相关工具的开源版本，能让python web服务器搭建变得更加简单快捷。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Python开源Web框架Tornado学习笔记"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/Python学习/">Python学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Python开源Web框架Tornado学习笔记</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-07-12T19:23:12.000Z"><a href="/2016/07/12/3.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Tornado%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2016-07-12</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/html/" class="chip pink lighten-1">html</a>
+        
+            <a href="/tags/python/" class="chip pink lighten-1">python</a>
+        
+            <a href="/tags/web/" class="chip pink lighten-1">web</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="section table-of-contents-text">相关资料</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="section table-of-contents-text">环境搭建</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#1-%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85release%E4%B8%8B%E8%BD%BD%E9%A1%B5"><span class="section table-of-contents-text">1.下载安装release下载页</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#2-%E9%80%9A%E8%BF%87-pip-%E6%88%96%E8%80%85-easy-install-%E6%9D%A5%E5%AE%89%E8%A3%85-%E5%A6%82%EF%BC%9A"><span class="section table-of-contents-text">2.通过 pip 或者 easy_install 来安装,如：</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81"><span class="section table-of-contents-text">编写代码</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#HelloWorld%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="section table-of-contents-text">HelloWorld代码：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Handler%E4%B8%8E%E8%AF%B7%E6%B1%82%E6%98%A0%E5%B0%84"><span class="section table-of-contents-text">Handler与请求映射</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><a target="_blank" rel="noopener" href="http://www.tornadoweb.org/">Tornado</a>是<a target="_blank" rel="noopener" href="http://blog.friendfeed.com/">FriendFeed</a>使用的可扩展的非阻塞式 web 服务器及其相关工具的开源版本，能让python web服务器搭建变得更加简单快捷。</p>
+<span id="more"></span>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a target="_blank" rel="noopener" href="http://www.tornadoweb.cn/">这里</a>是中文帮助文档。<br><a target="_blank" rel="noopener" href="https://github.com/tornadoweb/tornado">这里</a>是项目GitHub地址。<br><a target="_blank" rel="noopener" href="http://demo.pythoner.com/itt2zh/index.html">这里</a>是一个很好的教程</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="1-下载安装release下载页"><a href="#1-下载安装release下载页" class="headerlink" title="1.下载安装release下载页"></a>1.下载安装<a target="_blank" rel="noopener" href="https://github.com/tornadoweb/tornado/releases">release下载页</a></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar xvzf tornado-1.2.1.tar.gz</span><br><span class="line">cd tornado-1.2.1</span><br><span class="line">python setup.py build</span><br><span class="line">sudo python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通过-pip-或者-easy-install-来安装-如："><a href="#2-通过-pip-或者-easy-install-来安装-如：" class="headerlink" title="2.通过 pip 或者 easy_install 来安装,如："></a>2.通过 pip 或者 easy_install 来安装,如：</h3><ul>
+<li><p>使用pip安装命令，如果安装失败运行时引包会报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install tornado</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但前提是机器里安装了pip，如果没有的话先安装pip再说：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pip卸载&#x2F;更新命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pip uninstall tornado</span><br><span class="line">sudo pip install --upgrade tornado</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>编写Python代码比较习惯使用Jetbrains公司的<a target="_blank" rel="noopener" href="https://www.jetbrains.com/pycharm/">PyCharm</a>,获取注册码可参考<a target="_blank" rel="noopener" href="http://idea.qinxi1992.cn/">http://idea.qinxi1992.cn/</a></br><br>GitHub上源代码里包含了<a target="_blank" rel="noopener" href="https://github.com/tornadoweb/tornado/tree/stable/demos">示例代码</a></p>
+<h3 id="HelloWorld代码："><a href="#HelloWorld代码：" class="headerlink" title="HelloWorld代码："></a>HelloWorld代码：</h3><p>访问<a target="_blank" rel="noopener" href="http://localhost:8888/">http://localhost:8888/</a> 就可以在浏览器打印出Hello, world</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tornado.ioloop</span><br><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;Hello, world&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app = make_app()</span><br><span class="line">    app.listen(<span class="number">8888</span>)</span><br><span class="line">    tornado.ioloop.IOLoop.current().start()</span><br></pre></td></tr></table></figure>
+
+<p>使用Tornado的程序结构清晰易懂，程序定义了一个类，一个函数，一些全局代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br></pre></td></tr></table></figure>
+<p>这里是代码执行的入口，这个判断语句判断该模块是否是主模块，里面一般写一些对该模块的测试代码，只有把该模块作为主模块执行的时候，才运行这些测试代码，否则当它作为类库被其他模块引用时，就不必手动来注释这些测试代码了。<br>普通Tornado程序的执行，就是一个tornado.web.Application对象通过listen()监听一个端口，在使用tornado.ioloop.IOLoop.current().start()开启IOLoop。</p>
+<h3 id="Handler与请求映射"><a href="#Handler与请求映射" class="headerlink" title="Handler与请求映射"></a>Handler与请求映射</h3><p>光有监听，没有指定服务器接受请求后的操作，也不能完成请求，Tornado通过继承tornado.web.RequestHandler，重写get(), post()等方法来指定相应的操作，Handler数组作为Application构造参数与之关联。<br>因此一个Application可以有多个Handler，对应不同的次级url，例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FirstHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;FirstHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SecondHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;SecondHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/first&quot;</span>, FirstHandler),</span><br><span class="line">        (<span class="string">r&quot;/second&quot;</span>, SecondHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p>定义了两个Handler类，在Application构造方法参数中如(r”&#x2F;first”, FirstHandler)指定子URL &#x2F;first对应到FirstHandler，字符串”&#x2F;first”前面的r作用是声明字符串中的所有字符不做转义操作，因此通过访问<a target="_blank" rel="noopener" href="http://localhost:8888/first">http://localhost:8888/first</a> 和<a target="_blank" rel="noopener" href="http://localhost:8888/second">http://localhost:8888/second</a> 可以映射到不同的操作。</p>
+<p>也可以使用通配符，这时匹配的参数还会作为参数传递到Handler请求中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, arg</span>):</span><br><span class="line">        self.write(<span class="string">&quot;Page&quot;</span> + arg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/page/([0-9]+)&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p>这时访问<a target="_blank" rel="noopener" href="http://localhost:8888/page/789">http://localhost:8888/page/789</a> ，页面打印出Page789。但如果传入不匹配的url如<a target="_blank" rel="noopener" href="http://localhost:8888/page/789aa">http://localhost:8888/page/789aa</a> ，将会返回404错误。<br>如此以后，如果网站需要增加一个页面或模块，只需要在项目中添加对应的Handler并注册即可。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/2017/05/16/4.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Flask%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Python开源Web框架Flask学习笔记">
+    上一篇：Python开源Web框架Flask学习笔记
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2016/06/22/2.Java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="next" title="Java基础学习笔记之多线程">
+    下一篇：Java基础学习笔记之多线程
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>安卓7.0以上设备网络抓包笔记 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="安卓7.0以上设备网络抓包笔记"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/Android学习/">Android学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>安卓7.0以上设备网络抓包笔记</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2023-06-13T11:01:29.000Z"><a href="/2023/06/13/19-%E5%AE%89%E5%8D%937-0%E4%BB%A5%E4%B8%8A%E8%AE%BE%E5%A4%87%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E7%AC%94%E8%AE%B0/">2023-06-13</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/android/" class="chip pink lighten-1">android</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%B8%B8%E8%A7%84https%E6%8A%93%E5%8C%85"><span class="section table-of-contents-text">常规https抓包</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%AE%89%E5%8D%937-0%E4%BB%A5%E5%90%8Ehttps%E6%8A%93%E5%8C%85"><span class="section table-of-contents-text">安卓7.0以后https抓包</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E4%B8%8D%E5%85%81%E8%AE%B8%E7%94%A8%E6%88%B7%E8%AF%81%E4%B9%A6%E7%9A%84%E6%8A%93%E5%8C%85"><span class="section table-of-contents-text">不允许用户证书的抓包</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E4%BF%AE%E6%94%B9APP%E7%94%A8%E6%88%B7%E8%AF%81%E4%B9%A6%E8%AE%B8%E5%8F%AF"><span class="section table-of-contents-text">修改APP用户证书许可</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#Root%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%AF%81%E4%B9%A6"><span class="section table-of-contents-text">Root用户添加系统证书</span></a></li></ol></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一</p>
+<span id="more"></span>
+<p>fiddler下载地址： <a target="_blank" rel="noopener" href="https://www.telerik.com/download/fiddler">https://www.telerik.com/download/fiddler</a></p>
+<h2 id="常规https抓包"><a href="#常规https抓包" class="headerlink" title="常规https抓包"></a>常规https抓包</h2><p>常规抓https包准备步骤：</p>
+<ol>
+<li>下载抓包证书</li>
+<li>手机Wifi设置代理</li>
+<li>手机导入抓包证书</li>
+</ol>
+<h2 id="安卓7-0以后https抓包"><a href="#安卓7-0以后https抓包" class="headerlink" title="安卓7.0以后https抓包"></a>安卓7.0以后https抓包</h2><p>证书抓包方式，安卓7.0以后证书分为系统证书和用户证书，</p>
+<ol>
+<li>对于允许用户证书的应用，可以采用常规方式抓包</li>
+<li>对于只允许系统证书的应用，需要如下操作</li>
+</ol>
+<h3 id="不允许用户证书的抓包"><a href="#不允许用户证书的抓包" class="headerlink" title="不允许用户证书的抓包"></a>不允许用户证书的抓包</h3><p>不允许用户证书的抓包一般会想到两种方式改成可抓包</p>
+<h4 id="修改APP用户证书许可"><a href="#修改APP用户证书许可" class="headerlink" title="修改APP用户证书许可"></a>修改APP用户证书许可</h4><p>既然不允许用户证书，我们就修改APP，使APP允许用户证书， 一般来说修改安卓Manifest如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span> <span class="attr">android:networkSecurityConfig</span>=<span class="string">&quot;@xml/network_security_config&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改network_security_config.xml修改如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;system&quot;</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 允许用户证书--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;user&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当然修改已存在的app，将涉及到反编译，回编，签名等步骤</p>
+<h4 id="Root用户添加系统证书"><a href="#Root用户添加系统证书" class="headerlink" title="Root用户添加系统证书"></a>Root用户添加系统证书</h4><p>第二种方式是修改系统文件，把fiddler证书变成系统证书</p>
+<ol>
+<li><p>下载抓包证书（常规抓包也需要这个）如：FiddlerRoot.cer</p>
+</li>
+<li><p>转换成pem格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取新的证书HASH值(命令输出第一行会显示文件hash，如：e5c3944b)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把pem证书文件用hash命名如（e5c3944b.pem）</p>
+</li>
+<li><p>把新证书拷贝到系统证书目录（需root）：&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F;</p>
+</li>
+<li><p>文件权限改成664，重启手机即可</p>
+</li>
+</ol>
+<p>一般情况下经过这些修改，就可以正常进行https抓包了</p>
+
+                
+<p class="pink-link-context">
+    <a href="/2023/09/09/20-ESP%E8%AE%BE%E5%A4%87%E5%9C%A8MAC%E7%B3%BB%E7%BB%9F%E7%83%A7%E5%86%99%E5%A4%B1%E8%B4%A5%E4%B8%8E%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/" rel="next" title="ESP设备在MAC系统烧写失败与驱动安装">
+    上一篇：ESP设备在MAC系统烧写失败与驱动安装
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2023/05/18/18-Web%E5%89%8D%E7%AB%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%8F%8AOpenCV%E7%9A%84WebAssembly%E6%8E%A5%E5%85%A5/" rel="next" title="Web前端图像处理及OpenCV的WebAssembly接入">
+    下一篇：Web前端图像处理及OpenCV的WebAssembly接入
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

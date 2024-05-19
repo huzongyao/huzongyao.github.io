@@ -1,0 +1,658 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>PlatformIO学习之ESP8266开发环境搭建 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="PlatformIO 是开源的物联网开发生态系统。提供跨平台的代码构建器、集成开发环境（IDE），兼容 Arduino，ESP8266和mbed等。支持在Windows、Linux、macOS上使用预编译好的工具链，调试器和框架进行开发。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="PlatformIO学习之ESP8266开发环境搭建"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/PlatformIO学习/">PlatformIO学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>PlatformIO学习之ESP8266开发环境搭建</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2020-08-26T17:04:14.000Z"><a href="/2020/08/26/16.PlatformIO%E5%AD%A6%E4%B9%A0%E4%B9%8BESP8266%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">2020-08-26</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/esp8266/" class="chip pink lighten-1">esp8266</a>
+        
+            <a href="/tags/PlatformIO/" class="chip pink lighten-1">PlatformIO</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#PlatformIO%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="section table-of-contents-text">PlatformIO使用步骤</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#1-%E5%AE%89%E8%A3%85PlatformIO"><span class="section table-of-contents-text">1. 安装PlatformIO</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#2-%E5%AE%89%E8%A3%85%E5%B9%B3%E5%8F%B0%E6%94%AF%E6%8C%81"><span class="section table-of-contents-text">2. 安装平台支持</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#3-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="section table-of-contents-text">3. 创建项目</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#4-Hello-Arduino"><span class="section table-of-contents-text">4. Hello Arduino</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#5-%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="section table-of-contents-text">5. 使用技巧</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>PlatformIO 是开源的物联网开发生态系统。提供跨平台的代码构建器、集成开发环境（IDE），兼容 Arduino，ESP8266和mbed等。支持在Windows、Linux、macOS上使用预编译好的工具链，调试器和框架进行开发。</p>
+<span id="more"></span>
+<p>使用PlatformIO开发嵌入式有很多方便之处，首先PlatformIO不是独立的IDE，只是一个VisualStudio Code中的一个插件，所以安装非常方便，如果熟悉使用VSCode的话更好。<br>此外PlatformIO中可以统一安装嵌入式开发的平台支持和类库，免去了频繁的下载和搭建各种编译环境，免去了系统不兼容造成的麻烦。因为这些编译环境和上传调试工具都由平台支持者统一去适配好了。<br>对于ESP8266开发板，使用Arduino开发也很方便，不过PlatformIO支持得更好，提供了Arduino，NonOS-SDK，RTOS-SDK的开发方式，只要把平台更新好就可以开始写user代码了，非常方便。</p>
+<h3 id="PlatformIO使用步骤"><a href="#PlatformIO使用步骤" class="headerlink" title="PlatformIO使用步骤"></a>PlatformIO使用步骤</h3><h4 id="1-安装PlatformIO"><a href="#1-安装PlatformIO" class="headerlink" title="1. 安装PlatformIO"></a>1. 安装PlatformIO</h4><p>打开VSCode扩展栏，搜索PlatformIO，然后安装，等待安装成功后重新加载即可，安装成功后左侧多出一个蚂蚁头样的栏目。</p>
+<h4 id="2-安装平台支持"><a href="#2-安装平台支持" class="headerlink" title="2. 安装平台支持"></a>2. 安装平台支持</h4><p>打开PIO Home &gt; Platforms， 去Embedded栏搜索ESP，就会出来Espressif 8266，点右上方install即可安装平台支持。</p>
+<h4 id="3-创建项目"><a href="#3-创建项目" class="headerlink" title="3. 创建项目"></a>3. 创建项目</h4><p>在PIO Home &gt; Home, 点击 New Project， 就可以创建项目，创建的时候Board一栏可以根据情况选个，比如NodeMCU，Framework一栏是指定软件框架的，可以根据情况选择Arduino(兼容Arduino)，NonOS(不带RTOS)，RTOS(带RTOS),选择完成等待配置完成，就可以开发项目了。也可以点Project Examples，查看自带的示例。</p>
+<h4 id="4-Hello-Arduino"><a href="#4-Hello-Arduino" class="headerlink" title="4. Hello Arduino"></a>4. Hello Arduino</h4><p>创建了一个Arduino项目，在src&#x2F;main.cpp中编写代码即可，和在Arduino IDE中编写是一样的，不过在头部要加上 #include “Arduino.h” 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;Arduino.h&quot;</span><br><span class="line">#include &quot;ESP8266WiFi.h&quot;</span><br><span class="line"></span><br><span class="line">void setup() &#123;</span><br><span class="line">    // initialize LED digital pin as an output.</span><br><span class="line">    pinMode(LED_BUILTIN, OUTPUT);</span><br><span class="line">    // 初始化串口</span><br><span class="line">    Serial.begin(115200);</span><br><span class="line">    Serial.println(&quot;Arduino Begin!!&quot;);</span><br><span class="line"></span><br><span class="line">    WiFi.mode(WIFI_STA);</span><br><span class="line">    WiFi.disconnect();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">    // turn the LED on (HIGH is the voltage level)</span><br><span class="line">    digitalWrite(LED_BUILTIN, HIGH);</span><br><span class="line">    Serial.println(&quot;\n\n---Scan Wifi-------------&quot;);</span><br><span class="line">    int n = WiFi.scanNetworks();</span><br><span class="line">    for (int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">        Serial.printf(&quot;%02d: %s, Ch:%d (%ddBm) %s\n&quot;, i + 1,</span><br><span class="line">                      WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i),</span><br><span class="line">                      WiFi.encryptionType(i) == ENC_TYPE_NONE ? &quot;&quot; : &quot;*&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    Serial.println(&quot;---Wifi End-------------\n\n&quot;);</span><br><span class="line">    // wait for a second</span><br><span class="line">    delay(6000);</span><br><span class="line">    // turn the LED off by making the voltage LOW</span><br><span class="line">    digitalWrite(LED_BUILTIN, LOW);</span><br><span class="line">    // wait for a second</span><br><span class="line">    delay(20);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-使用技巧"><a href="#5-使用技巧" class="headerlink" title="5. 使用技巧"></a>5. 使用技巧</h4><ul>
+<li><p>每个项目的重要配置，主要保存在platformio.ini文件中，可以指定平台，板卡，软件框架，串口烧写速率，串口终端波特率等，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[env:nodemcuv2]</span><br><span class="line">platform = espressif8266</span><br><span class="line">board = nodemcuv2</span><br><span class="line">framework = arduino</span><br><span class="line">upload_speed = 921600</span><br><span class="line">monitor_speed = 115200</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码写完后需要运行只需要点下方的向右箭头→，即可完成编译和烧写，和Arduino IDE类似。点下方插头图标🔌，即可打开串口终端查看消息</p>
+</li>
+<li><p>VSCode代码格式化样式设置：默认的代码格式化是VS样式，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int test()</span><br><span class="line">&#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3)</span><br><span class="line">    &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125;</span><br><span class="line">    else if (i == 4)</span><br><span class="line">    &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样子比较占行数，我们一般习惯LLVM样式，只要在设置 &gt; 扩展 &gt; C&#x2F;C++ &gt; C_Cpp: Clang_format_style<br>修改设置位LLVM即可，再使用Alt + Shift + F 格式化代码，即可变成紧凑型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">  int i = 3;</span><br><span class="line">  if (i == 3) &#123;</span><br><span class="line">    i = 4;</span><br><span class="line">  &#125; else if (i == 4) &#123;</span><br><span class="line">    i = 3;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果嫌这样TAB空格太短，可以指定为下面代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; BasedOnStyle: LLVM, IndentWidth: 4 &#125;</span><br></pre></td></tr></table></figure>
+<p>空格长一点了，代码较短的话看起来舒服一些</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3) &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125; else if (i == 4) &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                
+<p class="pink-link-context">
+    <a href="/2023/05/12/17-%E5%9F%BA%E4%BA%8EWebAssembly%E7%9A%84%E5%89%8D%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5/" rel="next" title="基于WebAssembly的前端网络安全实践">
+    上一篇：基于WebAssembly的前端网络安全实践
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2020/03/17/15.Android%E4%BD%BF%E7%94%A8%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86RSA%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/" rel="next" title="Android使用非对称加密RSA提高数据安全性">
+    下一篇：Android使用非对称加密RSA提高数据安全性
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

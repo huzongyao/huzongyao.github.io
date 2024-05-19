@@ -1,0 +1,677 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Web前端图像处理及OpenCV的WebAssembly接入 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="OpenCV是一个基于Apache2.0许可（开源）发行的跨平台计算机视觉和机器学习软件库，可以运行在Linux、Windows、Android和Mac OS操作系统上。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Web前端图像处理及OpenCV的WebAssembly接入"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/前端学习/">前端学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Web前端图像处理及OpenCV的WebAssembly接入</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2023-05-18T10:32:29.000Z"><a href="/2023/05/18/18-Web%E5%89%8D%E7%AB%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%8F%8AOpenCV%E7%9A%84WebAssembly%E6%8E%A5%E5%85%A5/">2023-05-18</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/前端/" class="chip pink lighten-1">前端</a>
+        
+            <a href="/tags/WebAssembly/" class="chip pink lighten-1">WebAssembly</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E5%AE%89%E8%A3%85WebAssembly%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="section table-of-contents-text">安装WebAssembly编译环境</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E7%BC%96%E8%AF%91OpenCV-JS"><span class="section table-of-contents-text">编译OpenCV-JS</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#OpenCV-JS%E4%BD%BF%E7%94%A8"><span class="section table-of-contents-text">OpenCV-JS使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#OpenCV%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="section table-of-contents-text">OpenCV静态链接库使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#JS%E4%B8%8EC-%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F"><span class="section table-of-contents-text">JS与C++图像数据交换方式</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>OpenCV是一个基于Apache2.0许可（开源）发行的跨平台计算机视觉和机器学习软件库，可以运行在Linux、Windows、Android和Mac OS操作系统上。</p>
+<span id="more"></span>
+<p>它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。<br>有了WebAssembly的应用，OpenCV同时也可以在Web端使用，增强了兼容性和可用性。</p>
+<h1 id="安装WebAssembly编译环境"><a href="#安装WebAssembly编译环境" class="headerlink" title="安装WebAssembly编译环境"></a>安装WebAssembly编译环境</h1><ul>
+<li>参考文档：<a target="_blank" rel="noopener" href="https://emscripten.org/docs/getting_started/downloads.html">https://emscripten.org/docs/getting_started/downloads.html</a></li>
+<li>下载地址：<a target="_blank" rel="noopener" href="https://github.com/emscripten-core/emsdk">https://github.com/emscripten-core/emsdk</a></li>
+</ul>
+<h1 id="编译OpenCV-JS"><a href="#编译OpenCV-JS" class="headerlink" title="编译OpenCV-JS"></a>编译OpenCV-JS</h1><ul>
+<li>下载OpenCV源代码：<a target="_blank" rel="noopener" href="https://opencv.org/releases/">https://opencv.org/releases/</a></li>
+<li>执行源代码目录下编译脚本：&#x2F;platforms&#x2F;js&#x2F;build_js.py</li>
+<li>使用编译系统最好为Linux或者MacOS</li>
+<li>按照提示信息编译即可，需要指定一些参数如：opencv目录，输出目录</li>
+<li>编译完成后会在输出目录下生成目标文件</li>
+<li>官方编译参考：<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.7.0/d4/da1/tutorial_js_setup.html">https://docs.opencv.org/4.7.0/d4/da1/tutorial_js_setup.html</a></li>
+</ul>
+<h1 id="OpenCV-JS使用"><a href="#OpenCV-JS使用" class="headerlink" title="OpenCV-JS使用"></a>OpenCV-JS使用</h1><ul>
+<li>直接使用js接口，可以参考：<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.7.0/d5/d10/tutorial_js_root.html">https://docs.opencv.org/4.7.0/d5/d10/tutorial_js_root.html</a></li>
+</ul>
+<h1 id="OpenCV静态链接库使用"><a href="#OpenCV静态链接库使用" class="headerlink" title="OpenCV静态链接库使用"></a>OpenCV静态链接库使用</h1><ul>
+<li>当通用js库不满足需求，需要定制CV算法的时候可以采用</li>
+<li>实际生产中引入整个OpenCV-JS库也会导致页面请求过大，也需要在C++层做定制修改</li>
+<li>静态链接库需要使用.a文件作为源文件，在OpenCV-JS编译输出目录下&#x2F;lib目录下有静态链接库</li>
+<li>一般需要使用的是libopencv_core.a，libopencv_imgproc.a</li>
+<li>使用静态链接库可以做到生成的wasm文件大小随需求动态变化，按需索取</li>
+</ul>
+<h1 id="JS与C-图像数据交换方式"><a href="#JS与C-图像数据交换方式" class="headerlink" title="JS与C++图像数据交换方式"></a>JS与C++图像数据交换方式</h1><ul>
+<li><p>JS层获取图片并传到C++层运算，运算完成后再去读取C++内存的方式交互</p>
+</li>
+<li><p>概括来讲就是利用WebAssembly.HEAPU8使得JS端可以共享C++的堆内存空间</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>.<span class="property">HEAPU8</span>.<span class="title function_">set</span>(src.<span class="property">data</span>, heap)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JS层调用C++内存处理方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ctx = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> srcData = ctx.<span class="title function_">getImageData</span>(<span class="number">0</span>, <span class="number">0</span>, canvas.<span class="property">width</span>, canvas.<span class="property">height</span>)</span><br><span class="line"><span class="keyword">let</span> data = srcData.<span class="property">data</span></span><br><span class="line"><span class="keyword">let</span> length = data.<span class="property">length</span></span><br><span class="line"><span class="keyword">let</span> heap = <span class="variable language_">this</span>.<span class="property">$wasm</span>[<span class="string">&#x27;mallocNative&#x27;</span>](length)</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>.<span class="property">HEAPU8</span>.<span class="title function_">set</span>(src.<span class="property">data</span>, heap)</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>[<span class="string">&#x27;processImage&#x27;</span>](it.<span class="property">op</span>, src, heap)</span><br><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="title class_">Uint8ClampedArray</span>(<span class="variable language_">this</span>.<span class="property">$wasm</span>.<span class="property">HEAPU8</span>.<span class="property">buffer</span>, heap, length)</span><br><span class="line"><span class="keyword">let</span> dstData = <span class="keyword">new</span> <span class="title class_">ImageData</span>(arr, canvas.<span class="property">width</span>, canvas.<span class="property">height</span>)</span><br><span class="line">ctx.<span class="title function_">putImageData</span>(dst, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">it.<span class="property">src</span> = canvas.<span class="title function_">toDataURL</span>(<span class="string">&#x27;image/jpeg&#x27;</span>)</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>[<span class="string">&#x27;freeNative&#x27;</span>](heap)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>C++可以使用内存空间创建Mat即可</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> *p = (<span class="type">uint8_t</span> *) buf;</span><br><span class="line"><span class="type">int</span> width = img[<span class="string">&quot;width&quot;</span>].<span class="built_in">as</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line"><span class="type">int</span> height = img[<span class="string">&quot;height&quot;</span>].<span class="built_in">as</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line"><span class="keyword">auto</span> raw = <span class="built_in">Mat</span>(height, width, CV_8UC4, p);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后续图片处理方式和正常C++调用一样的，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mat gray;</span><br><span class="line"><span class="built_in">cvtColor</span>(raw, gray, COLOR_RGBA2GRAY);</span><br><span class="line"><span class="built_in">cvtColor</span>(gray, raw, COLOR_GRAY2BGRA);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>C++端对HEAPU8修改后，JS端可以直接获取，这也是js和wasm共享内存的一种方式</p>
+</li>
+</ul>
+
+                
+<p class="pink-link-context">
+    <a href="/2023/06/13/19-%E5%AE%89%E5%8D%937-0%E4%BB%A5%E4%B8%8A%E8%AE%BE%E5%A4%87%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E7%AC%94%E8%AE%B0/" rel="next" title="安卓7.0以上设备网络抓包笔记">
+    上一篇：安卓7.0以上设备网络抓包笔记
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2023/05/12/17-%E5%9F%BA%E4%BA%8EWebAssembly%E7%9A%84%E5%89%8D%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5/" rel="next" title="基于WebAssembly的前端网络安全实践">
+    下一篇：基于WebAssembly的前端网络安全实践
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

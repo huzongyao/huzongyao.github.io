@@ -1,0 +1,1193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>使用hexo搭建github个人博客小结</title>
+    <url>/2016/06/14/1.%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAgithub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<p>在GitHub上搭建静态站点依赖于官方提供的<a href="https://pages.github.com/">GitHub Pages机制</a>，然而手动编写静态的html页面会因为布局和样式造成很多重复的工作，而如果是采用MarkDown语法来编写，能满足很多文档和博客编写的需求，却需要一种方式把MarkDown语法转成普通html，通过模板来定制生成的html样式。</p>
+<span id="more"></span>
+<h2 id="MarkDown到html转换"><a href="#MarkDown到html转换" class="headerlink" title="MarkDown到html转换"></a>MarkDown到html转换</h2><ul>
+<li><a href="http://jekyll.bootcss.com/">jekyll</a></li>
+</ul>
+<p>GitHub官方推荐的方式，基于Ruby<br>jekyll是一个简单的免费的Blog生成工具，类似WordPress。但是和WordPress又有很大的不同，原因是jekyll只是一个生成静态网页的工具，不需要数据库支持。但是可以配合第三方服务,例如Disqus。最关键的是jekyll可以免费部署在Github上，而且可以绑定自己的域名。</p>
+<ul>
+<li><a href="https://hexo.io/">hexo</a></li>
+</ul>
+<p>本博客时用的方式，基于Nodejs<br>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><h3 id="1-安装NodeJs"><a href="#1-安装NodeJs" class="headerlink" title="1.安装NodeJs"></a>1.安装NodeJs</h3><p>我在Ubuntu系统使用了源码编译安装：下载源码解压后进去执行编译安装命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br><span class="line">$ node -v</span><br><span class="line">v4.4.4</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装NPM"><a href="#2-安装NPM" class="headerlink" title="2.安装NPM"></a>2.安装NPM</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ curl http://npmjs.org/install.sh | sudo sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用-npm-即可完成-Hexo-的安装"><a href="#3-使用-npm-即可完成-Hexo-的安装" class="headerlink" title="3.使用 npm 即可完成 Hexo 的安装"></a>3.使用 npm 即可完成 Hexo 的安装</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-新建站点"><a href="#4-新建站点" class="headerlink" title="4.新建站点"></a>4.新建站点</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<h3 id="5-命令"><a href="#5-命令" class="headerlink" title="5.命令"></a>5.命令</h3><p>其他命令可参考<a href="https://hexo.io/zh-cn/docs/commands.html">官方网站</a>,常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo n</span><br><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-配置主题"><a href="#6-配置主题" class="headerlink" title="6.配置主题"></a>6.配置主题</h3><p>默认的主题是landscape，可以自己<a href="https://hexo.io/themes/">选择修改</a><br>我使用的主题是<a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+<h3 id="7-部署"><a href="#7-部署" class="headerlink" title="7.部署"></a>7.部署</h3><p>部署之前需要先安装git插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>需要先在_config.yml中配置远程github地址例如：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/huzongyao/huzongyao.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>部署命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-新建博客"><a href="#8-新建博客" class="headerlink" title="8.新建博客"></a>8.新建博客</h3><p>博客系统搭建完成后，以后写博客就简单多了，使用命令行创建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo n 博客标题</span><br></pre></td></tr></table></figure>
+
+<p>系统会在source&#x2F;_post&#x2F;目录生成 博客标题.md文件，头部的注释会指定博客的一些信息如标题，分类，标题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: 2016-06-14 09:53:09</span><br><span class="line">categories:</span><br><span class="line">- Sports</span><br><span class="line">- Baseball</span><br><span class="line">tags:</span><br><span class="line">- Injury</span><br><span class="line">- Fight</span><br><span class="line">- Shocking</span><br></pre></td></tr></table></figure>
+
+<p>每次编辑完成后执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+
+<p>这时如果没有报错，就可以用浏览器打开<a href="http://localhost:4000/">http://localhost:4000/</a>预览最终站点效果，确认无误后使用部署命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+<p>大功告成了！</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>综合学习</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+        <tag>nodejs</tag>
+        <tag>html</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android组件化开发填坑记录</title>
+    <url>/2017/11/30/10.Android%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91%E5%A1%AB%E5%9D%91%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>Android组件化开发通常也说模块化开发，使用Android Studio做开发时，通常组件化的实现就是在一个工程项目中同时包含若干个application模块和若干个library模块，还会引用一些第三方类库或者依赖。每一个application模块通常可以编译成一个应用，而library模块一般不用于生成可执行的应用，而是生成jar&#x2F;aar类库，或者被同一项目下其他的library或application模块引用。</p>
+<span id="more"></span>
+
+<h2 id="模块化的原因"><a href="#模块化的原因" class="headerlink" title="模块化的原因"></a>模块化的原因</h2><p>模块化会增加编译负担，造成一些不必要的错误，所以，对于功能单一的应用，自然没有必要做模块化，所有代码写在一个app模块就行。但是对于复杂的业务场景，比如需要同时维护多个功能类似，但又有一些差别的应用，或者应用的功能模块需要经常进行定制化裁剪，或者多人协同开发功能模块，这些场景下使用组件化可以方便就行功能复用和裁剪，每个功能模块独立开发，互不干扰，提高开发效率。</p>
+<h2 id="组件化遇到的问题"><a href="#组件化遇到的问题" class="headerlink" title="组件化遇到的问题"></a>组件化遇到的问题</h2><h3 id="一-第三方类库依赖问题"><a href="#一-第三方类库依赖问题" class="headerlink" title="一.第三方类库依赖问题"></a>一.第三方类库依赖问题</h3><h4 id="1-远程依赖问题"><a href="#1-远程依赖问题" class="headerlink" title="1.远程依赖问题"></a>1.远程依赖问题</h4><p>一般来说，远程依赖是最简单的，只需要配置路径即可，例如：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;com.android.support:design:25.3.1&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>如果在library模块中引用了一次，引用该library的其他模块无需声明，也可以使用这个远程依赖。若两者使用了不同版本的相同依赖，最好统一成同一个版本，以免二者发生冲突。</p>
+<h4 id="2-本地依赖问题"><a href="#2-本地依赖问题" class="headerlink" title="2.本地依赖问题"></a>2.本地依赖问题</h4><p>如果依赖本地的一个aar或者jar包，在library模块中引用一般没有问题，例如下面代码，我们把aar，以及native二进制的目录armeabi，armeabi-v7a等全放在library模块&#x2F;libs目录下：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="keyword">flatDir</span> &#123;</span><br><span class="line">            dirs <span class="string">&#x27;libs&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">sourceSets</span> &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            jniLibs.srcDirs = [<span class="string">&#x27;libs&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;libs&#x27;</span>, <span class="keyword">include</span>: [<span class="string">&#x27;*.jar&#x27;</span>])</span><br><span class="line">    <span class="keyword">compile</span>(name: <span class="string">&#x27;faceplatform-release&#x27;</span>, ext: <span class="string">&#x27;aar&#x27;</span>)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时，library模块可以正确编译，aar也生成出来了，但是引用它的app模块报错了：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error:Failed to resolve: :faceplatform-release:</span><br></pre></td></tr></table></figure>
+<p>app模块编译也需要这个依赖库，但是找不到。这时，你可以把所有的aar复制一份到app模块里，这样编译没问题了，但是造成了很多重复文件，有个更好的办法可以不用拷贝文件，修改app模块的gradle即可：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="keyword">flatDir</span> &#123;</span><br><span class="line">            dirs <span class="string">&#x27;../library/libs&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的意思是去library模块&#x2F;libs目录下去找找依赖吧，这样就能找到需要的本地依赖库了。</p>
+<h3 id="二-Butter-Knife在library模块使用的问题"><a href="#二-Butter-Knife在library模块使用的问题" class="headerlink" title="二.Butter Knife在library模块使用的问题"></a>二.Butter Knife在library模块使用的问题</h3><p>Butter Knife是一个View注入框架，有了它，让我少写了很多findviewById(),在app模块中使用很简单：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">  <span class="keyword">compile</span> <span class="string">&#x27;com.jakewharton:butterknife:8.8.1&#x27;</span></span><br><span class="line">  annotationProcessor <span class="string">&#x27;com.jakewharton:butterknife-compiler:8.8.1&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleActivity</span> <span class="keyword">extends</span> <span class="title class_">Activity</span> &#123;</span><br><span class="line">  <span class="meta">@BindView(R.id.user)</span> EditText username;</span><br><span class="line">  <span class="meta">@BindView(R.id.pass)</span> EditText password;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@BindString(R.string.login_error)</span> String loginErrorMessage;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@OnClick(R.id.submit)</span> <span class="keyword">void</span> <span class="title function_">submit</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// TODO call server...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.simple_activity);</span><br><span class="line">    ButterKnife.bind(<span class="built_in">this</span>);</span><br><span class="line">    <span class="comment">// TODO Use fields...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但如果要在library模块中使用，不但要修改gradle，java代码也要修改如下，这些github上都有说明：<br><a href="https://github.com/JakeWharton/butterknife">https://github.com/JakeWharton/butterknife</a> </p>
+<ul>
+<li>需要使用gradle插件做一些预处理：<br>插件声明<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">   &#125;</span><br><span class="line">  dependencies &#123;</span><br><span class="line">    classpath &#x27;com.jakewharton:butterknife-gradle-plugin:8.8.1&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+在library模块中使用插件：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.library&#x27;</span><br><span class="line">apply plugin: &#x27;com.jakewharton.butterknife&#x27;</span><br></pre></td></tr></table></figure></li>
+<li>把R改成R2：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ExampleActivity extends Activity &#123;</span><br><span class="line">  @BindView(R2.id.user) EditText username;</span><br><span class="line">  @BindView(R2.id.pass) EditText password;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="三-资源ID常量的变化"><a href="#三-资源ID常量的变化" class="headerlink" title="三.资源ID常量的变化"></a>三.资源ID常量的变化</h3><p>在library模块中声明的资源ID，不能使用switch&#x2F;case来判断，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void onClick(View src)&#123;</span><br><span class="line">    switch(src.getId()) &#123;</span><br><span class="line">    case R.id.playbtn:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line"></span><br><span class="line">    case R.id.stopbtn:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line"></span><br><span class="line">    case R.id.btnmenu:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的写法是错误的，android studio会提示错误，原因是资源ID在app模块中是声明为final的，也就是无法再改变的，而library模块中并没有声明final，只有在最终编译成apk的时候才会被统一进行确定，如果事先声明了final，多个模块编译到一个apk时难免互相有ID重复，或者与依赖库或app中的ID重复，这样就会造成错误。因此就不能采用switch&#x2F;case来判断id了，而用if&#x2F;else就没毛病了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void onClick(View src)&#123;</span><br><span class="line">    int id = src.getId();</span><br><span class="line">    if (id == R.id.playbtn)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125; else if (id == R.id.stopbtn)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125; else if (id == R.id.btnmenu)&#123;</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面butterknife的问题，也是由于这个原因，所以butterknife会用gradle插件重新生成一个资源文件R2，在R2中的ID都是用final来修饰的，所以就可以解决这个问题了。</p>
+<h3 id="四-接入GoogleService推送"><a href="#四-接入GoogleService推送" class="headerlink" title="四.接入GoogleService推送"></a>四.接入GoogleService推送</h3><p>使用google推送，或者是Firebase，就需要接入GoogleService，按照Firebase官网的指导，接入方法是先添加Gradle插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &#x27;com.android.tools.build:gradle:2.3.2&#x27;</span><br><span class="line">        classpath &#x27;com.google.gms:google-services:3.1.0&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并且使用插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.application&#x27;</span><br><span class="line">apply plugin: &#x27;com.google.gms.google-services&#x27;</span><br></pre></td></tr></table></figure>
+<p>这个插件必须只能使用在app模块，如果使用在library模块是要报错的。但是，如果我们的Firebase接收消息的业务逻辑写在了library模块，就需要在library模块中引用firebase的依赖库，而在app模块中apply plugin，google-services.json文件也必须放到app模块下，才能保证顺利编译。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile fileTree(include: [&#x27;*.jar&#x27;], dir: &#x27;libs&#x27;)</span><br><span class="line">    compile &#x27;com.google.firebase:firebase-core:11.0.4&#x27;</span><br><span class="line">    compile &#x27;com.google.firebase:firebase-messaging:11.0.4&#x27;</span><br><span class="line">    testCompile &#x27;junit:junit:4.12&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-资源覆盖问题"><a href="#五-资源覆盖问题" class="headerlink" title="五.资源覆盖问题"></a>五.资源覆盖问题</h3><p>过去的单模块编写，同一资源目录下不允许出现两个同名的资源，但是在多模块的情况下，app模块的assets、res下的颜色，图片，字符串等都会覆盖library模块或者远程依赖带过来的同名资源，这样就可以方便的在app模块中修改library已定义好的主题，字符串等。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot学习之入门学习笔记</title>
+    <url>/2018/01/14/11.SpringBoot%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。我在此做一些学习笔记，以便今后用到时可以迅速搭建开发环境。</p>
+<span id="more"></span>
+
+<h2 id="开发环境的搭建"><a href="#开发环境的搭建" class="headerlink" title="开发环境的搭建"></a>开发环境的搭建</h2><p>搭建开发环境首先需要安装IDEA<a href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a>。安装完成后就可以创建SpringBoot项目：<br>Create New Project -&gt; Spring Initializr -&gt; 选择JDK -&gt; Next -&gt; 选择dependence(勾选web) -&gt; finish。<br>创建好工程以后，工程中有一个默认的DemoApplication：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Web服务器开始工作，返回Hello-World"><a href="#Web服务器开始工作，返回Hello-World" class="headerlink" title="Web服务器开始工作，返回Hello World"></a>Web服务器开始工作，返回Hello World</h2><p>这个Application执行起来并没有任何效果，要让SpringBoot响应网络请求，可以定义一些Controller类，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;hello&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">printHello</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello World!!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时在执行程序，并在浏览器中输入：<a href="http://localhost:8080/hello">http://localhost:8080/hello</a> 就可以返回Hello World了。(默认端口号8080)</p>
+<h2 id="创建RestApi，返回JSON数据"><a href="#创建RestApi，返回JSON数据" class="headerlink" title="创建RestApi，返回JSON数据"></a>创建RestApi，返回JSON数据</h2><p>很多情况下我们用SpringBoot来做接口服务器，需要返回Json数据，SpringBoot提供了很方便的写法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ManController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;man&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Man <span class="title function_">getMan</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Man</span>(<span class="string">&quot;xiaoli&quot;</span>, <span class="number">25</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;men&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Man&gt; <span class="title function_">getManList</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;Man&gt; men = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        men.add(<span class="keyword">new</span> <span class="title class_">Man</span>(<span class="string">&quot;qiwei&quot;</span>, <span class="number">25</span>));</span><br><span class="line">        men.add(<span class="keyword">new</span> <span class="title class_">Man</span>(<span class="string">&quot;dingding&quot;</span>, <span class="number">26</span>));</span><br><span class="line">        <span class="keyword">return</span> men;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Man</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">Man</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.name = name;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是侯访问接口：<a href="http://localhost:8080/man">http://localhost:8080/man</a> 返回json数据：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    name<span class="punctuation">:</span> <span class="string">&quot;xiaoli&quot;</span><span class="punctuation">,</span></span><br><span class="line">    age<span class="punctuation">:</span> <span class="number">25</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>访问接口：<a href="http://localhost:8080/men">http://localhost:8080/men</a> 返回list数据：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        name<span class="punctuation">:</span> <span class="string">&quot;qiwei&quot;</span><span class="punctuation">,</span></span><br><span class="line">        age<span class="punctuation">:</span> <span class="number">25</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        name<span class="punctuation">:</span> <span class="string">&quot;dingding&quot;</span><span class="punctuation">,</span></span><br><span class="line">        age<span class="punctuation">:</span> <span class="number">26</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>SpringBoot学习</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android使用Dagger2学习笔记</title>
+    <url>/2018/03/19/12.Android%E4%BD%BF%E7%94%A8Dagger2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>Dagger2是一个依赖注入框架。IoC(控制反转)，DI(依赖注入)这些概念在JAVA EE开发中经常会使用到，同样的原理，使用到Android的开发中，也会使业务开发更加简单。</p>
+<span id="more"></span>
+
+<h3 id="一-引入依赖库："><a href="#一-引入依赖库：" class="headerlink" title="一. 引入依赖库："></a>一. 引入依赖库：</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">compile &quot;com.google.dagger:dagger:2.15&quot;</span><br><span class="line">annotationProcessor &quot;com.google.dagger:dagger-compiler:2.15&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二-最简单的应用："><a href="#二-最简单的应用：" class="headerlink" title="二. 最简单的应用："></a>二. 最简单的应用：</h3><p>1.一个普通的实体类A，包含一个成员变量name，构造方法和get方法，唯一的不同点是构造方法上加了@Inject注解。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">A</span><span class="params">()</span> &#123;</span><br><span class="line">        name = <span class="string">&quot;I am A&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.一个AComponent接口，不同的是带有@Component注解。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">AComponent</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">inject</span><span class="params">(DemoActivity activity)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.MainActivity类，它依赖实体类A，但是并没有手动构造一个A的对象，而是加入了这个语句：DaggerAComponent.builder().build().inject(this);<br>也可以用DaggerAComponent.create().inject(this);</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoActivity</span> <span class="keyword">extends</span> <span class="title class_">Activity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    A mA;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(<span class="meta">@Nullable</span> Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        DaggerAComponent.builder().build().inject(<span class="built_in">this</span>);</span><br><span class="line">        Toast.makeText(<span class="built_in">this</span>, mA.getName(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就完成了最简单的依赖注入，程序正常执行，不会因为没有实例化mA而发生空指针异常。如果使用过ButterKnife，便会对Dagger2有似曾相识的感觉，在使用ButterKnife时，框架编译会帮我们生成若干findViewById(…)代码，我们只需调用ButterKnife.bind(this)一句，便可将带有@BindView(…)注解的视图对象实例化。类似的，我们在Dagger2使用中只需执行inject(this)，框架便会帮我们实例化@Inject注解的依赖对象。说简单点就是一个Component把需要依赖的两个类关联起来。</p>
+<h3 id="三-使用Provider："><a href="#三-使用Provider：" class="headerlink" title="三.使用Provider："></a>三.使用Provider：</h3><p>对于复杂的对象构造，我们就需要加入Provider，一些第三方的类，我们无法去给它加上@Inject，所以使用Provider，功能如其名，即实例化一些对象并提供出来给我们使用。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">A</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component(modules = AModule.class)</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">AComponent</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">inject</span><span class="params">(DemoActivity activity)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AModule</span> &#123;</span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    A <span class="title function_">provideA</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">A</span>(<span class="string">&quot;Hello World!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoActivity</span> <span class="keyword">extends</span> <span class="title class_">Activity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    A mA;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(<span class="meta">@Nullable</span> Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        DaggerAComponent.create().inject(<span class="built_in">this</span>);</span><br><span class="line">        Toast.makeText(<span class="built_in">this</span>, mA.getName(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中加入了一个Module类，其中的Provider方法用于提供实体类的构造器，在Component中也要通过注解来关联起来：@Component(modules &#x3D; AModule.class)，Provider来提供构造器。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python+OpenCV图像处理学习笔记</title>
+    <url>/2018/12/01/13.Python-OpenCV%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>OpenCV是一个基于BSD许可（开源）发行的跨平台计算机视觉库，可以运行在Linux、Windows、Android和Mac OS操作系统上。</p>
+<span id="more"></span>
+
+<h3 id="一-环境搭建："><a href="#一-环境搭建：" class="headerlink" title="一. 环境搭建："></a>一. 环境搭建：</h3><ol>
+<li>安装Python3，也可以安装anaconda比较方便：<a href="https://www.anaconda.com/%E3%80%82">https://www.anaconda.com/。</a></li>
+<li>安装opencv-python：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install opencv-python</span><br></pre></td></tr></table></figure>
+
+<h3 id="二-基本使用"><a href="#二-基本使用" class="headerlink" title="二. 基本使用:"></a>二. 基本使用:</h3><h4 id="读写图片并显示"><a href="#读写图片并显示" class="headerlink" title="读写图片并显示"></a>读写图片并显示</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="comment"># 读取图片</span></span><br><span class="line">img = cv2.imread(<span class="string">&#x27;img/image.jpg&#x27;</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 显示图片</span></span><br><span class="line">cv2.imshow(<span class="string">&#x27;my image&#x27;</span>, img)</span><br><span class="line"><span class="comment"># 图片写入文件</span></span><br><span class="line">cv2.imwrite(<span class="string">&#x27;img/image1.png&#x27;</span>, img)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>OpenCV学习</category>
+      </categories>
+      <tags>
+        <tag>opencv</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TensorFlow基础入门学习笔记</title>
+    <url>/2018/12/02/14.TensorFlow%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值计算的开源软件库。节点（Nodes）在图中表示数学操作，图中的线（edges）则表示在节点间相互联系的多维数据数组，即张量（tensor）。它灵活的架构让你可以在多种平台上展开计算，例如台式计算机中的一个或多个CPU（或GPU），服务器，移动设备等等。</p>
+<span id="more"></span>
+
+<h3 id="一-环境搭建："><a href="#一-环境搭建：" class="headerlink" title="一. 环境搭建："></a>一. 环境搭建：</h3><ol>
+<li>安装python3.6，安装tensorflow：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="二-开始使用"><a href="#二-开始使用" class="headerlink" title="二.开始使用"></a>二.开始使用</h3><h4 id="1-最简单的HelloWorld："><a href="#1-最简单的HelloWorld：" class="headerlink" title="1. 最简单的HelloWorld："></a>1. 最简单的HelloWorld：</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">hello = tf.constant(<span class="string">&#x27;hello tf&#x27;</span>)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="built_in">print</span>(sess.run(hello))</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-数值，矩阵运算："><a href="#2-数值，矩阵运算：" class="headerlink" title="2. 数值，矩阵运算："></a>2. 数值，矩阵运算：</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">aa = tf.constant(<span class="number">6</span>)</span><br><span class="line">bb = tf.constant(<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">cc = tf.constant([</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">])</span><br><span class="line">dd = tf.constant([</span><br><span class="line">    [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">    [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">])</span><br><span class="line">ee = tf.constant([</span><br><span class="line">    [<span class="number">3</span>, <span class="number">4</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">    [<span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment"># 数字乘法</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(tf.multiply(aa, bb)))</span><br><span class="line">    <span class="comment"># 矩阵相加</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(tf.add(cc, dd)))</span><br><span class="line">    <span class="comment"># 矩阵元素相乘</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(tf.multiply(cc, dd)))</span><br><span class="line">    <span class="comment"># 矩阵乘法</span></span><br><span class="line">    <span class="built_in">print</span>(sess.run(tf.matmul(dd, ee)))</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-换用numpy模块做数值，矩阵运算："><a href="#3-换用numpy模块做数值，矩阵运算：" class="headerlink" title="3. 换用numpy模块做数值，矩阵运算："></a>3. 换用numpy模块做数值，矩阵运算：</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">arr = np.array([</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">])</span><br><span class="line"><span class="built_in">print</span>(arr)</span><br><span class="line"><span class="comment"># 单位矩阵</span></span><br><span class="line"><span class="built_in">print</span>(np.ones([<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line"><span class="comment"># 与数字运算</span></span><br><span class="line"><span class="built_in">print</span>(arr * <span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(arr / <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 与矩阵运算</span></span><br><span class="line">arr1 = np.array([</span><br><span class="line">    [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">])</span><br><span class="line"><span class="built_in">print</span>(arr * arr1)</span><br><span class="line"><span class="built_in">print</span>(arr / arr1)</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-使用matplotlib绘图展示结果："><a href="#4-使用matplotlib绘图展示结果：" class="headerlink" title="4.使用matplotlib绘图展示结果："></a>4.使用matplotlib绘图展示结果：</h4><p>安装方法：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install matplotlib</span><br></pre></td></tr></table></figure>
+
+<p>使用matplot绘制折线图和柱状图：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">6</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(x, y, <span class="string">&#x27;g&#x27;</span>, lw=<span class="number">2</span>)</span><br><span class="line">plt.bar(x, y, <span class="number">0.2</span>, color=<span class="string">&#x27;r&#x27;</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>TensorFlow学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>tensorflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android使用非对称加密RSA提高数据安全性</title>
+    <url>/2020/03/17/15.Android%E4%BD%BF%E7%94%A8%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86RSA%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/</url>
+    <content><![CDATA[<p>RSA算法1978年出现，是第一个既能用于数据加密也能用于数字签名的算法，易于理解和操作。发明者:Ron Rivest, Adi Shamir 和 Leonard Adleman。早在1973年，英国国家通信总局的数学家Clifford Cocks就发现类似的算法，但其发现被列为绝密，直到1998年才公诸于世。</p>
+<span id="more"></span>
+<p>RSA是一种常用的非对称加密算法，所谓非对称加密是指使用一对密钥（公钥和私钥）进行加密和解密，公钥人人都可以获得，用于加密数据，私钥保存在服务器中，用于解密数据。</p>
+<h3 id="一-OpenSSL操作RSA相关key："><a href="#一-OpenSSL操作RSA相关key：" class="headerlink" title="一. OpenSSL操作RSA相关key："></a>一. OpenSSL操作RSA相关key：</h3><p>为了加密，我们首先需要生成加解密所需的一堆公钥和私钥，如果使用OpenSSL在Linux命令行操作下可以方便做到：</p>
+<ol>
+<li><p>生成pkcs1格式的1024位私钥, 可以用于服务端私钥解密：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl genrsa -out private.pem 1024</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pkcs1格式私钥转pkcs8格式私钥：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl pkcs8 -topk8 -inform PEM -in private.pem -outform pem -nocrypt -out pkcs8.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从pkcs1私钥中生成pkcs8公钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl rsa -in private.pem -pubout -out public.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从pkcs8私钥中生成pkcs8公钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl rsa -in pkcs8.pem -pubout -out public_pkcs8.pem</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以看到，3和4生成的pkcs8公钥都是一样的，之所以要转pkcs8公钥是因为原生Android只能支持pkcs8格式</p>
+<h3 id="二-公钥在Android设备上使用"><a href="#二-公钥在Android设备上使用" class="headerlink" title="二. 公钥在Android设备上使用"></a>二. 公钥在Android设备上使用</h3><p>我们生成的密钥，实际上是一个文本文件，里面用base64编码描述了实际密钥的二进制字节码，所以我们拿到pkcs8的密钥，首先还要还原字节数组。</p>
+<ol>
+<li><p>去掉密钥文件里的头尾描述：—–BEGIN PUBLIC KEY—– 和 —–END PUBLIC KEY—– ，我们只需要中间的base64编码字符串。</p>
+</li>
+<li><p>解析Base64，得到最终密钥的的byte数组。(当然这些步骤也可以提前处理好，比如事先就把base64转换成二进制储存在文件中，或者编码在代码中，到时候直接用就可以)<br>我使用了AndroidUtilCode，解码Base64很方便：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">implementation &#x27;com.blankj:utilcode:1.25.9&#x27;</span><br></pre></td></tr></table></figure>
+<p>Base64解码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">byte[] pub = EncodeUtils.base64Decode(pp);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用RSA对二进制进行加密, 使用AndroidUtilCode也很方便。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 加密</span><br><span class="line">byte[] encode = EncryptUtils.encryptRSA(mTestData, pubKey, 1024, &quot;RSA/ECB/PKCS1Padding&quot;);</span><br><span class="line"></span><br><span class="line">// 解密</span><br><span class="line">byte[] decode = EncryptUtils.decryptRSA(encode, privKey, 1024, &quot;RSA/ECB/PKCS1Padding&quot;);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="三-实际使用"><a href="#三-实际使用" class="headerlink" title="三. 实际使用"></a>三. 实际使用</h3><ul>
+<li>RSA每一次加密和解密只能对与key相同长度的数据进行操作，所以在encryptRSA()中实际上会分组后多次对数据进行操作</li>
+<li>RSA运算操作的数据类型都是字节数据，所以我们也可以对文件的二进制数据进行操作，也可以操作字符串，<br>而加密生成的二进制不便于http网络传输，可以转换成Base64字符串后传输，后端再做Base64解码后得到密文。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PlatformIO学习之ESP8266开发环境搭建</title>
+    <url>/2020/08/26/16.PlatformIO%E5%AD%A6%E4%B9%A0%E4%B9%8BESP8266%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>PlatformIO 是开源的物联网开发生态系统。提供跨平台的代码构建器、集成开发环境（IDE），兼容 Arduino，ESP8266和mbed等。支持在Windows、Linux、macOS上使用预编译好的工具链，调试器和框架进行开发。</p>
+<span id="more"></span>
+<p>使用PlatformIO开发嵌入式有很多方便之处，首先PlatformIO不是独立的IDE，只是一个VisualStudio Code中的一个插件，所以安装非常方便，如果熟悉使用VSCode的话更好。<br>此外PlatformIO中可以统一安装嵌入式开发的平台支持和类库，免去了频繁的下载和搭建各种编译环境，免去了系统不兼容造成的麻烦。因为这些编译环境和上传调试工具都由平台支持者统一去适配好了。<br>对于ESP8266开发板，使用Arduino开发也很方便，不过PlatformIO支持得更好，提供了Arduino，NonOS-SDK，RTOS-SDK的开发方式，只要把平台更新好就可以开始写user代码了，非常方便。</p>
+<h3 id="PlatformIO使用步骤"><a href="#PlatformIO使用步骤" class="headerlink" title="PlatformIO使用步骤"></a>PlatformIO使用步骤</h3><h4 id="1-安装PlatformIO"><a href="#1-安装PlatformIO" class="headerlink" title="1. 安装PlatformIO"></a>1. 安装PlatformIO</h4><p>打开VSCode扩展栏，搜索PlatformIO，然后安装，等待安装成功后重新加载即可，安装成功后左侧多出一个蚂蚁头样的栏目。</p>
+<h4 id="2-安装平台支持"><a href="#2-安装平台支持" class="headerlink" title="2. 安装平台支持"></a>2. 安装平台支持</h4><p>打开PIO Home &gt; Platforms， 去Embedded栏搜索ESP，就会出来Espressif 8266，点右上方install即可安装平台支持。</p>
+<h4 id="3-创建项目"><a href="#3-创建项目" class="headerlink" title="3. 创建项目"></a>3. 创建项目</h4><p>在PIO Home &gt; Home, 点击 New Project， 就可以创建项目，创建的时候Board一栏可以根据情况选个，比如NodeMCU，Framework一栏是指定软件框架的，可以根据情况选择Arduino(兼容Arduino)，NonOS(不带RTOS)，RTOS(带RTOS),选择完成等待配置完成，就可以开发项目了。也可以点Project Examples，查看自带的示例。</p>
+<h4 id="4-Hello-Arduino"><a href="#4-Hello-Arduino" class="headerlink" title="4. Hello Arduino"></a>4. Hello Arduino</h4><p>创建了一个Arduino项目，在src&#x2F;main.cpp中编写代码即可，和在Arduino IDE中编写是一样的，不过在头部要加上 #include “Arduino.h” 。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &quot;Arduino.h&quot;</span><br><span class="line">#include &quot;ESP8266WiFi.h&quot;</span><br><span class="line"></span><br><span class="line">void setup() &#123;</span><br><span class="line">    // initialize LED digital pin as an output.</span><br><span class="line">    pinMode(LED_BUILTIN, OUTPUT);</span><br><span class="line">    // 初始化串口</span><br><span class="line">    Serial.begin(115200);</span><br><span class="line">    Serial.println(&quot;Arduino Begin!!&quot;);</span><br><span class="line"></span><br><span class="line">    WiFi.mode(WIFI_STA);</span><br><span class="line">    WiFi.disconnect();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">    // turn the LED on (HIGH is the voltage level)</span><br><span class="line">    digitalWrite(LED_BUILTIN, HIGH);</span><br><span class="line">    Serial.println(&quot;\n\n---Scan Wifi-------------&quot;);</span><br><span class="line">    int n = WiFi.scanNetworks();</span><br><span class="line">    for (int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">        Serial.printf(&quot;%02d: %s, Ch:%d (%ddBm) %s\n&quot;, i + 1,</span><br><span class="line">                      WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i),</span><br><span class="line">                      WiFi.encryptionType(i) == ENC_TYPE_NONE ? &quot;&quot; : &quot;*&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    Serial.println(&quot;---Wifi End-------------\n\n&quot;);</span><br><span class="line">    // wait for a second</span><br><span class="line">    delay(6000);</span><br><span class="line">    // turn the LED off by making the voltage LOW</span><br><span class="line">    digitalWrite(LED_BUILTIN, LOW);</span><br><span class="line">    // wait for a second</span><br><span class="line">    delay(20);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-使用技巧"><a href="#5-使用技巧" class="headerlink" title="5. 使用技巧"></a>5. 使用技巧</h4><ul>
+<li><p>每个项目的重要配置，主要保存在platformio.ini文件中，可以指定平台，板卡，软件框架，串口烧写速率，串口终端波特率等，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[env:nodemcuv2]</span><br><span class="line">platform = espressif8266</span><br><span class="line">board = nodemcuv2</span><br><span class="line">framework = arduino</span><br><span class="line">upload_speed = 921600</span><br><span class="line">monitor_speed = 115200</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码写完后需要运行只需要点下方的向右箭头→，即可完成编译和烧写，和Arduino IDE类似。点下方插头图标🔌，即可打开串口终端查看消息</p>
+</li>
+<li><p>VSCode代码格式化样式设置：默认的代码格式化是VS样式，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int test()</span><br><span class="line">&#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3)</span><br><span class="line">    &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125;</span><br><span class="line">    else if (i == 4)</span><br><span class="line">    &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样子比较占行数，我们一般习惯LLVM样式，只要在设置 &gt; 扩展 &gt; C&#x2F;C++ &gt; C_Cpp: Clang_format_style<br>修改设置位LLVM即可，再使用Alt + Shift + F 格式化代码，即可变成紧凑型。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">  int i = 3;</span><br><span class="line">  if (i == 3) &#123;</span><br><span class="line">    i = 4;</span><br><span class="line">  &#125; else if (i == 4) &#123;</span><br><span class="line">    i = 3;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果嫌这样TAB空格太短，可以指定为下面代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123; BasedOnStyle: LLVM, IndentWidth: 4 &#125;</span><br></pre></td></tr></table></figure>
+<p>空格长一点了，代码较短的话看起来舒服一些</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3) &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125; else if (i == 4) &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>PlatformIO学习</category>
+      </categories>
+      <tags>
+        <tag>esp8266</tag>
+        <tag>PlatformIO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于WebAssembly的前端网络安全实践</title>
+    <url>/2023/05/12/17-%E5%9F%BA%E4%BA%8EWebAssembly%E7%9A%84%E5%89%8D%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5/</url>
+    <content><![CDATA[<p>WebAssembly（缩写为Wasm）是一种用于基于堆栈的虚拟机的二进制指令格式。Wasm 被设计为编程语言的可移植编译目标，支持在 Web 上部署客户端和服务器应用程序。</p>
+<span id="more"></span>
+
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>WebAssembly是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。<br>它设计的目的不是为了手写代码而是为诸如 C、C++和Rust等低级源语言提供一个高效的编译目标。</p>
+<ul>
+<li>拥有更好的计算性能</li>
+<li>受益于现代C++的模板，常量表达式，宏定义等特性</li>
+<li>提高安全性，比js更加难以实施逆向，可以实施编译时加密技术</li>
+<li>受益于已存在的大量开源C&#x2F;C++开源库，可以移植使用</li>
+</ul>
+<h2 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h2><ul>
+<li>基于C++14常量表达式和模板的字符串编译时加密</li>
+<li>在类unix系统上编译openssl，静态链接到工程中，可用于方便的实现各种加密手段</li>
+<li>基于openssl，实现sha1, sha256, aes256, base64算法demo</li>
+<li>基于nlohmann::json，实现方便使用的json操作demo</li>
+</ul>
+<h2 id="WebAssembly快速上手玩法"><a href="#WebAssembly快速上手玩法" class="headerlink" title="WebAssembly快速上手玩法"></a>WebAssembly快速上手玩法</h2><h3 id="1-下载跨平台编译SDK："><a href="#1-下载跨平台编译SDK：" class="headerlink" title="1. 下载跨平台编译SDK："></a>1. 下载跨平台编译SDK：</h3><pre><code>* 参考文档：https://emscripten.org/docs/getting_started/downloads.html
+* 下载地址：https://github.com/emscripten-core/emsdk
+</code></pre>
+<h3 id="2-初始化SDK"><a href="#2-初始化SDK" class="headerlink" title="2. 初始化SDK"></a>2. 初始化SDK</h3><p>按照文档初始化SDK</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./emsdk install latest</span><br><span class="line">./emsdk activate latest</span><br><span class="line">source ./emsdk_env.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-编译C-C-代码："><a href="#3-编译C-C-代码：" class="headerlink" title="3. 编译C&#x2F;C++代码："></a>3. 编译C&#x2F;C++代码：</h3><ul>
+<li><p>编译第一个程序很简单，类似于用gcc&#x2F;clang编译一个程序：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;你好，世界！\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译很简单</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">emcc main.cpp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译可以直接生成html文件，方便调试</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">emcc main.cpp -o main.html</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑代码可以采用Clion&#x2F;VsCode等</p>
+</li>
+<li><p>复杂程序编译也需要按需求加入更多源文件和编译选项</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ./cpp</span><br><span class="line">emcc -o ../src/wasm/emjob.mjs -std=c++17 -lembind -I./libs/openssl main.cpp libs/openssl/libcrypto.a</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>或者直接执行make.bat</p>
+</li>
+<li><p>其他编译选项可以参考cpp&#x2F;make.bat</p>
+</li>
+<li><p>emcc编译选项可以参考 <a href="https://emscripten.org/docs/tools_reference/emcc.html">https://emscripten.org/docs/tools_reference/emcc.html</a></p>
+</li>
+<li><p>基本原理：emcc编译源文件产生对应的js文件及wasm文件，以供后续在前端代码中调用</p>
+</li>
+</ul>
+<h3 id="4-在Vue中使用wasm"><a href="#4-在Vue中使用wasm" class="headerlink" title="4. 在Vue中使用wasm"></a>4. 在Vue中使用wasm</h3><ul>
+<li>上一步编译成功会生成src&#x2F;wasm&#x2F;emjob.mjs，在vue项目中可以方便的引用wasm模块：<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Module</span> <span class="keyword">from</span> <span class="string">&quot;@/wasm/emjob&quot;</span></span><br><span class="line"><span class="title class_">Module</span>().<span class="title function_">then</span>(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">    app.<span class="property">config</span>.<span class="property">globalProperties</span>.<span class="property">$wasm</span> = <span class="variable language_">module</span></span><br><span class="line">    app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>实例中wasm异步加载放在了整个vue加载之前，如果影响前端代码执行，也可以改到适合的地方调用即可</p>
+<h3 id="5-wasm桥接"><a href="#5-wasm桥接" class="headerlink" title="5. wasm桥接"></a>5. wasm桥接</h3><ul>
+<li><p>最常用的js调c++，就很简单，例如：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun2</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">EMSCRIPTEN_BINDINGS</span>(my_module) &#123;</span><br><span class="line">    <span class="built_in">function</span>(<span class="string">&quot;fun1&quot;</span>, &amp;fun1);</span><br><span class="line">    <span class="built_in">function</span>(<span class="string">&quot;fun2&quot;</span>, &amp;fun2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更多可以参考文档：<a href="https://emscripten.org/docs/porting/index.html">https://emscripten.org/docs/porting/index.html</a></p>
+</li>
+</ul>
+<h3 id="6-后续步骤"><a href="#6-后续步骤" class="headerlink" title="6. 后续步骤"></a>6. 后续步骤</h3><ul>
+<li>标准vue前端项目运行或打包即可</li>
+</ul>
+<h3 id="7-项目实践中的实际问题"><a href="#7-项目实践中的实际问题" class="headerlink" title="7. 项目实践中的实际问题"></a>7. 项目实践中的实际问题</h3><h4 id="域名验证防止wasm被冒用"><a href="#域名验证防止wasm被冒用" class="headerlink" title="域名验证防止wasm被冒用"></a>域名验证防止wasm被冒用</h4><p>用wasm固然可以隐藏一些运算逻辑，使运算逻辑难以被逆向成功，只少比js逻辑保密性好一些吧，但是如果客人果真调试我们的网站，<br>发现关键逻辑是wasm写的，大概率会想到直接冒用我们的wasm，也不用管算法如何，能用就行。</p>
+<p>对于这种情况，我们最简单的防御方法就是做一下域名验证吧，比如一个签名算法，我们可以做个判断，只有当前域名为localhost，<br>我们才返回正确的签名，否则就返回一个错误的值。客人发现运算结果是错的，不一定第一时间想到是域名问题，也许就知难而退了。<br>当然这个方法也不能完全保证安全，如果客人知道了这个判断，他们伪造个hostname就可以了</p>
+<p>具体校验函数实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="keyword">inline</span> <span class="title">isHostValid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    emscripten::val location = emscripten::val::<span class="built_in">global</span>(_c(<span class="string">&quot;location&quot;</span>));</span><br><span class="line">    <span class="keyword">auto</span> host = location[_c(<span class="string">&quot;hostname&quot;</span>)].<span class="built_in">as</span>&lt;string&gt;();</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">find</span>(VHOST.<span class="built_in">begin</span>(), VHOST.<span class="built_in">end</span>(), host) != VHOST.<span class="built_in">end</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>检验函数原理就是我们通过全局变量 location.hostname 获取到当前域名，跟合法域名列表 VHOST 进行比对，结果会返回true&#x2F;false<br>在业务逻辑开始之前调用该函数判断一下，就知道域名是否合法了。</p>
+<h4 id="编译OpenSSL"><a href="#编译OpenSSL" class="headerlink" title="编译OpenSSL"></a>编译OpenSSL</h4><p>OpenSSL是开源的加解密库，我们先编译成静态链接库，以方便使用。<br>交叉编译机器需要linux或者mac（配置方便一些），可以先下载并解压OpenSSL，使用3.x版本或者1.x版本均可。<br>配置编译选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">emconfigure ./Configure gcc</span><br></pre></td></tr></table></figure>
+
+<p>开始编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">make -j32</span><br></pre></td></tr></table></figure>
+<p>过一会儿生成文件libcrypto.a，以及include下的头文件就是我们需要的</p>
+<h4 id="Emscripten结合到CLion"><a href="#Emscripten结合到CLion" class="headerlink" title="Emscripten结合到CLion"></a>Emscripten结合到CLion</h4><p>在Clion中开发C、C++很舒服，但是默认没有支持Wasm。我们想要使用emcmake来进行源代码关联，并编译程序，其实也很简单。<br>需要修改一个设置：settings &gt; Build, Execution, Deployment &gt; CMake，创建一个新的配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-DCMAKE_TOOLCHAIN_FILE=&lt;path_to_emsdk&gt;/emscripten//cmake/Modules/Platform/Emscripten.cmake</span><br></pre></td></tr></table></figure>
+<p>这样就完美解决了代码的关联提示和编译问题，但局限是只能适用于CMake的编译。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>前端学习</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>WebAssembly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Web前端图像处理及OpenCV的WebAssembly接入</title>
+    <url>/2023/05/18/18-Web%E5%89%8D%E7%AB%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%8F%8AOpenCV%E7%9A%84WebAssembly%E6%8E%A5%E5%85%A5/</url>
+    <content><![CDATA[<p>OpenCV是一个基于Apache2.0许可（开源）发行的跨平台计算机视觉和机器学习软件库，可以运行在Linux、Windows、Android和Mac OS操作系统上。</p>
+<span id="more"></span>
+<p>它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。<br>有了WebAssembly的应用，OpenCV同时也可以在Web端使用，增强了兼容性和可用性。</p>
+<h1 id="安装WebAssembly编译环境"><a href="#安装WebAssembly编译环境" class="headerlink" title="安装WebAssembly编译环境"></a>安装WebAssembly编译环境</h1><ul>
+<li>参考文档：<a href="https://emscripten.org/docs/getting_started/downloads.html">https://emscripten.org/docs/getting_started/downloads.html</a></li>
+<li>下载地址：<a href="https://github.com/emscripten-core/emsdk">https://github.com/emscripten-core/emsdk</a></li>
+</ul>
+<h1 id="编译OpenCV-JS"><a href="#编译OpenCV-JS" class="headerlink" title="编译OpenCV-JS"></a>编译OpenCV-JS</h1><ul>
+<li>下载OpenCV源代码：<a href="https://opencv.org/releases/">https://opencv.org/releases/</a></li>
+<li>执行源代码目录下编译脚本：&#x2F;platforms&#x2F;js&#x2F;build_js.py</li>
+<li>使用编译系统最好为Linux或者MacOS</li>
+<li>按照提示信息编译即可，需要指定一些参数如：opencv目录，输出目录</li>
+<li>编译完成后会在输出目录下生成目标文件</li>
+<li>官方编译参考：<a href="https://docs.opencv.org/4.7.0/d4/da1/tutorial_js_setup.html">https://docs.opencv.org/4.7.0/d4/da1/tutorial_js_setup.html</a></li>
+</ul>
+<h1 id="OpenCV-JS使用"><a href="#OpenCV-JS使用" class="headerlink" title="OpenCV-JS使用"></a>OpenCV-JS使用</h1><ul>
+<li>直接使用js接口，可以参考：<a href="https://docs.opencv.org/4.7.0/d5/d10/tutorial_js_root.html">https://docs.opencv.org/4.7.0/d5/d10/tutorial_js_root.html</a></li>
+</ul>
+<h1 id="OpenCV静态链接库使用"><a href="#OpenCV静态链接库使用" class="headerlink" title="OpenCV静态链接库使用"></a>OpenCV静态链接库使用</h1><ul>
+<li>当通用js库不满足需求，需要定制CV算法的时候可以采用</li>
+<li>实际生产中引入整个OpenCV-JS库也会导致页面请求过大，也需要在C++层做定制修改</li>
+<li>静态链接库需要使用.a文件作为源文件，在OpenCV-JS编译输出目录下&#x2F;lib目录下有静态链接库</li>
+<li>一般需要使用的是libopencv_core.a，libopencv_imgproc.a</li>
+<li>使用静态链接库可以做到生成的wasm文件大小随需求动态变化，按需索取</li>
+</ul>
+<h1 id="JS与C-图像数据交换方式"><a href="#JS与C-图像数据交换方式" class="headerlink" title="JS与C++图像数据交换方式"></a>JS与C++图像数据交换方式</h1><ul>
+<li><p>JS层获取图片并传到C++层运算，运算完成后再去读取C++内存的方式交互</p>
+</li>
+<li><p>概括来讲就是利用WebAssembly.HEAPU8使得JS端可以共享C++的堆内存空间</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>.<span class="property">HEAPU8</span>.<span class="title function_">set</span>(src.<span class="property">data</span>, heap)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JS层调用C++内存处理方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> ctx = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> srcData = ctx.<span class="title function_">getImageData</span>(<span class="number">0</span>, <span class="number">0</span>, canvas.<span class="property">width</span>, canvas.<span class="property">height</span>)</span><br><span class="line"><span class="keyword">let</span> data = srcData.<span class="property">data</span></span><br><span class="line"><span class="keyword">let</span> length = data.<span class="property">length</span></span><br><span class="line"><span class="keyword">let</span> heap = <span class="variable language_">this</span>.<span class="property">$wasm</span>[<span class="string">&#x27;mallocNative&#x27;</span>](length)</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>.<span class="property">HEAPU8</span>.<span class="title function_">set</span>(src.<span class="property">data</span>, heap)</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>[<span class="string">&#x27;processImage&#x27;</span>](it.<span class="property">op</span>, src, heap)</span><br><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="title class_">Uint8ClampedArray</span>(<span class="variable language_">this</span>.<span class="property">$wasm</span>.<span class="property">HEAPU8</span>.<span class="property">buffer</span>, heap, length)</span><br><span class="line"><span class="keyword">let</span> dstData = <span class="keyword">new</span> <span class="title class_">ImageData</span>(arr, canvas.<span class="property">width</span>, canvas.<span class="property">height</span>)</span><br><span class="line">ctx.<span class="title function_">putImageData</span>(dst, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">it.<span class="property">src</span> = canvas.<span class="title function_">toDataURL</span>(<span class="string">&#x27;image/jpeg&#x27;</span>)</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$wasm</span>[<span class="string">&#x27;freeNative&#x27;</span>](heap)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>C++可以使用内存空间创建Mat即可</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> *p = (<span class="type">uint8_t</span> *) buf;</span><br><span class="line"><span class="type">int</span> width = img[<span class="string">&quot;width&quot;</span>].<span class="built_in">as</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line"><span class="type">int</span> height = img[<span class="string">&quot;height&quot;</span>].<span class="built_in">as</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line"><span class="keyword">auto</span> raw = <span class="built_in">Mat</span>(height, width, CV_8UC4, p);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后续图片处理方式和正常C++调用一样的，例如：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Mat gray;</span><br><span class="line"><span class="built_in">cvtColor</span>(raw, gray, COLOR_RGBA2GRAY);</span><br><span class="line"><span class="built_in">cvtColor</span>(gray, raw, COLOR_GRAY2BGRA);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>C++端对HEAPU8修改后，JS端可以直接获取，这也是js和wasm共享内存的一种方式</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>前端学习</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>WebAssembly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安卓7.0以上设备网络抓包笔记</title>
+    <url>/2023/06/13/19-%E5%AE%89%E5%8D%937-0%E4%BB%A5%E4%B8%8A%E8%AE%BE%E5%A4%87%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一</p>
+<span id="more"></span>
+<p>fiddler下载地址： <a href="https://www.telerik.com/download/fiddler">https://www.telerik.com/download/fiddler</a></p>
+<h2 id="常规https抓包"><a href="#常规https抓包" class="headerlink" title="常规https抓包"></a>常规https抓包</h2><p>常规抓https包准备步骤：</p>
+<ol>
+<li>下载抓包证书</li>
+<li>手机Wifi设置代理</li>
+<li>手机导入抓包证书</li>
+</ol>
+<h2 id="安卓7-0以后https抓包"><a href="#安卓7-0以后https抓包" class="headerlink" title="安卓7.0以后https抓包"></a>安卓7.0以后https抓包</h2><p>证书抓包方式，安卓7.0以后证书分为系统证书和用户证书，</p>
+<ol>
+<li>对于允许用户证书的应用，可以采用常规方式抓包</li>
+<li>对于只允许系统证书的应用，需要如下操作</li>
+</ol>
+<h3 id="不允许用户证书的抓包"><a href="#不允许用户证书的抓包" class="headerlink" title="不允许用户证书的抓包"></a>不允许用户证书的抓包</h3><p>不允许用户证书的抓包一般会想到两种方式改成可抓包</p>
+<h4 id="修改APP用户证书许可"><a href="#修改APP用户证书许可" class="headerlink" title="修改APP用户证书许可"></a>修改APP用户证书许可</h4><p>既然不允许用户证书，我们就修改APP，使APP允许用户证书， 一般来说修改安卓Manifest如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span> <span class="attr">android:networkSecurityConfig</span>=<span class="string">&quot;@xml/network_security_config&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改network_security_config.xml修改如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;system&quot;</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 允许用户证书--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">certificates</span></span></span><br><span class="line"><span class="tag">                <span class="attr">overridePins</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">src</span>=<span class="string">&quot;user&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">trust-anchors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">base-config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当然修改已存在的app，将涉及到反编译，回编，签名等步骤</p>
+<h4 id="Root用户添加系统证书"><a href="#Root用户添加系统证书" class="headerlink" title="Root用户添加系统证书"></a>Root用户添加系统证书</h4><p>第二种方式是修改系统文件，把fiddler证书变成系统证书</p>
+<ol>
+<li><p>下载抓包证书（常规抓包也需要这个）如：FiddlerRoot.cer</p>
+</li>
+<li><p>转换成pem格式：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取新的证书HASH值(命令输出第一行会显示文件hash，如：e5c3944b)：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把pem证书文件用hash命名如（e5c3944b.pem）</p>
+</li>
+<li><p>把新证书拷贝到系统证书目录（需root）：&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F;</p>
+</li>
+<li><p>文件权限改成664，重启手机即可</p>
+</li>
+</ol>
+<p>一般情况下经过这些修改，就可以正常进行https抓包了</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java基础学习笔记之多线程</title>
+    <url>/2016/06/22/2.Java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<p>用多线程只有一个目的，那就是更好的利用cpu的资源，因为所有的多线程代码都可以用单线程来实现。说这个话其实只有一半对，因为反应“多角色”的程序代码，最起码每个角色要给他一个线程吧，否则连实际场景都无法模拟，当然也没法说能用单线程来实现：比如最常见的“生产者，消费者模型”。</p>
+<span id="more"></span>
+<h2 id="创建新线程"><a href="#创建新线程" class="headerlink" title="创建新线程"></a>创建新线程</h2><h3 id="1-继承Thread"><a href="#1-继承Thread" class="headerlink" title="1.继承Thread"></a>1.继承Thread</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Comet</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Orbiting&quot;</span>);</span><br><span class="line">        orbit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-实现Runnable接口"><a href="#2-实现Runnable接口" class="headerlink" title="2.实现Runnable接口"></a>2.实现Runnable接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Asteroid</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Orbiting&quot;</span>);</span><br><span class="line">        orbit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Asteroid</span> <span class="variable">maja</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Asteroid</span>();</span><br><span class="line"><span class="type">Thread</span> <span class="variable">majaThread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(maja);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Thread的状态"><a href="#Thread的状态" class="headerlink" title="Thread的状态"></a>Thread的状态</h2><table>
+<thead>
+<tr>
+<th>线程状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NEW</td>
+<td>A thread that is created but not started</td>
+</tr>
+<tr>
+<td>RUNNABLE</td>
+<td>A thread that is available to run</td>
+</tr>
+<tr>
+<td>BLOCKED</td>
+<td>An “alive” thread that is blocked waiting for a monitor lock</td>
+</tr>
+<tr>
+<td>WAITING</td>
+<td>An “alive” thread that calls its own wait() or join() while waiting on another thread</td>
+</tr>
+<tr>
+<td>TIMED_WAITING</td>
+<td>An “alive” thread that is waiting on another thread for a specified period of time; sleeping</td>
+</tr>
+<tr>
+<td>TERMINATED</td>
+<td>A thread that has completed</td>
+</tr>
+</tbody></table>
+<h2 id="Thread普通方法"><a href="#Thread普通方法" class="headerlink" title="Thread普通方法"></a>Thread普通方法</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getPriority()</td>
+<td>Returns the thread’s priority</td>
+</tr>
+<tr>
+<td>getState()</td>
+<td>Returns the thread’s state</td>
+</tr>
+<tr>
+<td>interrupt()</td>
+<td>Interrupts the thread</td>
+</tr>
+<tr>
+<td>isAlive()</td>
+<td>Returns the thread’s alive status</td>
+</tr>
+<tr>
+<td>isInterrupted()</td>
+<td>Checks for interruption of the thread</td>
+</tr>
+<tr>
+<td>join()</td>
+<td>Causes the thread to wait for another thread to complete</td>
+</tr>
+<tr>
+<td>setPriority(int)</td>
+<td>Sets the thread’s priority</td>
+</tr>
+<tr>
+<td>start()</td>
+<td>Places the thread into a runnable state</td>
+</tr>
+</tbody></table>
+<h2 id="Thread重载Object的方法"><a href="#Thread重载Object的方法" class="headerlink" title="Thread重载Object的方法"></a>Thread重载Object的方法</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>notify()</td>
+<td>Tells a thread to wake up and run</td>
+</tr>
+<tr>
+<td>notifyAll()</td>
+<td>Tells all threads that are waiting on a thread or resource to wake up, and then the scheduler will select one of the threads to run</td>
+</tr>
+<tr>
+<td>wait()</td>
+<td>Pauses a thread in a wait state until another thread calls notify() or notifyAll()</td>
+</tr>
+</tbody></table>
+<h2 id="Thread静态方法"><a href="#Thread静态方法" class="headerlink" title="Thread静态方法"></a>Thread静态方法</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>activeCount()</td>
+<td>Returns number of threads in the current thread’s group</td>
+</tr>
+<tr>
+<td>currentThread()</td>
+<td>Returns reference to the currently running thread</td>
+</tr>
+<tr>
+<td>interrupted()</td>
+<td>Checks for interruption of the currently running thread</td>
+</tr>
+<tr>
+<td>sleep(long)</td>
+<td>Blocks the currently running thread for parameter number of milliseconds</td>
+</tr>
+<tr>
+<td>yield()</td>
+<td>Pauses the current thread to allow other threads to run</td>
+</tr>
+</tbody></table>
+<h2 id="线程的同步"><a href="#线程的同步" class="headerlink" title="线程的同步"></a>线程的同步</h2><p>线程同步采用关键字synchronized，意味着对代码块或者方法加锁，使用场景有：</p>
+<ul>
+<li><p>1.对实例t使用同步锁</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (t) &#123;</span><br><span class="line">    <span class="comment">// Block body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.对实例this使用同步锁</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">    <span class="comment">// Block body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.对成员方法raise()使用同步锁,两种方法等效</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Equivalent code segment 1</span></span><br><span class="line"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">raise</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// Method Body</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Equivalent code segment 2</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">raise</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">        <span class="comment">// Method body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.对静态方法calibrate()使用同步锁</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Telescope</span> &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">calibrate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Method body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="多线程工具包"><a href="#多线程工具包" class="headerlink" title="多线程工具包"></a>多线程工具包</h2><p>java对多线程提供了工具包java.util.concurrent</p>
+<h3 id="线程池-Executors"><a href="#线程池-Executors" class="headerlink" title="线程池 Executors"></a>线程池 Executors</h3><p>Executors提供了工厂方法来创建线程池</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>newCachedThreadPool()</td>
+<td>Creates an unbounded thread pool that automatically reuses threads</td>
+</tr>
+<tr>
+<td>newFixedThreadPool(int nThreads)</td>
+<td>Creates a fixed-size thread pool that automatically reuses threads off a shared unbounded queue</td>
+</tr>
+<tr>
+<td>newScheduledThreadPool(int corePoolSize)</td>
+<td>Creates a thread pool that can have commands scheduled to run periodically or on a specified delay</td>
+</tr>
+<tr>
+<td>newSingleThreadExecutor()</td>
+<td>Creates a single-threaded executor that operates off an unbounded queue</td>
+</tr>
+<tr>
+<td>newSingleThreadScheduledExecutor()</td>
+<td>Creates a single-threaded executor that can have commands scheduled to run periodically or by a specified delay</td>
+</tr>
+</tbody></table>
+<p>使用实例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Create tasks</span></span><br><span class="line"><span class="comment">// (from &#x27;class RTask implements Runnable&#x27;)</span></span><br><span class="line"><span class="type">RTask</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RTask</span>(<span class="string">&quot;thread1&quot;</span>);</span><br><span class="line"><span class="type">RTask</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RTask</span>(<span class="string">&quot;thread2&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create thread manager</span></span><br><span class="line"><span class="type">ExecutorService</span> <span class="variable">threadExecutor</span> <span class="operator">=</span> Executors.newFixedThreadPool(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Make threads runnable</span></span><br><span class="line">threadExecutor.execute(t1);</span><br><span class="line">threadExecutor.execute(t2);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shutdown threads</span></span><br><span class="line">threadExecutor.shutdown();</span><br></pre></td></tr></table></figure>
+
+<h3 id="线程安全集合类"><a href="#线程安全集合类" class="headerlink" title="线程安全集合类"></a>线程安全集合类</h3><p>尽管集合类可以被同步，但最好使用java提供的线程安全集合类。</p>
+<table>
+<thead>
+<tr>
+<th>集合类</th>
+<th>对应的线程安全集合类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HashMap</td>
+<td>ConcurrentHashMap</td>
+</tr>
+<tr>
+<td>TreeMap</td>
+<td>ConcurrentSkipListMap</td>
+</tr>
+<tr>
+<td>TreeSet</td>
+<td>ConcurrentSkipListSet</td>
+</tr>
+<tr>
+<td>Map subtypes</td>
+<td>ConcurrentMap</td>
+</tr>
+<tr>
+<td>List subtypes</td>
+<td>CopyOnWriteArrayList</td>
+</tr>
+<tr>
+<td>Set subtypes</td>
+<td>CopyOnWriteArraySet</td>
+</tr>
+<tr>
+<td>PriorityQueue</td>
+<td>PriorityBlockingQueue</td>
+</tr>
+<tr>
+<td>Deque</td>
+<td>BlockingDeque</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>BlockingQueue</td>
+</tr>
+</tbody></table>
+<h3 id="同步器-信号量"><a href="#同步器-信号量" class="headerlink" title="同步器&#x2F;信号量"></a>同步器&#x2F;信号量</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Semaphore</td>
+<td>Maintains a set of permits</td>
+</tr>
+<tr>
+<td>CountDownLatch</td>
+<td>Implements waits against sets of operations being performed</td>
+</tr>
+<tr>
+<td>CyclicBarrer</td>
+<td>Implements waits against common barrier points</td>
+</tr>
+<tr>
+<td>Exchanger</td>
+<td>Implements a synchronization point where threads can exchange elements</td>
+</tr>
+</tbody></table>
+<h3 id="时间单位常量TimeUnit"><a href="#时间单位常量TimeUnit" class="headerlink" title="时间单位常量TimeUnit"></a>时间单位常量TimeUnit</h3><table>
+<thead>
+<tr>
+<th>Constants</th>
+<th>Unit def.</th>
+<th>Unit (sec)</th>
+<th>Abbreviation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NANOSECONDS</td>
+<td>1&#x2F;1000</td>
+<td>μs</td>
+<td>.000000001 ns</td>
+</tr>
+<tr>
+<td>MICROSECONDS</td>
+<td>1&#x2F;1000</td>
+<td>ms</td>
+<td>.000001 μs</td>
+</tr>
+<tr>
+<td>MILLISECONDS</td>
+<td>1&#x2F;1000</td>
+<td>sec</td>
+<td>.001 ms</td>
+</tr>
+<tr>
+<td>SECONDS</td>
+<td>sec</td>
+<td>1</td>
+<td>sec</td>
+</tr>
+<tr>
+<td>MINUTES</td>
+<td>60 sec</td>
+<td>60</td>
+<td>min</td>
+</tr>
+<tr>
+<td>HOURS</td>
+<td>60 min</td>
+<td>3600</td>
+<td>hr</td>
+</tr>
+<tr>
+<td>DAYS</td>
+<td>24 hr</td>
+<td>86400</td>
+<td>d</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Java学习</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ESP设备在MAC系统烧写失败与驱动安装</title>
+    <url>/2023/09/09/20-ESP%E8%AE%BE%E5%A4%87%E5%9C%A8MAC%E7%B3%BB%E7%BB%9F%E7%83%A7%E5%86%99%E5%A4%B1%E8%B4%A5%E4%B8%8E%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<p>ESP32设备经常采用CH340系列串口芯片与电脑进行通信并烧写程序，在MAC电脑上烧写一定不要忘记安装驱动，否则会导致烧写失败</p>
+<span id="more"></span>
+<p>在MAC电脑上连接USB设备大多数情况下是不需要手动安装驱动的，但是CH340系列是一个奇葩。</p>
+<h3 id="ESP32设备的串口"><a href="#ESP32设备的串口" class="headerlink" title="ESP32设备的串口"></a>ESP32设备的串口</h3><p>对于内置USB功能的ESP32C3, S2, S3这些芯片，烧写程序有两种方案，</p>
+<ul>
+<li>第一是直接用芯片自带的USB，这样可以减少外围原件， 降低硬件成本，但问题是设备重启的时候，串口也会断开重连。</li>
+<li>第二种方法是外接一块USB转串口芯片，再连接到单片机的串口上。这样适合于不带USB功能的ESP8266, ESP32等芯片。</li>
+</ul>
+<h3 id="驱动下载安装"><a href="#驱动下载安装" class="headerlink" title="驱动下载安装"></a>驱动下载安装</h3><p>CH340系列串口芯片需要安装驱动，千万不要忘记：<br><a href="https://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html">https://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html</a><br>下载后解压，安装即可，测试PlatformIO可正常运行。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>PlatformIO学习</category>
+      </categories>
+      <tags>
+        <tag>esp8266</tag>
+        <tag>PlatformIO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MTK平台安卓ROM修改和刷机相关笔记</title>
+    <url>/2023/10/19/21-MTK%E5%B9%B3%E5%8F%B0%E5%AE%89%E5%8D%93ROM%E4%BF%AE%E6%94%B9%E5%92%8C%E5%88%B7%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>MTK相关操作和修改。</p>
+<span id="more"></span>
+<p>记录MTK刷机及修改所用一些工具和技巧。</p>
+<h2 id="Vbmeta关闭avb2-0校验"><a href="#Vbmeta关闭avb2-0校验" class="headerlink" title="Vbmeta关闭avb2.0校验"></a>Vbmeta关闭avb2.0校验</h2><p>vbmeta分区中一般记录了boot, system, vendor镜像校验信息，校验会导致修改过的boot等镜像刷入后无法启动，<br>所以一般需要关闭这个校验。</p>
+<ol>
+<li><p>命令方式(重新刷如vbmeta):</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动修改ROM：使用二进制编辑工具，如HexEditor修改(VsCode也有HexEdit插件，非常方便)，具体修改位置：</p>
+</li>
+</ol>
+<ul>
+<li>第123字节：0x00 -&gt; 0x03</li>
+<li>修改完成之后刷入vbmeta分区即可，所产生的作用和第一种方式是一样的</li>
+</ul>
+<h2 id="MTK工具软件MTKClient使用"><a href="#MTK工具软件MTKClient使用" class="headerlink" title="MTK工具软件MTKClient使用"></a>MTK工具软件MTKClient使用</h2><p>MTKClient有一个带界面的工具，首次连接需要在开机时按下音量键，连接成功后可以做很多ROM操作</p>
+<ol>
+<li>ROM分区操作（导出、刷入、清空）</li>
+<li>flash操作（对整块flash导出、刷入、清空）</li>
+<li>解除BL锁，回锁</li>
+</ol>
+<h2 id="MTK刷机SPFlashTool"><a href="#MTK刷机SPFlashTool" class="headerlink" title="MTK刷机SPFlashTool"></a>MTK刷机SPFlashTool</h2><p>SPFlashTool是官方刷机软件，有些功能与MTKClient类似，<a href="https://spflashtool.com/">https://spflashtool.com/</a><br>可以执行固件刷入，导出，flash导出，内存测试等功能</p>
+<h2 id="MTK开机画面修改工具LogoBuilder"><a href="#MTK开机画面修改工具LogoBuilder" class="headerlink" title="MTK开机画面修改工具LogoBuilder"></a>MTK开机画面修改工具LogoBuilder</h2><p>使用这个工具可以修改设备开机第一屏，可以执行解压和重打包任务，解压后我们可以对相关的png图片进行修改，<br>完成后再打包成bin文件即可</p>
+<h2 id="MTK-WWR分区切分及刷机固件制作工具"><a href="#MTK-WWR分区切分及刷机固件制作工具" class="headerlink" title="MTK_WWR分区切分及刷机固件制作工具"></a>MTK_WWR分区切分及刷机固件制作工具</h2><ol>
+<li>分区切割：我们可以用MTKClient或者SPFlashTool导出整块flash数据，再使用WWR来嗅探分区表并切割这些分区，<br>切割后生成的分区文件和分区表文件可以用于SPFlashTool刷机，也可以使用fastboot刷机</li>
+<li>我们使用SPFlashTool来导出分区时通常需要一个分区表txt文件，该工具可以根据芯片型号生成该文件。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>红米Note8Pro手机刷机相关笔记</title>
+    <url>/2024/02/29/22-%E7%BA%A2%E7%B1%B3Note8Pro%E6%89%8B%E6%9C%BA%E5%88%B7%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>红米Note8Pro手机刷机相关笔记</p>
+<span id="more"></span>
+<p>该手机是MTK芯片</p>
+<h2 id="系统下载和烧写"><a href="#系统下载和烧写" class="headerlink" title="系统下载和烧写"></a>系统下载和烧写</h2><ol>
+<li>官方下载地址：<a href="https://xiaomirom.com/series/begonia/">https://xiaomirom.com/series/begonia/</a></li>
+<li>下载选项：我下载的时候可以选择国行和海外版，国行没有GP，想要GP需要下载海外版。</li>
+<li>ROM类型：分为fastboot版和recovery版，分别是线刷和卡刷。</li>
+</ol>
+<h2 id="TWRP刷写："><a href="#TWRP刷写：" class="headerlink" title="TWRP刷写："></a>TWRP刷写：</h2><ol>
+<li>安卓11的下载地址：<a href="https://www.pling.com/p/1556853/">https://www.pling.com/p/1556853/</a></li>
+</ol>
+<h2 id="ROOT工具："><a href="#ROOT工具：" class="headerlink" title="ROOT工具："></a>ROOT工具：</h2><ol>
+<li>获取ROOT工具Magisk：<a href="https://github.com/topjohnwu/Magisk">https://github.com/topjohnwu/Magisk</a></li>
+</ol>
+<h2 id="反向周边工具："><a href="#反向周边工具：" class="headerlink" title="反向周边工具："></a>反向周边工具：</h2><ol>
+<li>抓包工具reqable: <a href="https://reqable.com/en-US/download/">https://reqable.com/en-US/download/</a></li>
+<li>抓包代理XSocksDroid：<a href="https://github.com/zhuhai-and/XSocksDroid">https://github.com/zhuhai-and/XSocksDroid</a></li>
+<li>Hook代理Frida：<a href="https://github.com/frida/frida">https://github.com/frida/frida</a></li>
+<li>Frida启动器：<a href="https://github.com/metmit/FridaManager">https://github.com/metmit/FridaManager</a></li>
+<li>Jadx:<a href="https://github.com/skylot/jadx">https://github.com/skylot/jadx</a></li>
+</ol>
+<h2 id="ROOT常用操作"><a href="#ROOT常用操作" class="headerlink" title="ROOT常用操作"></a>ROOT常用操作</h2><ol>
+<li><p>卸载系统应用：</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm uninstall --user 0 com.android.chrome</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看应用路径：</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm path com.android.chrome</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python开源Web框架Tornado学习笔记</title>
+    <url>/2016/07/12/3.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Tornado%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p><a href="http://www.tornadoweb.org/">Tornado</a>是<a href="http://blog.friendfeed.com/">FriendFeed</a>使用的可扩展的非阻塞式 web 服务器及其相关工具的开源版本，能让python web服务器搭建变得更加简单快捷。</p>
+<span id="more"></span>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="http://www.tornadoweb.cn/">这里</a>是中文帮助文档。<br><a href="https://github.com/tornadoweb/tornado">这里</a>是项目GitHub地址。<br><a href="http://demo.pythoner.com/itt2zh/index.html">这里</a>是一个很好的教程</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="1-下载安装release下载页"><a href="#1-下载安装release下载页" class="headerlink" title="1.下载安装release下载页"></a>1.下载安装<a href="https://github.com/tornadoweb/tornado/releases">release下载页</a></h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf tornado-1.2.1.tar.gz</span><br><span class="line">cd tornado-1.2.1</span><br><span class="line">python setup.py build</span><br><span class="line">sudo python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通过-pip-或者-easy-install-来安装-如："><a href="#2-通过-pip-或者-easy-install-来安装-如：" class="headerlink" title="2.通过 pip 或者 easy_install 来安装,如："></a>2.通过 pip 或者 easy_install 来安装,如：</h3><ul>
+<li><p>使用pip安装命令，如果安装失败运行时引包会报错</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pip install tornado</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但前提是机器里安装了pip，如果没有的话先安装pip再说：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pip卸载&#x2F;更新命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pip uninstall tornado</span><br><span class="line">sudo pip install --upgrade tornado</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>编写Python代码比较习惯使用Jetbrains公司的<a href="https://www.jetbrains.com/pycharm/">PyCharm</a>,获取注册码可参考<a href="http://idea.qinxi1992.cn/">http://idea.qinxi1992.cn/</a></br><br>GitHub上源代码里包含了<a href="https://github.com/tornadoweb/tornado/tree/stable/demos">示例代码</a></p>
+<h3 id="HelloWorld代码："><a href="#HelloWorld代码：" class="headerlink" title="HelloWorld代码："></a>HelloWorld代码：</h3><p>访问<a href="http://localhost:8888/">http://localhost:8888/</a> 就可以在浏览器打印出Hello, world</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tornado.ioloop</span><br><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;Hello, world&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app = make_app()</span><br><span class="line">    app.listen(<span class="number">8888</span>)</span><br><span class="line">    tornado.ioloop.IOLoop.current().start()</span><br></pre></td></tr></table></figure>
+
+<p>使用Tornado的程序结构清晰易懂，程序定义了一个类，一个函数，一些全局代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br></pre></td></tr></table></figure>
+<p>这里是代码执行的入口，这个判断语句判断该模块是否是主模块，里面一般写一些对该模块的测试代码，只有把该模块作为主模块执行的时候，才运行这些测试代码，否则当它作为类库被其他模块引用时，就不必手动来注释这些测试代码了。<br>普通Tornado程序的执行，就是一个tornado.web.Application对象通过listen()监听一个端口，在使用tornado.ioloop.IOLoop.current().start()开启IOLoop。</p>
+<h3 id="Handler与请求映射"><a href="#Handler与请求映射" class="headerlink" title="Handler与请求映射"></a>Handler与请求映射</h3><p>光有监听，没有指定服务器接受请求后的操作，也不能完成请求，Tornado通过继承tornado.web.RequestHandler，重写get(), post()等方法来指定相应的操作，Handler数组作为Application构造参数与之关联。<br>因此一个Application可以有多个Handler，对应不同的次级url，例如</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FirstHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;FirstHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SecondHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        self.write(<span class="string">&quot;SecondHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/first&quot;</span>, FirstHandler),</span><br><span class="line">        (<span class="string">r&quot;/second&quot;</span>, SecondHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p>定义了两个Handler类，在Application构造方法参数中如(r”&#x2F;first”, FirstHandler)指定子URL &#x2F;first对应到FirstHandler，字符串”&#x2F;first”前面的r作用是声明字符串中的所有字符不做转义操作，因此通过访问<a href="http://localhost:8888/first">http://localhost:8888/first</a> 和<a href="http://localhost:8888/second">http://localhost:8888/second</a> 可以映射到不同的操作。</p>
+<p>也可以使用通配符，这时匹配的参数还会作为参数传递到Handler请求中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, arg</span>):</span><br><span class="line">        self.write(<span class="string">&quot;Page&quot;</span> + arg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/page/([0-9]+)&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p>这时访问<a href="http://localhost:8888/page/789">http://localhost:8888/page/789</a> ，页面打印出Page789。但如果传入不匹配的url如<a href="http://localhost:8888/page/789aa">http://localhost:8888/page/789aa</a> ，将会返回404错误。<br>如此以后，如果网站需要增加一个页面或模块，只需要在项目中添加对应的Handler并注册即可。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Python学习</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
+        <tag>python</tag>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python开源Web框架Flask学习笔记</title>
+    <url>/2017/05/16/4.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Flask%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。</p>
+<span id="more"></span>
+
+<h2 id="简单环境搭建"><a href="#简单环境搭建" class="headerlink" title="简单环境搭建"></a>简单环境搭建</h2><ul>
+<li><p>参考资料<br>项目<a href="http://flask.pocoo.org/">官网</a><br>中文<a href="http://docs.jinkan.org/docs/flask/">使用文档</a></p>
+</li>
+<li><p>软件安装<br>可以通过pip安装，确保机器已安装python-pip</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install flask</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最小应用<br>新建hello.py，代码如下，保存后执行python hello.py，在浏览器访问localhost:5000即可显示</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="其他技巧"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧</h2><h3 id="运行参数"><a href="#运行参数" class="headerlink" title="运行参数"></a>运行参数</h3><p>程序默认只能从本机访问，若要从其他机器远程访问，就需要使用参数启动程序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>若需要开启调试模式，可以使用参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>路由与参数</p>
+<ol>
+<li>路由方法：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        do_the_login()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        show_the_login_form()</span><br></pre></td></tr></table></figure></li>
+<li>参数获取：</li>
+</ol>
+<ul>
+<li>form表单参数<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">    name = request.form[<span class="string">&#x27;username&#x27;</span>]</span><br><span class="line">    passwd = request.form[<span class="string">&#x27;password&#x27;</span>]</span><br></pre></td></tr></table></figure></li>
+<li>URL参数<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/&lt;username&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_user_profile</span>(<span class="params">username</span>):</span><br><span class="line">    <span class="comment"># show the user profile for that user</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;User %s&#x27;</span> % username</span><br></pre></td></tr></table></figure></li>
+<li>GET参数<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">searchword = request.args.get(<span class="string">&#x27;q&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li>文件上传<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">from</span> werkzeug <span class="keyword">import</span> secure_filename</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/upload&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upload_file</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        f = request.files[<span class="string">&#x27;the_file&#x27;</span>]</span><br><span class="line">        f.save(<span class="string">&#x27;/var/www/uploads/&#x27;</span> + secure_filename(f.filename))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li>Cookies的读写：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">username = request.cookies.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">resp = make_response(render_template(...))</span><br><span class="line">resp.set_cookie(<span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;the username&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li>模板使用：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> render_template</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello/&#x27;</span></span>)</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello/&lt;name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>(<span class="params">name=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;hello.html&#x27;</span>, name=name)</span><br></pre></td></tr></table></figure></li>
+<li>跨域支持：<br>要支持跨域的话只需要做全局配置，安装<a href="https://pypi.python.org/pypi/Flask-Cors/">flask_cors</a><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install flask-cors</span><br></pre></td></tr></table></figure>
+ 加入以下代码：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">app = Flask(__name__)</span><br><span class="line">CORS(app, supports_credentials=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></li>
+<li>配合gevent实现并发访问<br>之前的代码运行时只有单实例，如果一个请求还在执行，另一个请求就进不来，简单的使用gevent可以实现并发：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_cors <span class="keyword">import</span> CORS</span><br><span class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> monkey</span><br><span class="line"><span class="keyword">from</span> gevent.pywsgi <span class="keyword">import</span> WSGIServer</span><br><span class="line"></span><br><span class="line">monkey.patch_all()</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">CORS(app)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    time.sleep(<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/test1&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_test1</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    http_server = WSGIServer((<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">5000</span>), app)</span><br><span class="line">    http_server.serve_forever()</span><br></pre></td></tr></table></figure>
+访问&#x2F;index时，加了个延时，请求十秒以后才会响应，但是访问&#x2F;test1时不会被阻塞，说明请求可以并发了。</li>
+</ol>
+<p>有了这些框架，搭建简单的web应用便可以非常迅速了。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Python学习</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
+        <tag>python</tag>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Gradle发布Android类库到JCenter笔记</title>
+    <url>/2017/05/23/5.%E4%BD%BF%E7%94%A8Gradle%E5%8F%91%E5%B8%83Android%E7%B1%BB%E5%BA%93%E5%88%B0JCenter%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>如果你想在Android Studio中引入一个library到你的项目，只需添加一行compile代码到模块的build.gradle文件中，远程依赖可以节省工程文件大小，避免了大量本地jar包类库占据代码空间，而且类库版本更新也很方便。<br>如果我们有一个开源类库需要提供给别人来用，就可以采用下面的方式来发布。</p>
+<span id="more"></span>
+<h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p>首先要在<a href="https://bintray.com/">bintray</a>注册个账号，并在设置里获取API Key</p>
+<h3 id="修改Gradle脚本"><a href="#修改Gradle脚本" class="headerlink" title="修改Gradle脚本"></a>修改Gradle脚本</h3><ul>
+<li><p>修改根目录下build.gradle</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle:2.3.1&#x27;</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.novoda:bintray-release:0.3.4&#x27;</span> <span class="comment">//添加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">task</span> clean(type: <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> rootProject.buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改要上传的类库模块的build.gradle</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.novoda.bintray-release&#x27;</span><span class="comment">//添加</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;25.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        abortOnError <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加</span></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;huzongyao&#x27;</span><span class="comment">//bintray.com用户名</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.hzy&#x27;</span><span class="comment">//jcenter上的路径</span></span><br><span class="line">    artifactId = <span class="string">&#x27;nsgif&#x27;</span><span class="comment">//项目名称</span></span><br><span class="line">    publishVersion = <span class="string">&#x27;1.0.0&#x27;</span><span class="comment">//版本号</span></span><br><span class="line">    desc = <span class="string">&#x27;an android gif decoder based on libnsgif&#x27;</span><span class="comment">//描述</span></span><br><span class="line">    website = <span class="string">&#x27;http://huzongyao.github.io/&#x27;</span><span class="comment">//网站</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行编译上传脚本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=huzongyao -PbintrayKey=XXXXXXXXXXXXXXXXXXXXXXXXXX -PdryRun=true</span><br></pre></td></tr></table></figure>
+<p>dryRun参数说明只编译不上传，确定要上传的时候设置为false</p>
+</li>
+<li><p>添加到JCenter<br>上传成功以后到bintray网站就可以看到这个类库的信息了，用以下方式就可以在android studio中引用该类库，但是还是报错。<br>这是只需要在网页右边点Add to jcenter，审核通过以后就可以正常使用了。</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;com.hzy:nsgif:1.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样之后就大功告成了，之后版本更新，也采用同样的方式即可。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AndroidStudio使用NDK编译本地代码</title>
+    <url>/2017/06/25/6.AndroidStudio%E4%BD%BF%E7%94%A8NDK%E7%BC%96%E8%AF%91%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p>AndroidStudio支持多种方式调用NDK编译本地代码，默认的Gradle可以支持NDK编译，但如果使用gradle-experimantal，可以提供更好的支持。</p>
+<span id="more"></span>
+
+<h3 id="AndroidStudio下NDK编译方式"><a href="#AndroidStudio下NDK编译方式" class="headerlink" title="AndroidStudio下NDK编译方式"></a>AndroidStudio下NDK编译方式</h3><h4 id="使用废弃的NDK"><a href="#使用废弃的NDK" class="headerlink" title="使用废弃的NDK"></a>使用废弃的NDK</h4><p>普通情况使用废弃的NDK，只需要在gradle.properties中加入配置（如果不加入则报错）：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android.useDeprecatedNdk=<span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>这样做只是为了防止gradle编译报错，为了正确编译还需要修改相应模块gradle文件，加入编译配置如：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;25.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">15</span></span><br><span class="line">        targetSdkVersion <span class="number">25</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">&quot;myjni&quot;</span></span><br><span class="line">            ldLibs <span class="string">&quot;log&quot;</span>, <span class="string">&quot;jnigraphics&quot;</span></span><br><span class="line">            abiFilters <span class="string">&quot;armeabi&quot;</span>, <span class="string">&quot;armeabi-v7a&quot;</span></span><br><span class="line">            cFlags <span class="string">&quot;-mtune=atom&quot;</span></span><br><span class="line">            stl <span class="string">&quot;gnustl_shared&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">sourceSets</span>.main &#123;</span><br><span class="line">        jniLibs.srcDir <span class="string">&#x27;src/main/libs&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        x86 &#123;</span><br><span class="line">            ndk &#123;</span><br><span class="line">                abiFilter <span class="string">&quot;x86&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mips &#123;</span><br><span class="line">            ndk &#123;</span><br><span class="line">                abiFilter <span class="string">&quot;mips&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        <span class="string">&#x27;&#x27;</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如果为提高速度直接用了已编译的lib而暂时不需要编译NDK，可以配置jni不编译：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">sourceSets</span>.main.jni.srcDirs = [] <span class="comment">//disable automatic ndk-build call</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用gradle-experimental"><a href="#使用gradle-experimental" class="headerlink" title="使用gradle-experimental"></a>使用gradle-experimental</h4><p>首先我们需要修改工程的gradle配置为gradle-experimental：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle-experimental:0.9.1&#x27;</span></span><br><span class="line">        <span class="comment">//classpath &#x27;com.android.tools.build:gradle:2.3.1&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后所有的模块配置都要加上model：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&quot;com.android.model.application&quot;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.android.model.library&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>完整的gradle配置:</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.model.library&#x27;</span></span><br><span class="line"></span><br><span class="line">model &#123;</span><br><span class="line">    android &#123;</span><br><span class="line">        compileSdkVersion <span class="number">25</span></span><br><span class="line">        buildToolsVersion <span class="string">&quot;26.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">        defaultConfig &#123;</span><br><span class="line">            minSdkVersion.apiLevel <span class="number">14</span></span><br><span class="line">            targetSdkVersion.apiLevel <span class="number">25</span></span><br><span class="line">            versionCode <span class="number">1</span></span><br><span class="line">            versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">&quot;guetzli&quot;</span></span><br><span class="line">            cppFlags.add(<span class="string">&quot;-std=c++11&quot;</span>)</span><br><span class="line">            ldLibs.addAll([<span class="string">&quot;log&quot;</span>, <span class="string">&quot;z&quot;</span>, <span class="string">&quot;jnigraphics&quot;</span>])</span><br><span class="line">            stl <span class="string">&quot;c++_static&quot;</span></span><br><span class="line">            abiFilters.addAll([<span class="string">&#x27;armeabi&#x27;</span>, <span class="string">&#x27;armeabi-v7a&#x27;</span>])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.buildTypes &#123;</span><br><span class="line">        debug &#123;</span><br><span class="line">            ndk &#123;</span><br><span class="line">                cppFlags.add(<span class="string">&#x27;-DNDK_DEBUG&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            proguardFiles.add(<span class="keyword">file</span>(<span class="string">&#x27;proguard-rules.pro&#x27;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>app 模块的配置也要相应改变：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.model.application&#x27;</span></span><br><span class="line"></span><br><span class="line">model&#123;</span><br><span class="line">    android &#123;</span><br><span class="line">        compileSdkVersion <span class="number">25</span></span><br><span class="line">        buildToolsVersion <span class="string">&quot;26.0.0&quot;</span></span><br><span class="line">        defaultConfig &#123;</span><br><span class="line">            applicationId <span class="string">&quot;com.hzy.guetzli.demo&quot;</span></span><br><span class="line">            minSdkVersion.apiLevel <span class="number">14</span></span><br><span class="line">            targetSdkVersion.apiLevel <span class="number">25</span></span><br><span class="line">            versionCode <span class="number">1</span></span><br><span class="line">            versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.signingConfigs &#123;</span><br><span class="line">        create(<span class="string">&quot;release&quot;</span>) &#123;</span><br><span class="line">            storeFile <span class="keyword">file</span>(<span class="string">&#x27;demokey.jks&#x27;</span>)</span><br><span class="line">            storePassword <span class="string">&#x27;demokey&#x27;</span></span><br><span class="line">            keyAlias <span class="string">&#x27;demokey&#x27;</span></span><br><span class="line">            keyPassword <span class="string">&#x27;demokey&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android.buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            useProguard <span class="keyword">true</span></span><br><span class="line">            proguardFiles.add(<span class="keyword">file</span>(<span class="string">&#x27;proguard-rules.pro&#x27;</span>))</span><br><span class="line">            signingConfig = $(<span class="string">&quot;android.signingConfigs.release&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样以后，本地代码就可以编译，而且AndroidStudio还支持本地代码高亮，调试等操作。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
+        <tag>ndk</tag>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用python开发completeroms网站爬虫</title>
+    <url>/2017/10/17/7.%E4%BD%BF%E7%94%A8python%E5%BC%80%E5%8F%91completeroms%E7%BD%91%E7%AB%99%E7%88%AC%E8%99%AB/</url>
+    <content><![CDATA[<p>使用Python开发爬虫是很快速简单灵活的。我在<a href="http://www.completeroms.com/">completeroms</a>这个网站看到了很全的模拟器游戏下载，包括NES，GBA，GBC等等，偶尔下载几个ROM回味一下童年时代红白机的乐趣也不失为一件很有情调的事。然而该网站没有一个批量下载的功能，只能一个个自己下载，下载一个ROM得点开两个页面，即便手速再快，每次下载之前还得等待10秒。于是，对于想批量下载的羊毛党来说，得弄个爬虫才是真爱了。</p>
+<span id="more"></span>
+
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="1-爬虫抓取逻辑"><a href="#1-爬虫抓取逻辑" class="headerlink" title="1.爬虫抓取逻辑"></a>1.爬虫抓取逻辑</h3><p>抓取的逻辑一般和人用浏览器访问大致是一样的，下载ROM我们首先会访问目录页。目录是有分页的，所以先要遍历所有目录页。针对于每一页，又会有若干个条目，所以又要遍历该页中的所有条目，对于每个条目，都有超链接跟踪到详情页，在详情页中便可找到下载链接。有了下载链接，呵呵，下就完了。</p>
+<h3 id="2-使用Requests访问HTTP"><a href="#2-使用Requests访问HTTP" class="headerlink" title="2.使用Requests访问HTTP"></a>2.使用Requests访问HTTP</h3><p>有了爬取的逻辑，接下来就要具体实现了，首先分析一下目录页网址的特点，如第NES游戏第3页：<a href="http://www.completeroms.com/roms/nintendo/3">http://www.completeroms.com/roms/nintendo/3</a> 只有最后一个数字会改变，前面的都一样，因此如果要爬1~64页，一个for循环就好了。然而现在我们怎么使用http请求拿到网页的内容呢？使用requests库吧：requests.get(url)一下就可以发送一个get请求了，于是就可以写代码了：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">max_page = <span class="number">65</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, max_page):</span><br><span class="line">    url = <span class="string">&#x27;http://www.completeroms.com/roms/nintendo/%d&#x27;</span> % i</span><br><span class="line">    req = requests.get(url)</span><br><span class="line">    <span class="built_in">print</span> req.text</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用BeautifulSoup解析DOM"><a href="#3-使用BeautifulSoup解析DOM" class="headerlink" title="3.使用BeautifulSoup解析DOM"></a>3.使用BeautifulSoup解析DOM</h3><p>使用requests可以拿到整个网页的html代码，但是我们需要从这些代码里提取出我们需要的信息，使用一些DOM解析库(如BeautifulSoup)来分析DOM结构即可。我们现在需要的是目录列表，这些列表是存在于table标签中的，例如：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;//www.completeroms.com/assets/img/flags/usa.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;United States of America&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/dl/nintendo/dragon-ball-z-4in1-/106706&quot;</span>&gt;</span>Dragon Ball Z 4-in-1 <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;usa&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/roms/nintendo&quot;</span>&gt;</span>Nintendo<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span>20,882<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rating&quot;</span> <span class="attr">data-size</span>=<span class="string">&quot;xs&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;true&quot;</span> <span class="attr">data-show-caption</span>=<span class="string">&quot;false&quot;</span> <span class="attr">data-show-clear</span>=<span class="string">&quot;false&quot;</span> <span class="attr">value</span>=<span class="string">&quot;4.7&quot;</span> <span class="attr">current-value</span>=<span class="string">&quot;4.7&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;//www.completeroms.com/assets/img/flags/usa.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;United States of America&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/dl/nintendo/prince-of-persia-u/4219&quot;</span>&gt;</span>Prince Of Persia <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;usa&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/roms/nintendo&quot;</span>&gt;</span>Nintendo<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span>20,791<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rating&quot;</span> <span class="attr">data-size</span>=<span class="string">&quot;xs&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;true&quot;</span> <span class="attr">data-show-caption</span>=<span class="string">&quot;false&quot;</span> <span class="attr">data-show-clear</span>=<span class="string">&quot;false&quot;</span> <span class="attr">value</span>=<span class="string">&quot;4.6&quot;</span> <span class="attr">current-value</span>=<span class="string">&quot;4.6&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我想要过滤出来的，就是a标签href属性的内容，因为href链接就是对应ROM详情页的网址。用以下代码，就可以把这些href获取到：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bs = BeautifulSoup(req.text, features=<span class="string">&#x27;html5lib&#x27;</span>)</span><br><span class="line">tr_nodes = bs.find(<span class="string">&#x27;table&#x27;</span>, class_=<span class="string">&#x27;table&#x27;</span>).find_all(<span class="string">&#x27;tr&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> tr_node <span class="keyword">in</span> tr_nodes:</span><br><span class="line">    a_node = tr_node.find(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> a_node <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;warn: empty node!&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    a_url = a_node.attrs[<span class="string">&#x27;href&#x27;</span>]</span><br><span class="line">    <span class="built_in">print</span> a_url</span><br></pre></td></tr></table></figure>
+<p>这样以后我拿到的一堆详情页的URL：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">//www.completeroms.com/dl/nintendo/dragon-ball-z-4in1-/106706</span><br><span class="line">//www.completeroms.com/dl/nintendo/prince-of-persia-u/4219</span><br><span class="line">//www.completeroms.com/dl/nintendo/shinobi-u/4315</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-使用正则匹配提取字符串"><a href="#4-使用正则匹配提取字符串" class="headerlink" title="4.使用正则匹配提取字符串"></a>4.使用正则匹配提取字符串</h3><p>本来的访问顺序是这样的，目录页-&gt;详情页-&gt;下载页，但根据观察发现不用访问详情页便可得知下载页的URL，这样少了一次网络请求，可以节省点网络流量哈。下载页的URL形如：<a href="http://www.completeroms.com/thankyou.php?id=4367">http://www.completeroms.com/thankyou.php?id=4367</a> 显而易见id参数对应的值就是上一步中得到的href的最后一个“&#x2F;”后面的数字。所以我们下一步要做的，就是从&#x2F;&#x2F;<a href="http://www.completeroms.com/dl/nintendo/shinobi-u/4315%E8%BF%99%E6%A0%B7%E7%9A%84%E4%B8%80%E4%B8%AA%E7%BD%91%E5%9D%80%E4%B8%AD%E6%88%AA%E5%8F%96%E5%87%BA4315%E8%BF%99%E4%B8%AAid%E3%80%82%E8%BF%99%E4%B8%AAid%E7%9A%84%E9%95%BF%E5%BA%A6%E6%98%AF%E4%B8%8D%E5%9B%BA%E5%AE%9A%E7%9A%84%EF%BC%8C%E7%89%B9%E7%82%B9%E6%98%AF%E5%A4%84%E4%BA%8E%E2%80%9C/%E2%80%9D%E7%9A%84%E5%90%8E%E9%9D%A2%EF%BC%8C%E6%8B%BF%E5%88%B0%E5%AE%83%E7%9A%84%E4%B8%80%E7%A7%8D%E5%81%9A%E6%B3%95%E6%98%AF%E7%94%A8%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%EF%BC%8C%E4%BD%86%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%94%A8find()%E5%A6%82%EF%BC%9A">www.completeroms.com/dl/nintendo/shinobi-u/4315这样的一个网址中截取出4315这个id。这个id的长度是不固定的，特点是处于“/”的后面，拿到它的一种做法是用正则匹配，但也可以用find()如：</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">url = <span class="string">&#x27;//www.completeroms.com/dl/nintendo/shinobi-u/4315&#x27;</span></span><br><span class="line">last_id = url.rfind(<span class="string">&#x27;/&#x27;</span>) + <span class="number">1</span></span><br><span class="line">rom_id = url[last_id:]</span><br><span class="line">download_url = <span class="string">&#x27;http://www.completeroms.com/thankyou.php?id=%s&#x27;</span> % rom_id</span><br></pre></td></tr></table></figure>
+<p>这样以后，下载页的url又到手了，如果我用浏览器打开这个网址，等待10秒以后，ROM文件就自动开始下载了。但爬虫肯定不会就此罢休，起码得让ROM自动下载。我们有了下载页的URL，还需要做下一步，需要在下载页中找到文件的URL，这样才能下载嘛。然而通过观察就能发现，文件的下载地址并不是直接包含在任何一个a标签链接里的，而是写在js里，js跑起来后倒计时十秒钟后自动开始下载的，所以使用BeautifulSoup这样的DOM搜索去做就不合适了，我的做法是直接全文用正则匹配了。因为文件链接地址在整个文档中非常显眼：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">start_download</span>(<span class="params"></span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> url = <span class="string">&quot;http://dl.completeroms.com/grab/Nintendo/Pirate/Dragon Ball Z 4-in-1 [p1][!].zip&quot;</span>;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="title function_">open</span>( url,<span class="string">&quot;_self&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="built_in">setTimeout</span>( start_download, <span class="number">10000</span> );          </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我要的就是 var url &#x3D; 后面的这个链接，使用下面的代码就把它从整个文档中过滤出来了：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ptn = re.<span class="built_in">compile</span>(<span class="string">r&#x27;.*var url = &quot;(?P&lt;zip_url&gt;.*)&quot;;.*&#x27;</span>)</span><br><span class="line">m = ptn.search(req.text)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">hasattr</span>(m, <span class="string">&#x27;group&#x27;</span>):</span><br><span class="line">    zip_url = m.group(<span class="string">&#x27;zip_url&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span> zip_url</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-文件下载"><a href="#5-文件下载" class="headerlink" title="5.文件下载"></a>5.文件下载</h3><p>这时，迫不及待的在浏览器里输入刚刚从js里提取出来的这个文件下载地址，狂敲回车键，期待着文件开始下载。然而世事总难料，503错误出现了，半天的努力白费了。<br>既然用浏览器下载不了，使用爬虫直接下载，那不也是一样白费么。要发现其中的猫腻，就得搞清楚js中使用window.open( url,”_self”)来下载和直接用浏览器打开下载有啥区别。<br>最终发现，差异就在于他的请求头里多带了个参数 Referer:<a href="http://www.completeroms.com/thankyou.php?id=4367">http://www.completeroms.com/thankyou.php?id=4367</a> 知道了这个，我们自己也可以伪造个请求头，于是下载的代码出炉了：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Referer&#x27;</span>: download_url,</span><br><span class="line">    <span class="string">&#x27;Accept - Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 请求的时候设置请求头</span></span><br><span class="line">r = requests.get(zip_url, headers=headers)</span><br><span class="line"><span class="comment"># 设置下载目录</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(rom_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> code:</span><br><span class="line">    code.write(r.content)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-多线程下载"><a href="#6-多线程下载" class="headerlink" title="6.多线程下载"></a>6.多线程下载</h3><p>把上面的流程串起来，下载就可以源源不断跑起来了。网页上如果还有其他我们需要的信息，就解析对应的DOM获取就行了，比如我想把游戏说明里的缩略图也下载下来，依旧如法炮制就行。<br>但是，这时你会发现速度成问题了，这个网站nes的ROM有3000多个，顺次访问完3000个文件再下载完3000个文件，已经过去数十个小时了。我们希望看到的是多线程刷刷的下载速度，我们使用ThreadPool，就可以同时爬取多个下载页，或者同时下载多个文件了，使用很简单：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">start_fetch</span>():</span><br><span class="line">    pool = ThreadPool(<span class="number">8</span>)</span><br><span class="line">    pool_requests = makeRequests(get_game_in_pool, tr_nodes, <span class="literal">None</span>, <span class="literal">None</span>)</span><br><span class="line">    [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> pool_requests]</span><br><span class="line">    pool.wait()</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;finished!&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_game_in_pool</span>(<span class="params">tr_node</span>):</span><br><span class="line">    a_node = tr_node.find(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> a_node <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;warn: empty node!&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>代码中定义了线程池的容量是8， get_game_in_pool便是异步执行的方法， tr_nodes是个数组，系统会取出数组中每个元素tr_node作参数传给异步方法。<br>打个比方，线程池执行就像排队上厕所，tr_nodes数组就是排在厕所外面的队列，而get_game_in_pool函数定义了每个人上厕所需要走的流程，tr_node就是队列中的每个人。一共8个坑位，厕所开门时，队列头部8个人涌入占坑，谁上完厕所就让队列里下一个人进来，厕所从一开门就阻塞在那里直到所有人完事，厕所关门，执行print ‘finished!’<br>把爬虫放到线程池用8个线程来跑，未免也太心黑了，不过这个网站应该做了反爬虫，这样的并发下载使用不到半分钟，网站就爆出请求太多的错误了。即便是顺次下载，使用一段时间后也会报错，没辙了么。最终不但没用成多线程，还得加上5s的延时才得以稳定运行。只能靠时间来改变一切了。<br>完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> threadpool <span class="keyword">import</span> ThreadPool, makeRequests</span><br><span class="line"></span><br><span class="line">DOWNLOAD_ROOT = <span class="string">&#x27;../rom-download/completeroms/&#x27;</span></span><br><span class="line">SUPPORT_TYPES = &#123;</span><br><span class="line">    <span class="string">&#x27;nintendo&#x27;</span>: <span class="number">64</span>,</span><br><span class="line">    <span class="string">&#x27;gameboy-color&#x27;</span>: <span class="number">23</span>,</span><br><span class="line">    <span class="string">&#x27;game-gear&#x27;</span>: <span class="number">14</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RomDownloader</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, types</span>):</span><br><span class="line">        self.img_root = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        self.pool_rom_list = []</span><br><span class="line">        self.download_types = types</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">start_fetch</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">for</span> my_type <span class="keyword">in</span> self.download_types:</span><br><span class="line">            <span class="keyword">if</span> my_type <span class="keyword">not</span> <span class="keyword">in</span> SUPPORT_TYPES:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            max_page = SUPPORT_TYPES[my_type]</span><br><span class="line">            rom_list = []</span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, max_page):</span><br><span class="line">                index_url = <span class="string">&#x27;http://www.completeroms.com/roms/%s/%d&#x27;</span> % (my_type, i + <span class="number">1</span>)</span><br><span class="line">                req = requests.get(index_url)</span><br><span class="line">                bs = BeautifulSoup(req.text, features=<span class="string">&#x27;html5lib&#x27;</span>)</span><br><span class="line">                tr_nodes = bs.find(<span class="string">&#x27;table&#x27;</span>, class_=<span class="string">&#x27;table&#x27;</span>).find_all(<span class="string">&#x27;tr&#x27;</span>)</span><br><span class="line">                <span class="keyword">for</span> tr_node <span class="keyword">in</span> tr_nodes:</span><br><span class="line">                    a_node = tr_node.find(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                    <span class="keyword">if</span> a_node <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    detail_url = a_node.attrs[<span class="string">&#x27;href&#x27;</span>]</span><br><span class="line">                    last_id = detail_url.rfind(<span class="string">&#x27;/&#x27;</span>) + <span class="number">1</span></span><br><span class="line">                    rom_id = detail_url[last_id:]</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> rom_id:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    rom_info = &#123;</span><br><span class="line">                        <span class="string">&#x27;index&#x27;</span>: count,</span><br><span class="line">                        <span class="string">&#x27;rom_id&#x27;</span>: rom_id,</span><br><span class="line">                    &#125;</span><br><span class="line">                    rom_list.append(rom_info)</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;parse index ok[%s] total:[%d]&#x27;</span> % (index_url, count)</span><br><span class="line">            self.parse_download_info_async(rom_list)</span><br><span class="line">            self.write_url_map_csv(my_type)</span><br><span class="line">            self.download_img_async(my_type)</span><br><span class="line">            self.download_roms_slowly(my_type)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_download_info_async</span>(<span class="params">self, rom_list</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;start parse download info, count[%d]&#x27;</span> % <span class="built_in">len</span>(rom_list)</span><br><span class="line">        self.pool_rom_list = []</span><br><span class="line">        pool = ThreadPool(<span class="number">64</span>)</span><br><span class="line">        pool_requests = makeRequests(self.get_download_url_pool, rom_list,</span><br><span class="line">                                     self.get_download_url_done, self.get_download_url_error)</span><br><span class="line">        [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> pool_requests]</span><br><span class="line">        pool.wait()</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;parse download info, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_download_url_error</span>(<span class="params">req_args, error_info</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;url error:[%s]&#x27;</span> % req_args.args[<span class="number">0</span>][<span class="string">&#x27;final_url&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> error_info</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_download_url_pool</span>(<span class="params">rom_info</span>):</span><br><span class="line">        rom_id = rom_info[<span class="string">&#x27;rom_id&#x27;</span>]</span><br><span class="line">        final_url = <span class="string">&#x27;http://www.completeroms.com/thankyou.php?id=%s&#x27;</span> % rom_id</span><br><span class="line">        rom_info[<span class="string">&#x27;final_url&#x27;</span>] = final_url</span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&#x27;Accept - Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        req = requests.get(final_url, headers=headers, timeout=<span class="number">60</span>)</span><br><span class="line">        bs = BeautifulSoup(req.text, features=<span class="string">&#x27;html5lib&#x27;</span>)</span><br><span class="line">        fname_node = bs.find(<span class="string">&#x27;h3&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> fname_node:</span><br><span class="line">            file_name = fname_node.text.strip()</span><br><span class="line">            rom_info[<span class="string">&#x27;file_name&#x27;</span>] = file_name</span><br><span class="line">            img_node = bs.find(<span class="string">&#x27;img&#x27;</span>, class_=<span class="string">&#x27;rom-cover&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> img_node:</span><br><span class="line">                img_url = img_node.attrs[<span class="string">&#x27;src&#x27;</span>]</span><br><span class="line">                rom_info[<span class="string">&#x27;img_url&#x27;</span>] = img_url</span><br><span class="line">                last_dot = img_url.rfind(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">                ext_name = img_url[last_dot:].lower()</span><br><span class="line">                last_dot = file_name.rfind(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">                simple_name = file_name[<span class="number">0</span>:last_dot]</span><br><span class="line">                rom_info[<span class="string">&#x27;simple_name&#x27;</span>] = simple_name</span><br><span class="line">                img_name = simple_name + ext_name</span><br><span class="line">                rom_info[<span class="string">&#x27;img_name&#x27;</span>] = img_name</span><br><span class="line">        ptn = re.<span class="built_in">compile</span>(<span class="string">r&#x27;.*var url = &quot;(?P&lt;zip_url&gt;.*)&quot;;.*&#x27;</span>)</span><br><span class="line">        m = ptn.search(req.text)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(m, <span class="string">&#x27;group&#x27;</span>):</span><br><span class="line">            zip_url = m.group(<span class="string">&#x27;zip_url&#x27;</span>)</span><br><span class="line">            rom_info[<span class="string">&#x27;file_url&#x27;</span>] = zip_url</span><br><span class="line">        <span class="keyword">return</span> rom_info</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">write_url_map_csv</span>(<span class="params">self, my_type</span>):</span><br><span class="line">        csv_root = DOWNLOAD_ROOT + my_type + <span class="string">&#x27;/&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(csv_root):</span><br><span class="line">            os.makedirs(csv_root)</span><br><span class="line">        time_str = time.strftime(<span class="string">&#x27;%Y-%m-%d-%H%M%S&#x27;</span>, time.localtime())</span><br><span class="line">        log_path = <span class="string">&#x27;%surl-map-%s.csv&#x27;</span> % (csv_root, time_str)</span><br><span class="line">        csv_writer = codecs.<span class="built_in">open</span>(log_path, <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        csv_writer.write(<span class="string">&#x27;Name,Rom Url,Image Url,Referer Url\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> rom_info <span class="keyword">in</span> self.pool_rom_list:</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;simple_name&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> rom_info:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;no simple name[%s]&#x27;</span> % rom_info[<span class="string">&#x27;file_name&#x27;</span>]</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            csv_writer.write(<span class="string">&#x27;&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;\n&#x27;</span> % (rom_info[<span class="string">&#x27;simple_name&#x27;</span>] <span class="keyword">or</span> <span class="string">&#x27;&#x27;</span>, rom_info[<span class="string">&#x27;file_url&#x27;</span>],</span><br><span class="line">                                                        rom_info[<span class="string">&#x27;img_url&#x27;</span>], rom_info[<span class="string">&#x27;final_url&#x27;</span>]))</span><br><span class="line">        csv_writer.close()</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;write csv file ok[%s]&#x27;</span> % my_type</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_download_url_done</span>(<span class="params">self, req_args, rom_info</span>):</span><br><span class="line">        <span class="keyword">if</span> rom_info <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&#x27;get download url error!&#x27;</span></span><br><span class="line">        index = rom_info[<span class="string">&#x27;index&#x27;</span>]</span><br><span class="line">        file_name = rom_info[<span class="string">&#x27;file_name&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;get download url ok[%3d.%s]&#x27;</span> % (index, file_name)</span><br><span class="line">        self.pool_rom_list.append(rom_info)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_async</span>(<span class="params">self, my_type</span>):</span><br><span class="line">        self.img_root = DOWNLOAD_ROOT + my_type + <span class="string">&#x27;/images/&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(self.img_root):</span><br><span class="line">            os.makedirs(self.img_root)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;start download images, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line">        pool = ThreadPool(<span class="number">64</span>)</span><br><span class="line">        pool_requests = makeRequests(self.download_img_in_pool, self.pool_rom_list, self.download_img_done,</span><br><span class="line">                                     self.download_img_error)</span><br><span class="line">        [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> pool_requests]</span><br><span class="line">        pool.wait()</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;download images ok, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_error</span>(<span class="params">req_args, error_info</span>):</span><br><span class="line">        args = req_args.args[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;img_url&#x27;</span> <span class="keyword">in</span> args:</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&#x27;download image error:[%s]&#x27;</span> % args[<span class="string">&#x27;img_url&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> error_info</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_in_pool</span>(<span class="params">self, rom_info</span>):</span><br><span class="line">        img_name = rom_info[<span class="string">&#x27;img_name&#x27;</span>]</span><br><span class="line">        img_url = rom_info[<span class="string">&#x27;img_url&#x27;</span>]</span><br><span class="line">        img_path = self.img_root + img_name</span><br><span class="line">        <span class="keyword">if</span> os.path.exists(img_path):</span><br><span class="line">            <span class="keyword">return</span> rom_info</span><br><span class="line">        r = requests.get(img_url, timeout=<span class="number">60</span>)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(img_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> code:</span><br><span class="line">            code.write(r.content)</span><br><span class="line">        <span class="keyword">return</span> rom_info</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_done</span>(<span class="params">req_args, rom_info</span>):</span><br><span class="line">        index = rom_info[<span class="string">&#x27;index&#x27;</span>]</span><br><span class="line">        img_name = rom_info[<span class="string">&#x27;img_name&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;finish download image[%d][%s]&#x27;</span> % (index, img_name)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_roms_slowly</span>(<span class="params">self, my_type</span>):</span><br><span class="line">        roms_root = DOWNLOAD_ROOT + my_type + <span class="string">&#x27;/roms/&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(roms_root):</span><br><span class="line">            os.makedirs(roms_root)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;start download roms, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line">        <span class="keyword">for</span> rom_info <span class="keyword">in</span> self.pool_rom_list:</span><br><span class="line">            file_name = rom_info[<span class="string">&#x27;file_name&#x27;</span>]</span><br><span class="line">            rom_path = roms_root + file_name</span><br><span class="line">            <span class="keyword">if</span> os.path.exists(rom_path):</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;exists rom[%s]&#x27;</span> % file_name</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            final_url = rom_info[<span class="string">&#x27;final_url&#x27;</span>]</span><br><span class="line">            file_url = rom_info[<span class="string">&#x27;file_url&#x27;</span>]</span><br><span class="line">            headers = &#123;</span><br><span class="line">                <span class="string">&#x27;Referer&#x27;</span>: final_url,</span><br><span class="line">                <span class="string">&#x27;Accept - Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                r = requests.get(file_url, headers=headers, timeout=<span class="number">300</span>)</span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(rom_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> code:</span><br><span class="line">                    code.write(r.content)</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;download rom ok sleep 10s[%3d.%s]&#x27;</span> % (rom_info[<span class="string">&#x27;index&#x27;</span>], file_name)</span><br><span class="line">                time.sleep(<span class="number">6</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception, e:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;exception[%s][%s]&#x27;</span> % (rom_info[<span class="string">&#x27;file_name&#x27;</span>], e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;start fetch!!&#x27;</span>)</span><br><span class="line">    download_types = [</span><br><span class="line">        <span class="string">&#x27;gameboy-color&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;nintendo&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;game-gear&#x27;</span>,</span><br><span class="line">    ]</span><br><span class="line">    downloader = RomDownloader(download_types)</span><br><span class="line">    downloader.start_fetch()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>做的比较简单，如果需要稳定的话还要再加些空判断和异常处理，校验之类。我的目的只是几千个ROM一夜之间下载到手，其他的就不用管了。<br>完整项目：<a href="https://github.com/huzongyao/EmuRomCrawler">https://github.com/huzongyao/EmuRomCrawler</a></p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Python学习</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
+        <tag>python</tag>
+        <tag>dom</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AndroidStudio多模块编译之子模块的调试</title>
+    <url>/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/</url>
+    <content><![CDATA[<p>我们构建规模较大的Android工程时为了复用和分工协作，会使用到多模块构建应用程序。有时候一个App的编译也依赖于多个子模块，这样的App通常由一个app模块和若干个library模块组成。我们通过compile project(‘:library’)的方式就可以引入子模块供我们所用。但这种情况下有个问题，主模块引入的library默认情况下总是以release方式编译。</p>
+<span id="more"></span>
+
+<h2 id="子模块无法调试和打印LOG"><a href="#子模块无法调试和打印LOG" class="headerlink" title="子模块无法调试和打印LOG"></a>子模块无法调试和打印LOG</h2><p>这就意味着，不管app模块是以debug还是release方式编译，子模块的BuildConfig.DEBUG的值永远是false，且log不得输出，更重要的是release版本中本地代码无法断点调试。<br>相关现象的英文描述引用：<br>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. </p>
+<h3 id="1-子模块发布debug版本"><a href="#1-子模块发布debug版本" class="headerlink" title="1.子模块发布debug版本"></a>1.子模块发布debug版本</h3><p>要解决这个问题，最直接的就是指定子模块固定发布debug版本供其他模块引用，You can control which variant gets published:</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">      defaultPublishConfig <span class="string">&quot;debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有Flavor，也需要指定Flavor：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">&quot;flavor1Debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样以后，子模块发布的版本总是被指定为debug版本，调试也可以正常进行了。</p>
+<h3 id="2-根据主模块切换编译方式"><a href="#2-根据主模块切换编译方式" class="headerlink" title="2.根据主模块切换编译方式"></a>2.根据主模块切换编译方式</h3><p>上一种办法，通过添加 defaultPublishConfig “debug” 解决了调试问题，这样虽然再debug状态下好使了，但是在发release版本的时候会导致DEBUG仍然为true。<br>除非手动修改defaultPublishConfig “release”，我们想实现其随app模块的切换自动切换呢。</p>
+<ul>
+<li>Library</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    publishNonDefault <span class="keyword">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>App</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    releaseCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;release&#x27;</span>)</span><br><span class="line">    debugCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些配置也很容易理解，就是让子模块生成多个arr包，主模块根据需要来决定编译时引用哪一个。</p>
+<h3 id="3-更多参考资料"><a href="#3-更多参考资料" class="headerlink" title="3.更多参考资料"></a>3.更多参考资料</h3><ul>
+<li><a href="https://github.com/akaita/AndroidNativeLibrary">https://github.com/akaita/AndroidNativeLibrary</a></li>
+<li><a href="http://www.akaita.com/post/android-native-library-module-debug/">http://www.akaita.com/post/android-native-library-module-debug/</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android使用greenDAO方便SQLite做ORM开发</title>
+    <url>/2017/11/14/9.Android%E4%BD%BF%E7%94%A8greenDAO%E6%96%B9%E4%BE%BFSQLite%E5%81%9AORM%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[<p>ORM是指对象关系映射（Object Relational Mapping，简称ORM）模式是一种为了解决面向对象与关系数据库存在的互不匹配的现象的技术。简单的说，ORM是通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系数据库中。使用它普通的数据库操作不需要去手动编写SQL语句，提高开发效率并减少出错。greenDAO是可以运行在Android平台的一款ORM框架，使用方便，效率也不错，应此很常用。</p>
+<span id="more"></span>
+
+<h2 id="greenDAO介绍"><a href="#greenDAO介绍" class="headerlink" title="greenDAO介绍"></a>greenDAO介绍</h2><p><a href="http://greenrobot.org/greendao/">greenDAO</a>是<a href="http://greenrobot.org/">greenrobot</a>推出的开源产品之一，在<a href="https://github.com/greenrobot/greenDAO">GitHub</a>可以获取其源代码。</p>
+<ul>
+<li>它的效率很高，超过其他普通的ORM框架</li>
+<li>可以支持加密，要求安全存储数据的应用可以加密使存在数据库中的内容不被泄露。</li>
+<li>框架的大小不足100kb，所以不会明显增加应用的大小。</li>
+<li>不但能存普通数据，还可以存储protobuf，使得适用性很好。</li>
+</ul>
+<p>greenDAO官方推荐使用效率更高的新产品<a href="http://objectbox.io/">ObjectBox</a>,据说效率比Realm还高。不过在普通情况下，greenDAO就可以满足我的需求了。</p>
+<h2 id="greenDAO依赖引入"><a href="#greenDAO依赖引入" class="headerlink" title="greenDAO依赖引入"></a>greenDAO依赖引入</h2><p>greenDAO需要在编译时做一些额外的操作，所以需要在项目根目录的build.gradle引入额外的插件</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="comment">// In your root build.gradle file:</span></span><br><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">        mavenCentral() <span class="comment">// add repository</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle:2.3.0&#x27;</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;org.greenrobot:greendao-gradle-plugin:3.2.2&#x27;</span> <span class="comment">// add plugin</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在项目需要使用数据库的模块目录下的build.gradle中引入依赖库并执行插件</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="comment">// In your app projects build.gradle file:</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;org.greenrobot.greendao&#x27;</span> <span class="comment">// apply plugin</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">&#x27;org.greenrobot:greendao:3.2.2&#x27;</span> <span class="comment">// add library</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要修改数据库版本，也可以在gradle脚本中指定，当数据表结构改变时，需要升级数据库版本：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="comment">// In the build.gradle file of your app project:</span></span><br><span class="line">android &#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greendao &#123;</span><br><span class="line">    schemaVersion <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样以后，依赖引入就完成了，接下来就可以进行java代码开发了。</p>
+<h2 id="创建数据模型"><a href="#创建数据模型" class="headerlink" title="创建数据模型"></a>创建数据模型</h2><p>创建模型就是编写一个普通的实体类，区别在于用一些greenDAO提供的注解来标识类或者成员的特性，例如：一个简单的User实体</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transient</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> tempUsageCount; <span class="comment">// not persisted</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// getters and setters for id and user ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码中的@Entity就代表这是一个需要用greenDAO持久化的实体。它还可以带更多的参数，用来对这个表做更多的定制：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity(</span></span><br><span class="line"><span class="meta">        // If you have more than one schema, you can tell greenDAO</span></span><br><span class="line"><span class="meta">        // to which schema an entity belongs (pick any string as a name).</span></span><br><span class="line"><span class="meta">        schema = &quot;myschema&quot;,</span></span><br><span class="line"><span class="meta">        </span></span><br><span class="line"><span class="meta">        // Flag to make an entity &quot;active&quot;: Active entities have update,</span></span><br><span class="line"><span class="meta">        // delete, and refresh methods.</span></span><br><span class="line"><span class="meta">        active = true,</span></span><br><span class="line"><span class="meta">        </span></span><br><span class="line"><span class="meta">        // Specifies the name of the table in the database.</span></span><br><span class="line"><span class="meta">        // By default, the name is based on the entities class name.</span></span><br><span class="line"><span class="meta">        nameInDb = &quot;AWESOME_USERS&quot;,</span></span><br><span class="line"><span class="meta">        </span></span><br><span class="line"><span class="meta">        // Define indexes spanning multiple columns here.</span></span><br><span class="line"><span class="meta">        indexes = &#123;</span></span><br><span class="line"><span class="meta">                @Index(value = &quot;name DESC&quot;, unique = true)</span></span><br><span class="line"><span class="meta">        &#125;,</span></span><br><span class="line"><span class="meta">        </span></span><br><span class="line"><span class="meta">        // Flag if the DAO should create the database table (default is true).</span></span><br><span class="line"><span class="meta">        // Set this to false, if you have multiple entities mapping to one table,</span></span><br><span class="line"><span class="meta">        // or the table creation is done outside of greenDAO.</span></span><br><span class="line"><span class="meta">        createInDb = false,</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">        // Whether an all properties constructor should be generated.</span></span><br><span class="line"><span class="meta">        // A no-args constructor is always required.</span></span><br><span class="line"><span class="meta">        generateConstructors = true,</span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">        // Whether getters and setters for properties should be generated if missing.</span></span><br><span class="line"><span class="meta">        generateGettersSetters = true</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模型创建完成后，我们只需要编译代码，插件会自动帮我们生成get&#x2F;set方法，以及带hash的构造方法，当我们修改模型的时候，也要对应修改@Generated注解的方法，或者干脆把他们删了，让插件自动生成。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transient</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> tempUsageCount; <span class="comment">// not persisted</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(hash = 873297011)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">User</span><span class="params">(Long id, String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(hash = 586692638)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">User</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Long id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h2><p>我们的模型创建出来了，就迫不及待的想通过get&#x2F;set方法来获取和修改数据了，然而操作过数据库的我们都知道，我们还需要一个数据库链接，数据才能做持久化。一般情况下，我们只需要在Application里打开一个数据库链接会话就可以了，之后在业务模块中需要存取数据时复用这个会话就行。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="comment">/** A flag to show how easily you can switch from standard SQLite to the encrypted SQLCipher. */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">boolean</span> <span class="variable">ENCRYPTED</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> DaoSession daoSession;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">        <span class="type">DevOpenHelper</span> <span class="variable">helper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DevOpenHelper</span>(<span class="built_in">this</span>, ENCRYPTED ? <span class="string">&quot;notes-db-encrypted&quot;</span> : <span class="string">&quot;notes-db&quot;</span>);</span><br><span class="line">        <span class="type">Database</span> <span class="variable">db</span> <span class="operator">=</span> ENCRYPTED ? helper.getEncryptedWritableDb(<span class="string">&quot;super-secret&quot;</span>) : helper.getWritableDb();</span><br><span class="line">        daoSession = <span class="keyword">new</span> <span class="title class_">DaoMaster</span>(db).newSession();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> DaoSession <span class="title function_">getDaoSession</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> daoSession;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果在业务模块中需要操作数据库时，通过这个全局的session获取某个模型的DAO来做具体的增删改查操作。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// get the note DAO</span></span><br><span class="line"><span class="type">DaoSession</span> <span class="variable">daoSession</span> <span class="operator">=</span> ((App) getApplication()).getDaoSession();</span><br><span class="line">noteDao = daoSession.getNoteDao();</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert</span></span><br><span class="line"><span class="type">Note</span> <span class="variable">note</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Note</span>();</span><br><span class="line">note.setText(noteText);</span><br><span class="line">note.setComment(comment);</span><br><span class="line">note.setDate(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">note.setType(NoteType.TEXT);</span><br><span class="line">noteDao.insert(note);</span><br><span class="line">Log.d(<span class="string">&quot;DaoExample&quot;</span>, <span class="string">&quot;Inserted new note, ID: &quot;</span> + note.getId());</span><br><span class="line"></span><br><span class="line"><span class="comment">// delete</span></span><br><span class="line">noteDao.deleteByKey(id);</span><br><span class="line"></span><br><span class="line"><span class="comment">// update</span></span><br><span class="line">note.setText(<span class="string">&quot;This note has changed.&quot;</span>);</span><br><span class="line">noteDao.update(note);</span><br></pre></td></tr></table></figure>
+
+<p>如果遇到复杂的业务场景，greenDAO还可以做连接操作，外键，实现一对一，一对多等对应关系。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,0 +1,708 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>基于WebAssembly的前端网络安全实践 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="WebAssembly（缩写为Wasm）是一种用于基于堆栈的虚拟机的二进制指令格式。Wasm 被设计为编程语言的可移植编译目标，支持在 Web 上部署客户端和服务器应用程序。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="基于WebAssembly的前端网络安全实践"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/前端学习/">前端学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>基于WebAssembly的前端网络安全实践</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2023-05-12T13:41:21.000Z"><a href="/2023/05/12/17-%E5%9F%BA%E4%BA%8EWebAssembly%E7%9A%84%E5%89%8D%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5/">2023-05-12</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/前端/" class="chip pink lighten-1">前端</a>
+        
+            <a href="/tags/WebAssembly/" class="chip pink lighten-1">WebAssembly</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="section table-of-contents-text">使用场景</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD"><span class="section table-of-contents-text">实现功能</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#WebAssembly%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E7%8E%A9%E6%B3%95"><span class="section table-of-contents-text">WebAssembly快速上手玩法</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#1-%E4%B8%8B%E8%BD%BD%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%BC%96%E8%AF%91SDK%EF%BC%9A"><span class="section table-of-contents-text">1. 下载跨平台编译SDK：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96SDK"><span class="section table-of-contents-text">2. 初始化SDK</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#3-%E7%BC%96%E8%AF%91C-C-%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="section table-of-contents-text">3. 编译C&#x2F;C++代码：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#4-%E5%9C%A8Vue%E4%B8%AD%E4%BD%BF%E7%94%A8wasm"><span class="section table-of-contents-text">4. 在Vue中使用wasm</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#5-wasm%E6%A1%A5%E6%8E%A5"><span class="section table-of-contents-text">5. wasm桥接</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#6-%E5%90%8E%E7%BB%AD%E6%AD%A5%E9%AA%A4"><span class="section table-of-contents-text">6. 后续步骤</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#7-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">7. 项目实践中的实际问题</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E5%9F%9F%E5%90%8D%E9%AA%8C%E8%AF%81%E9%98%B2%E6%AD%A2wasm%E8%A2%AB%E5%86%92%E7%94%A8"><span class="section table-of-contents-text">域名验证防止wasm被冒用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E7%BC%96%E8%AF%91OpenSSL"><span class="section table-of-contents-text">编译OpenSSL</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#Emscripten%E7%BB%93%E5%90%88%E5%88%B0CLion"><span class="section table-of-contents-text">Emscripten结合到CLion</span></a></li></ol></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>WebAssembly（缩写为Wasm）是一种用于基于堆栈的虚拟机的二进制指令格式。Wasm 被设计为编程语言的可移植编译目标，支持在 Web 上部署客户端和服务器应用程序。</p>
+<span id="more"></span>
+
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>WebAssembly是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。<br>它设计的目的不是为了手写代码而是为诸如 C、C++和Rust等低级源语言提供一个高效的编译目标。</p>
+<ul>
+<li>拥有更好的计算性能</li>
+<li>受益于现代C++的模板，常量表达式，宏定义等特性</li>
+<li>提高安全性，比js更加难以实施逆向，可以实施编译时加密技术</li>
+<li>受益于已存在的大量开源C&#x2F;C++开源库，可以移植使用</li>
+</ul>
+<h2 id="实现功能"><a href="#实现功能" class="headerlink" title="实现功能"></a>实现功能</h2><ul>
+<li>基于C++14常量表达式和模板的字符串编译时加密</li>
+<li>在类unix系统上编译openssl，静态链接到工程中，可用于方便的实现各种加密手段</li>
+<li>基于openssl，实现sha1, sha256, aes256, base64算法demo</li>
+<li>基于nlohmann::json，实现方便使用的json操作demo</li>
+</ul>
+<h2 id="WebAssembly快速上手玩法"><a href="#WebAssembly快速上手玩法" class="headerlink" title="WebAssembly快速上手玩法"></a>WebAssembly快速上手玩法</h2><h3 id="1-下载跨平台编译SDK："><a href="#1-下载跨平台编译SDK：" class="headerlink" title="1. 下载跨平台编译SDK："></a>1. 下载跨平台编译SDK：</h3><pre><code>* 参考文档：https://emscripten.org/docs/getting_started/downloads.html
+* 下载地址：https://github.com/emscripten-core/emsdk
+</code></pre>
+<h3 id="2-初始化SDK"><a href="#2-初始化SDK" class="headerlink" title="2. 初始化SDK"></a>2. 初始化SDK</h3><p>按照文档初始化SDK</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./emsdk install latest</span><br><span class="line">./emsdk activate latest</span><br><span class="line">source ./emsdk_env.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-编译C-C-代码："><a href="#3-编译C-C-代码：" class="headerlink" title="3. 编译C&#x2F;C++代码："></a>3. 编译C&#x2F;C++代码：</h3><ul>
+<li><p>编译第一个程序很简单，类似于用gcc&#x2F;clang编译一个程序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;你好，世界！\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译很简单</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emcc main.cpp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译可以直接生成html文件，方便调试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emcc main.cpp -o main.html</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑代码可以采用Clion&#x2F;VsCode等</p>
+</li>
+<li><p>复杂程序编译也需要按需求加入更多源文件和编译选项</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ./cpp</span><br><span class="line">emcc -o ../src/wasm/emjob.mjs -std=c++17 -lembind -I./libs/openssl main.cpp libs/openssl/libcrypto.a</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>或者直接执行make.bat</p>
+</li>
+<li><p>其他编译选项可以参考cpp&#x2F;make.bat</p>
+</li>
+<li><p>emcc编译选项可以参考 <a target="_blank" rel="noopener" href="https://emscripten.org/docs/tools_reference/emcc.html">https://emscripten.org/docs/tools_reference/emcc.html</a></p>
+</li>
+<li><p>基本原理：emcc编译源文件产生对应的js文件及wasm文件，以供后续在前端代码中调用</p>
+</li>
+</ul>
+<h3 id="4-在Vue中使用wasm"><a href="#4-在Vue中使用wasm" class="headerlink" title="4. 在Vue中使用wasm"></a>4. 在Vue中使用wasm</h3><ul>
+<li>上一步编译成功会生成src&#x2F;wasm&#x2F;emjob.mjs，在vue项目中可以方便的引用wasm模块：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Module</span> <span class="keyword">from</span> <span class="string">&quot;@/wasm/emjob&quot;</span></span><br><span class="line"><span class="title class_">Module</span>().<span class="title function_">then</span>(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">    app.<span class="property">config</span>.<span class="property">globalProperties</span>.<span class="property">$wasm</span> = <span class="variable language_">module</span></span><br><span class="line">    app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>实例中wasm异步加载放在了整个vue加载之前，如果影响前端代码执行，也可以改到适合的地方调用即可</p>
+<h3 id="5-wasm桥接"><a href="#5-wasm桥接" class="headerlink" title="5. wasm桥接"></a>5. wasm桥接</h3><ul>
+<li><p>最常用的js调c++，就很简单，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun2</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">EMSCRIPTEN_BINDINGS</span>(my_module) &#123;</span><br><span class="line">    <span class="built_in">function</span>(<span class="string">&quot;fun1&quot;</span>, &amp;fun1);</span><br><span class="line">    <span class="built_in">function</span>(<span class="string">&quot;fun2&quot;</span>, &amp;fun2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更多可以参考文档：<a target="_blank" rel="noopener" href="https://emscripten.org/docs/porting/index.html">https://emscripten.org/docs/porting/index.html</a></p>
+</li>
+</ul>
+<h3 id="6-后续步骤"><a href="#6-后续步骤" class="headerlink" title="6. 后续步骤"></a>6. 后续步骤</h3><ul>
+<li>标准vue前端项目运行或打包即可</li>
+</ul>
+<h3 id="7-项目实践中的实际问题"><a href="#7-项目实践中的实际问题" class="headerlink" title="7. 项目实践中的实际问题"></a>7. 项目实践中的实际问题</h3><h4 id="域名验证防止wasm被冒用"><a href="#域名验证防止wasm被冒用" class="headerlink" title="域名验证防止wasm被冒用"></a>域名验证防止wasm被冒用</h4><p>用wasm固然可以隐藏一些运算逻辑，使运算逻辑难以被逆向成功，只少比js逻辑保密性好一些吧，但是如果客人果真调试我们的网站，<br>发现关键逻辑是wasm写的，大概率会想到直接冒用我们的wasm，也不用管算法如何，能用就行。</p>
+<p>对于这种情况，我们最简单的防御方法就是做一下域名验证吧，比如一个签名算法，我们可以做个判断，只有当前域名为localhost，<br>我们才返回正确的签名，否则就返回一个错误的值。客人发现运算结果是错的，不一定第一时间想到是域名问题，也许就知难而退了。<br>当然这个方法也不能完全保证安全，如果客人知道了这个判断，他们伪造个hostname就可以了</p>
+<p>具体校验函数实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="keyword">inline</span> <span class="title">isHostValid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    emscripten::val location = emscripten::val::<span class="built_in">global</span>(_c(<span class="string">&quot;location&quot;</span>));</span><br><span class="line">    <span class="keyword">auto</span> host = location[_c(<span class="string">&quot;hostname&quot;</span>)].<span class="built_in">as</span>&lt;string&gt;();</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">find</span>(VHOST.<span class="built_in">begin</span>(), VHOST.<span class="built_in">end</span>(), host) != VHOST.<span class="built_in">end</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>检验函数原理就是我们通过全局变量 location.hostname 获取到当前域名，跟合法域名列表 VHOST 进行比对，结果会返回true&#x2F;false<br>在业务逻辑开始之前调用该函数判断一下，就知道域名是否合法了。</p>
+<h4 id="编译OpenSSL"><a href="#编译OpenSSL" class="headerlink" title="编译OpenSSL"></a>编译OpenSSL</h4><p>OpenSSL是开源的加解密库，我们先编译成静态链接库，以方便使用。<br>交叉编译机器需要linux或者mac（配置方便一些），可以先下载并解压OpenSSL，使用3.x版本或者1.x版本均可。<br>配置编译选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emconfigure ./Configure gcc</span><br></pre></td></tr></table></figure>
+
+<p>开始编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j32</span><br></pre></td></tr></table></figure>
+<p>过一会儿生成文件libcrypto.a，以及include下的头文件就是我们需要的</p>
+<h4 id="Emscripten结合到CLion"><a href="#Emscripten结合到CLion" class="headerlink" title="Emscripten结合到CLion"></a>Emscripten结合到CLion</h4><p>在Clion中开发C、C++很舒服，但是默认没有支持Wasm。我们想要使用emcmake来进行源代码关联，并编译程序，其实也很简单。<br>需要修改一个设置：settings &gt; Build, Execution, Deployment &gt; CMake，创建一个新的配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-DCMAKE_TOOLCHAIN_FILE=&lt;path_to_emsdk&gt;/emscripten//cmake/Modules/Platform/Emscripten.cmake</span><br></pre></td></tr></table></figure>
+<p>这样就完美解决了代码的关联提示和编译问题，但局限是只能适用于CMake的编译。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/2023/05/18/18-Web%E5%89%8D%E7%AB%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E5%8F%8AOpenCV%E7%9A%84WebAssembly%E6%8E%A5%E5%85%A5/" rel="next" title="Web前端图像处理及OpenCV的WebAssembly接入">
+    上一篇：Web前端图像处理及OpenCV的WebAssembly接入
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2020/08/26/16.PlatformIO%E5%AD%A6%E4%B9%A0%E4%B9%8BESP8266%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="next" title="PlatformIO学习之ESP8266开发环境搭建">
+    下一篇：PlatformIO学习之ESP8266开发环境搭建
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Android组件化开发填坑记录 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="Android组件化开发通常也说模块化开发，使用Android Studio做开发时，通常组件化的实现就是在一个工程项目中同时包含若干个application模块和若干个library模块，还会引用一些第三方类库或者依赖。每一个application模块通常可以编译成一个应用，而library模块一般不用于生成可执行的应用，而是生成jar&amp;#x2F;aar类库，或者被同一项目下其他的library或application模块引用。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Android组件化开发填坑记录"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/Android学习/">Android学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Android组件化开发填坑记录</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-11-30T15:14:33.000Z"><a href="/2017/11/30/10.Android%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91%E5%A1%AB%E5%9D%91%E8%AE%B0%E5%BD%95/">2017-11-30</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/android/" class="chip pink lighten-1">android</a>
+        
+            <a href="/tags/gradle/" class="chip pink lighten-1">gradle</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="section table-of-contents-text">模块化的原因</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E7%BB%84%E4%BB%B6%E5%8C%96%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">组件化遇到的问题</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E4%B8%80-%E7%AC%AC%E4%B8%89%E6%96%B9%E7%B1%BB%E5%BA%93%E4%BE%9D%E8%B5%96%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">一.第三方类库依赖问题</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#1-%E8%BF%9C%E7%A8%8B%E4%BE%9D%E8%B5%96%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">1.远程依赖问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#2-%E6%9C%AC%E5%9C%B0%E4%BE%9D%E8%B5%96%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">2.本地依赖问题</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E4%BA%8C-Butter-Knife%E5%9C%A8library%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">二.Butter Knife在library模块使用的问题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E4%B8%89-%E8%B5%84%E6%BA%90ID%E5%B8%B8%E9%87%8F%E7%9A%84%E5%8F%98%E5%8C%96"><span class="section table-of-contents-text">三.资源ID常量的变化</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E5%9B%9B-%E6%8E%A5%E5%85%A5GoogleService%E6%8E%A8%E9%80%81"><span class="section table-of-contents-text">四.接入GoogleService推送</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E4%BA%94-%E8%B5%84%E6%BA%90%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98"><span class="section table-of-contents-text">五.资源覆盖问题</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>Android组件化开发通常也说模块化开发，使用Android Studio做开发时，通常组件化的实现就是在一个工程项目中同时包含若干个application模块和若干个library模块，还会引用一些第三方类库或者依赖。每一个application模块通常可以编译成一个应用，而library模块一般不用于生成可执行的应用，而是生成jar&#x2F;aar类库，或者被同一项目下其他的library或application模块引用。</p>
+<span id="more"></span>
+
+<h2 id="模块化的原因"><a href="#模块化的原因" class="headerlink" title="模块化的原因"></a>模块化的原因</h2><p>模块化会增加编译负担，造成一些不必要的错误，所以，对于功能单一的应用，自然没有必要做模块化，所有代码写在一个app模块就行。但是对于复杂的业务场景，比如需要同时维护多个功能类似，但又有一些差别的应用，或者应用的功能模块需要经常进行定制化裁剪，或者多人协同开发功能模块，这些场景下使用组件化可以方便就行功能复用和裁剪，每个功能模块独立开发，互不干扰，提高开发效率。</p>
+<h2 id="组件化遇到的问题"><a href="#组件化遇到的问题" class="headerlink" title="组件化遇到的问题"></a>组件化遇到的问题</h2><h3 id="一-第三方类库依赖问题"><a href="#一-第三方类库依赖问题" class="headerlink" title="一.第三方类库依赖问题"></a>一.第三方类库依赖问题</h3><h4 id="1-远程依赖问题"><a href="#1-远程依赖问题" class="headerlink" title="1.远程依赖问题"></a>1.远程依赖问题</h4><p>一般来说，远程依赖是最简单的，只需要配置路径即可，例如：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;com.android.support:design:25.3.1&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>如果在library模块中引用了一次，引用该library的其他模块无需声明，也可以使用这个远程依赖。若两者使用了不同版本的相同依赖，最好统一成同一个版本，以免二者发生冲突。</p>
+<h4 id="2-本地依赖问题"><a href="#2-本地依赖问题" class="headerlink" title="2.本地依赖问题"></a>2.本地依赖问题</h4><p>如果依赖本地的一个aar或者jar包，在library模块中引用一般没有问题，例如下面代码，我们把aar，以及native二进制的目录armeabi，armeabi-v7a等全放在library模块&#x2F;libs目录下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="keyword">flatDir</span> &#123;</span><br><span class="line">            dirs <span class="string">&#x27;libs&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">sourceSets</span> &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            jniLibs.srcDirs = [<span class="string">&#x27;libs&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;libs&#x27;</span>, <span class="keyword">include</span>: [<span class="string">&#x27;*.jar&#x27;</span>])</span><br><span class="line">    <span class="keyword">compile</span>(name: <span class="string">&#x27;faceplatform-release&#x27;</span>, ext: <span class="string">&#x27;aar&#x27;</span>)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时，library模块可以正确编译，aar也生成出来了，但是引用它的app模块报错了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:Failed to resolve: :faceplatform-release:</span><br></pre></td></tr></table></figure>
+<p>app模块编译也需要这个依赖库，但是找不到。这时，你可以把所有的aar复制一份到app模块里，这样编译没问题了，但是造成了很多重复文件，有个更好的办法可以不用拷贝文件，修改app模块的gradle即可：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="keyword">flatDir</span> &#123;</span><br><span class="line">            dirs <span class="string">&#x27;../library/libs&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的意思是去library模块&#x2F;libs目录下去找找依赖吧，这样就能找到需要的本地依赖库了。</p>
+<h3 id="二-Butter-Knife在library模块使用的问题"><a href="#二-Butter-Knife在library模块使用的问题" class="headerlink" title="二.Butter Knife在library模块使用的问题"></a>二.Butter Knife在library模块使用的问题</h3><p>Butter Knife是一个View注入框架，有了它，让我少写了很多findviewById(),在app模块中使用很简单：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">  <span class="keyword">compile</span> <span class="string">&#x27;com.jakewharton:butterknife:8.8.1&#x27;</span></span><br><span class="line">  annotationProcessor <span class="string">&#x27;com.jakewharton:butterknife-compiler:8.8.1&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleActivity</span> <span class="keyword">extends</span> <span class="title class_">Activity</span> &#123;</span><br><span class="line">  <span class="meta">@BindView(R.id.user)</span> EditText username;</span><br><span class="line">  <span class="meta">@BindView(R.id.pass)</span> EditText password;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@BindString(R.string.login_error)</span> String loginErrorMessage;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@OnClick(R.id.submit)</span> <span class="keyword">void</span> <span class="title function_">submit</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// TODO call server...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.simple_activity);</span><br><span class="line">    ButterKnife.bind(<span class="built_in">this</span>);</span><br><span class="line">    <span class="comment">// TODO Use fields...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但如果要在library模块中使用，不但要修改gradle，java代码也要修改如下，这些github上都有说明：<br><a target="_blank" rel="noopener" href="https://github.com/JakeWharton/butterknife">https://github.com/JakeWharton/butterknife</a> </p>
+<ul>
+<li>需要使用gradle插件做一些预处理：<br>插件声明<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">   &#125;</span><br><span class="line">  dependencies &#123;</span><br><span class="line">    classpath &#x27;com.jakewharton:butterknife-gradle-plugin:8.8.1&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+在library模块中使用插件：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.library&#x27;</span><br><span class="line">apply plugin: &#x27;com.jakewharton.butterknife&#x27;</span><br></pre></td></tr></table></figure></li>
+<li>把R改成R2：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ExampleActivity extends Activity &#123;</span><br><span class="line">  @BindView(R2.id.user) EditText username;</span><br><span class="line">  @BindView(R2.id.pass) EditText password;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="三-资源ID常量的变化"><a href="#三-资源ID常量的变化" class="headerlink" title="三.资源ID常量的变化"></a>三.资源ID常量的变化</h3><p>在library模块中声明的资源ID，不能使用switch&#x2F;case来判断，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public void onClick(View src)&#123;</span><br><span class="line">    switch(src.getId()) &#123;</span><br><span class="line">    case R.id.playbtn:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line"></span><br><span class="line">    case R.id.stopbtn:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line"></span><br><span class="line">    case R.id.btnmenu:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的写法是错误的，android studio会提示错误，原因是资源ID在app模块中是声明为final的，也就是无法再改变的，而library模块中并没有声明final，只有在最终编译成apk的时候才会被统一进行确定，如果事先声明了final，多个模块编译到一个apk时难免互相有ID重复，或者与依赖库或app中的ID重复，这样就会造成错误。因此就不能采用switch&#x2F;case来判断id了，而用if&#x2F;else就没毛病了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public void onClick(View src)&#123;</span><br><span class="line">    int id = src.getId();</span><br><span class="line">    if (id == R.id.playbtn)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125; else if (id == R.id.stopbtn)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125; else if (id == R.id.btnmenu)&#123;</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面butterknife的问题，也是由于这个原因，所以butterknife会用gradle插件重新生成一个资源文件R2，在R2中的ID都是用final来修饰的，所以就可以解决这个问题了。</p>
+<h3 id="四-接入GoogleService推送"><a href="#四-接入GoogleService推送" class="headerlink" title="四.接入GoogleService推送"></a>四.接入GoogleService推送</h3><p>使用google推送，或者是Firebase，就需要接入GoogleService，按照Firebase官网的指导，接入方法是先添加Gradle插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &#x27;com.android.tools.build:gradle:2.3.2&#x27;</span><br><span class="line">        classpath &#x27;com.google.gms:google-services:3.1.0&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并且使用插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.application&#x27;</span><br><span class="line">apply plugin: &#x27;com.google.gms.google-services&#x27;</span><br></pre></td></tr></table></figure>
+<p>这个插件必须只能使用在app模块，如果使用在library模块是要报错的。但是，如果我们的Firebase接收消息的业务逻辑写在了library模块，就需要在library模块中引用firebase的依赖库，而在app模块中apply plugin，google-services.json文件也必须放到app模块下，才能保证顺利编译。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile fileTree(include: [&#x27;*.jar&#x27;], dir: &#x27;libs&#x27;)</span><br><span class="line">    compile &#x27;com.google.firebase:firebase-core:11.0.4&#x27;</span><br><span class="line">    compile &#x27;com.google.firebase:firebase-messaging:11.0.4&#x27;</span><br><span class="line">    testCompile &#x27;junit:junit:4.12&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-资源覆盖问题"><a href="#五-资源覆盖问题" class="headerlink" title="五.资源覆盖问题"></a>五.资源覆盖问题</h3><p>过去的单模块编写，同一资源目录下不允许出现两个同名的资源，但是在多模块的情况下，app模块的assets、res下的颜色，图片，字符串等都会覆盖library模块或者远程依赖带过来的同名资源，这样就可以方便的在app模块中修改library已定义好的主题，字符串等。</p>
+
+                
+<p class="pink-link-context">
+    <a href="/2018/01/14/11.SpringBoot%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="SpringBoot学习之入门学习笔记">
+    上一篇：SpringBoot学习之入门学习笔记
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2017/11/14/9.Android%E4%BD%BF%E7%94%A8greenDAO%E6%96%B9%E4%BE%BFSQLite%E5%81%9AORM%E5%BC%80%E5%8F%91/" rel="next" title="Android使用greenDAO方便SQLite做ORM开发">
+    下一篇：Android使用greenDAO方便SQLite做ORM开发
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

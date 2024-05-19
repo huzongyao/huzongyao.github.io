@@ -1,0 +1,665 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>使用python开发completeroms网站爬虫 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="使用Python开发爬虫是很快速简单灵活的。我在completeroms这个网站看到了很全的模拟器游戏下载，包括NES，GBA，GBC等等，偶尔下载几个ROM回味一下童年时代红白机的乐趣也不失为一件很有情调的事。然而该网站没有一个批量下载的功能，只能一个个自己下载，下载一个ROM得点开两个页面，即便手速再快，每次下载之前还得等待10秒。于是，对于想批量下载的羊毛党来说，得弄个爬虫才是真爱了。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="使用python开发completeroms网站爬虫"/>
+    <meta property="og:site_name" content="HuZongYao的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">HuZongYao</p>
+                        <p class="desc">Web前端/安卓/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">10 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/Python学习/">Python学习</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>使用python开发completeroms网站爬虫</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-10-17T14:03:45.000Z"><a href="/2017/10/17/7.%E4%BD%BF%E7%94%A8python%E5%BC%80%E5%8F%91completeroms%E7%BD%91%E7%AB%99%E7%88%AC%E8%99%AB/">2017-10-17</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/html/" class="chip pink lighten-1">html</a>
+        
+            <a href="/tags/python/" class="chip pink lighten-1">python</a>
+        
+            <a href="/tags/dom/" class="chip pink lighten-1">dom</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%BC%80%E5%A7%8B"><span class="section table-of-contents-text">开始</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#1-%E7%88%AC%E8%99%AB%E6%8A%93%E5%8F%96%E9%80%BB%E8%BE%91"><span class="section table-of-contents-text">1.爬虫抓取逻辑</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#2-%E4%BD%BF%E7%94%A8Requests%E8%AE%BF%E9%97%AEHTTP"><span class="section table-of-contents-text">2.使用Requests访问HTTP</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#3-%E4%BD%BF%E7%94%A8BeautifulSoup%E8%A7%A3%E6%9E%90DOM"><span class="section table-of-contents-text">3.使用BeautifulSoup解析DOM</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#4-%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="section table-of-contents-text">4.使用正则匹配提取字符串</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#5-%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="section table-of-contents-text">5.文件下载</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#6-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD"><span class="section table-of-contents-text">6.多线程下载</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>使用Python开发爬虫是很快速简单灵活的。我在<a target="_blank" rel="noopener" href="http://www.completeroms.com/">completeroms</a>这个网站看到了很全的模拟器游戏下载，包括NES，GBA，GBC等等，偶尔下载几个ROM回味一下童年时代红白机的乐趣也不失为一件很有情调的事。然而该网站没有一个批量下载的功能，只能一个个自己下载，下载一个ROM得点开两个页面，即便手速再快，每次下载之前还得等待10秒。于是，对于想批量下载的羊毛党来说，得弄个爬虫才是真爱了。</p>
+<span id="more"></span>
+
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="1-爬虫抓取逻辑"><a href="#1-爬虫抓取逻辑" class="headerlink" title="1.爬虫抓取逻辑"></a>1.爬虫抓取逻辑</h3><p>抓取的逻辑一般和人用浏览器访问大致是一样的，下载ROM我们首先会访问目录页。目录是有分页的，所以先要遍历所有目录页。针对于每一页，又会有若干个条目，所以又要遍历该页中的所有条目，对于每个条目，都有超链接跟踪到详情页，在详情页中便可找到下载链接。有了下载链接，呵呵，下就完了。</p>
+<h3 id="2-使用Requests访问HTTP"><a href="#2-使用Requests访问HTTP" class="headerlink" title="2.使用Requests访问HTTP"></a>2.使用Requests访问HTTP</h3><p>有了爬取的逻辑，接下来就要具体实现了，首先分析一下目录页网址的特点，如第NES游戏第3页：<a target="_blank" rel="noopener" href="http://www.completeroms.com/roms/nintendo/3">http://www.completeroms.com/roms/nintendo/3</a> 只有最后一个数字会改变，前面的都一样，因此如果要爬1~64页，一个for循环就好了。然而现在我们怎么使用http请求拿到网页的内容呢？使用requests库吧：requests.get(url)一下就可以发送一个get请求了，于是就可以写代码了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">max_page = <span class="number">65</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, max_page):</span><br><span class="line">    url = <span class="string">&#x27;http://www.completeroms.com/roms/nintendo/%d&#x27;</span> % i</span><br><span class="line">    req = requests.get(url)</span><br><span class="line">    <span class="built_in">print</span> req.text</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用BeautifulSoup解析DOM"><a href="#3-使用BeautifulSoup解析DOM" class="headerlink" title="3.使用BeautifulSoup解析DOM"></a>3.使用BeautifulSoup解析DOM</h3><p>使用requests可以拿到整个网页的html代码，但是我们需要从这些代码里提取出我们需要的信息，使用一些DOM解析库(如BeautifulSoup)来分析DOM结构即可。我们现在需要的是目录列表，这些列表是存在于table标签中的，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;//www.completeroms.com/assets/img/flags/usa.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;United States of America&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/dl/nintendo/dragon-ball-z-4in1-/106706&quot;</span>&gt;</span>Dragon Ball Z 4-in-1 <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;usa&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/roms/nintendo&quot;</span>&gt;</span>Nintendo<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span>20,882<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rating&quot;</span> <span class="attr">data-size</span>=<span class="string">&quot;xs&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;true&quot;</span> <span class="attr">data-show-caption</span>=<span class="string">&quot;false&quot;</span> <span class="attr">data-show-clear</span>=<span class="string">&quot;false&quot;</span> <span class="attr">value</span>=<span class="string">&quot;4.7&quot;</span> <span class="attr">current-value</span>=<span class="string">&quot;4.7&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;//www.completeroms.com/assets/img/flags/usa.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;United States of America&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/dl/nintendo/prince-of-persia-u/4219&quot;</span>&gt;</span>Prince Of Persia <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;usa&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//www.completeroms.com/roms/nintendo&quot;</span>&gt;</span>Nintendo<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span>20,791<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">&quot;hidden-xs&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rating&quot;</span> <span class="attr">data-size</span>=<span class="string">&quot;xs&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;true&quot;</span> <span class="attr">data-show-caption</span>=<span class="string">&quot;false&quot;</span> <span class="attr">data-show-clear</span>=<span class="string">&quot;false&quot;</span> <span class="attr">value</span>=<span class="string">&quot;4.6&quot;</span> <span class="attr">current-value</span>=<span class="string">&quot;4.6&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我想要过滤出来的，就是a标签href属性的内容，因为href链接就是对应ROM详情页的网址。用以下代码，就可以把这些href获取到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bs = BeautifulSoup(req.text, features=<span class="string">&#x27;html5lib&#x27;</span>)</span><br><span class="line">tr_nodes = bs.find(<span class="string">&#x27;table&#x27;</span>, class_=<span class="string">&#x27;table&#x27;</span>).find_all(<span class="string">&#x27;tr&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> tr_node <span class="keyword">in</span> tr_nodes:</span><br><span class="line">    a_node = tr_node.find(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> a_node <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;warn: empty node!&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    a_url = a_node.attrs[<span class="string">&#x27;href&#x27;</span>]</span><br><span class="line">    <span class="built_in">print</span> a_url</span><br></pre></td></tr></table></figure>
+<p>这样以后我拿到的一堆详情页的URL：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//www.completeroms.com/dl/nintendo/dragon-ball-z-4in1-/106706</span><br><span class="line">//www.completeroms.com/dl/nintendo/prince-of-persia-u/4219</span><br><span class="line">//www.completeroms.com/dl/nintendo/shinobi-u/4315</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-使用正则匹配提取字符串"><a href="#4-使用正则匹配提取字符串" class="headerlink" title="4.使用正则匹配提取字符串"></a>4.使用正则匹配提取字符串</h3><p>本来的访问顺序是这样的，目录页-&gt;详情页-&gt;下载页，但根据观察发现不用访问详情页便可得知下载页的URL，这样少了一次网络请求，可以节省点网络流量哈。下载页的URL形如：<a target="_blank" rel="noopener" href="http://www.completeroms.com/thankyou.php?id=4367">http://www.completeroms.com/thankyou.php?id=4367</a> 显而易见id参数对应的值就是上一步中得到的href的最后一个“&#x2F;”后面的数字。所以我们下一步要做的，就是从&#x2F;&#x2F;<a target="_blank" rel="noopener" href="http://www.completeroms.com/dl/nintendo/shinobi-u/4315%E8%BF%99%E6%A0%B7%E7%9A%84%E4%B8%80%E4%B8%AA%E7%BD%91%E5%9D%80%E4%B8%AD%E6%88%AA%E5%8F%96%E5%87%BA4315%E8%BF%99%E4%B8%AAid%E3%80%82%E8%BF%99%E4%B8%AAid%E7%9A%84%E9%95%BF%E5%BA%A6%E6%98%AF%E4%B8%8D%E5%9B%BA%E5%AE%9A%E7%9A%84%EF%BC%8C%E7%89%B9%E7%82%B9%E6%98%AF%E5%A4%84%E4%BA%8E%E2%80%9C/%E2%80%9D%E7%9A%84%E5%90%8E%E9%9D%A2%EF%BC%8C%E6%8B%BF%E5%88%B0%E5%AE%83%E7%9A%84%E4%B8%80%E7%A7%8D%E5%81%9A%E6%B3%95%E6%98%AF%E7%94%A8%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%EF%BC%8C%E4%BD%86%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%94%A8find()%E5%A6%82%EF%BC%9A">www.completeroms.com/dl/nintendo/shinobi-u/4315这样的一个网址中截取出4315这个id。这个id的长度是不固定的，特点是处于“/”的后面，拿到它的一种做法是用正则匹配，但也可以用find()如：</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;//www.completeroms.com/dl/nintendo/shinobi-u/4315&#x27;</span></span><br><span class="line">last_id = url.rfind(<span class="string">&#x27;/&#x27;</span>) + <span class="number">1</span></span><br><span class="line">rom_id = url[last_id:]</span><br><span class="line">download_url = <span class="string">&#x27;http://www.completeroms.com/thankyou.php?id=%s&#x27;</span> % rom_id</span><br></pre></td></tr></table></figure>
+<p>这样以后，下载页的url又到手了，如果我用浏览器打开这个网址，等待10秒以后，ROM文件就自动开始下载了。但爬虫肯定不会就此罢休，起码得让ROM自动下载。我们有了下载页的URL，还需要做下一步，需要在下载页中找到文件的URL，这样才能下载嘛。然而通过观察就能发现，文件的下载地址并不是直接包含在任何一个a标签链接里的，而是写在js里，js跑起来后倒计时十秒钟后自动开始下载的，所以使用BeautifulSoup这样的DOM搜索去做就不合适了，我的做法是直接全文用正则匹配了。因为文件链接地址在整个文档中非常显眼：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">start_download</span>(<span class="params"></span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> url = <span class="string">&quot;http://dl.completeroms.com/grab/Nintendo/Pirate/Dragon Ball Z 4-in-1 [p1][!].zip&quot;</span>;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="title function_">open</span>( url,<span class="string">&quot;_self&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="built_in">setTimeout</span>( start_download, <span class="number">10000</span> );          </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我要的就是 var url &#x3D; 后面的这个链接，使用下面的代码就把它从整个文档中过滤出来了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ptn = re.<span class="built_in">compile</span>(<span class="string">r&#x27;.*var url = &quot;(?P&lt;zip_url&gt;.*)&quot;;.*&#x27;</span>)</span><br><span class="line">m = ptn.search(req.text)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">hasattr</span>(m, <span class="string">&#x27;group&#x27;</span>):</span><br><span class="line">    zip_url = m.group(<span class="string">&#x27;zip_url&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span> zip_url</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-文件下载"><a href="#5-文件下载" class="headerlink" title="5.文件下载"></a>5.文件下载</h3><p>这时，迫不及待的在浏览器里输入刚刚从js里提取出来的这个文件下载地址，狂敲回车键，期待着文件开始下载。然而世事总难料，503错误出现了，半天的努力白费了。<br>既然用浏览器下载不了，使用爬虫直接下载，那不也是一样白费么。要发现其中的猫腻，就得搞清楚js中使用window.open( url,”_self”)来下载和直接用浏览器打开下载有啥区别。<br>最终发现，差异就在于他的请求头里多带了个参数 Referer:<a target="_blank" rel="noopener" href="http://www.completeroms.com/thankyou.php?id=4367">http://www.completeroms.com/thankyou.php?id=4367</a> 知道了这个，我们自己也可以伪造个请求头，于是下载的代码出炉了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Referer&#x27;</span>: download_url,</span><br><span class="line">    <span class="string">&#x27;Accept - Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 请求的时候设置请求头</span></span><br><span class="line">r = requests.get(zip_url, headers=headers)</span><br><span class="line"><span class="comment"># 设置下载目录</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(rom_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> code:</span><br><span class="line">    code.write(r.content)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-多线程下载"><a href="#6-多线程下载" class="headerlink" title="6.多线程下载"></a>6.多线程下载</h3><p>把上面的流程串起来，下载就可以源源不断跑起来了。网页上如果还有其他我们需要的信息，就解析对应的DOM获取就行了，比如我想把游戏说明里的缩略图也下载下来，依旧如法炮制就行。<br>但是，这时你会发现速度成问题了，这个网站nes的ROM有3000多个，顺次访问完3000个文件再下载完3000个文件，已经过去数十个小时了。我们希望看到的是多线程刷刷的下载速度，我们使用ThreadPool，就可以同时爬取多个下载页，或者同时下载多个文件了，使用很简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">start_fetch</span>():</span><br><span class="line">    pool = ThreadPool(<span class="number">8</span>)</span><br><span class="line">    pool_requests = makeRequests(get_game_in_pool, tr_nodes, <span class="literal">None</span>, <span class="literal">None</span>)</span><br><span class="line">    [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> pool_requests]</span><br><span class="line">    pool.wait()</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;finished!&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_game_in_pool</span>(<span class="params">tr_node</span>):</span><br><span class="line">    a_node = tr_node.find(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> a_node <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;warn: empty node!&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>代码中定义了线程池的容量是8， get_game_in_pool便是异步执行的方法， tr_nodes是个数组，系统会取出数组中每个元素tr_node作参数传给异步方法。<br>打个比方，线程池执行就像排队上厕所，tr_nodes数组就是排在厕所外面的队列，而get_game_in_pool函数定义了每个人上厕所需要走的流程，tr_node就是队列中的每个人。一共8个坑位，厕所开门时，队列头部8个人涌入占坑，谁上完厕所就让队列里下一个人进来，厕所从一开门就阻塞在那里直到所有人完事，厕所关门，执行print ‘finished!’<br>把爬虫放到线程池用8个线程来跑，未免也太心黑了，不过这个网站应该做了反爬虫，这样的并发下载使用不到半分钟，网站就爆出请求太多的错误了。即便是顺次下载，使用一段时间后也会报错，没辙了么。最终不但没用成多线程，还得加上5s的延时才得以稳定运行。只能靠时间来改变一切了。<br>完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> threadpool <span class="keyword">import</span> ThreadPool, makeRequests</span><br><span class="line"></span><br><span class="line">DOWNLOAD_ROOT = <span class="string">&#x27;../rom-download/completeroms/&#x27;</span></span><br><span class="line">SUPPORT_TYPES = &#123;</span><br><span class="line">    <span class="string">&#x27;nintendo&#x27;</span>: <span class="number">64</span>,</span><br><span class="line">    <span class="string">&#x27;gameboy-color&#x27;</span>: <span class="number">23</span>,</span><br><span class="line">    <span class="string">&#x27;game-gear&#x27;</span>: <span class="number">14</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RomDownloader</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, types</span>):</span><br><span class="line">        self.img_root = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        self.pool_rom_list = []</span><br><span class="line">        self.download_types = types</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">start_fetch</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">for</span> my_type <span class="keyword">in</span> self.download_types:</span><br><span class="line">            <span class="keyword">if</span> my_type <span class="keyword">not</span> <span class="keyword">in</span> SUPPORT_TYPES:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            max_page = SUPPORT_TYPES[my_type]</span><br><span class="line">            rom_list = []</span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, max_page):</span><br><span class="line">                index_url = <span class="string">&#x27;http://www.completeroms.com/roms/%s/%d&#x27;</span> % (my_type, i + <span class="number">1</span>)</span><br><span class="line">                req = requests.get(index_url)</span><br><span class="line">                bs = BeautifulSoup(req.text, features=<span class="string">&#x27;html5lib&#x27;</span>)</span><br><span class="line">                tr_nodes = bs.find(<span class="string">&#x27;table&#x27;</span>, class_=<span class="string">&#x27;table&#x27;</span>).find_all(<span class="string">&#x27;tr&#x27;</span>)</span><br><span class="line">                <span class="keyword">for</span> tr_node <span class="keyword">in</span> tr_nodes:</span><br><span class="line">                    a_node = tr_node.find(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                    <span class="keyword">if</span> a_node <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    detail_url = a_node.attrs[<span class="string">&#x27;href&#x27;</span>]</span><br><span class="line">                    last_id = detail_url.rfind(<span class="string">&#x27;/&#x27;</span>) + <span class="number">1</span></span><br><span class="line">                    rom_id = detail_url[last_id:]</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> rom_id:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    rom_info = &#123;</span><br><span class="line">                        <span class="string">&#x27;index&#x27;</span>: count,</span><br><span class="line">                        <span class="string">&#x27;rom_id&#x27;</span>: rom_id,</span><br><span class="line">                    &#125;</span><br><span class="line">                    rom_list.append(rom_info)</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;parse index ok[%s] total:[%d]&#x27;</span> % (index_url, count)</span><br><span class="line">            self.parse_download_info_async(rom_list)</span><br><span class="line">            self.write_url_map_csv(my_type)</span><br><span class="line">            self.download_img_async(my_type)</span><br><span class="line">            self.download_roms_slowly(my_type)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_download_info_async</span>(<span class="params">self, rom_list</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;start parse download info, count[%d]&#x27;</span> % <span class="built_in">len</span>(rom_list)</span><br><span class="line">        self.pool_rom_list = []</span><br><span class="line">        pool = ThreadPool(<span class="number">64</span>)</span><br><span class="line">        pool_requests = makeRequests(self.get_download_url_pool, rom_list,</span><br><span class="line">                                     self.get_download_url_done, self.get_download_url_error)</span><br><span class="line">        [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> pool_requests]</span><br><span class="line">        pool.wait()</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;parse download info, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_download_url_error</span>(<span class="params">req_args, error_info</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;url error:[%s]&#x27;</span> % req_args.args[<span class="number">0</span>][<span class="string">&#x27;final_url&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> error_info</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_download_url_pool</span>(<span class="params">rom_info</span>):</span><br><span class="line">        rom_id = rom_info[<span class="string">&#x27;rom_id&#x27;</span>]</span><br><span class="line">        final_url = <span class="string">&#x27;http://www.completeroms.com/thankyou.php?id=%s&#x27;</span> % rom_id</span><br><span class="line">        rom_info[<span class="string">&#x27;final_url&#x27;</span>] = final_url</span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&#x27;Accept - Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        req = requests.get(final_url, headers=headers, timeout=<span class="number">60</span>)</span><br><span class="line">        bs = BeautifulSoup(req.text, features=<span class="string">&#x27;html5lib&#x27;</span>)</span><br><span class="line">        fname_node = bs.find(<span class="string">&#x27;h3&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> fname_node:</span><br><span class="line">            file_name = fname_node.text.strip()</span><br><span class="line">            rom_info[<span class="string">&#x27;file_name&#x27;</span>] = file_name</span><br><span class="line">            img_node = bs.find(<span class="string">&#x27;img&#x27;</span>, class_=<span class="string">&#x27;rom-cover&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> img_node:</span><br><span class="line">                img_url = img_node.attrs[<span class="string">&#x27;src&#x27;</span>]</span><br><span class="line">                rom_info[<span class="string">&#x27;img_url&#x27;</span>] = img_url</span><br><span class="line">                last_dot = img_url.rfind(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">                ext_name = img_url[last_dot:].lower()</span><br><span class="line">                last_dot = file_name.rfind(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">                simple_name = file_name[<span class="number">0</span>:last_dot]</span><br><span class="line">                rom_info[<span class="string">&#x27;simple_name&#x27;</span>] = simple_name</span><br><span class="line">                img_name = simple_name + ext_name</span><br><span class="line">                rom_info[<span class="string">&#x27;img_name&#x27;</span>] = img_name</span><br><span class="line">        ptn = re.<span class="built_in">compile</span>(<span class="string">r&#x27;.*var url = &quot;(?P&lt;zip_url&gt;.*)&quot;;.*&#x27;</span>)</span><br><span class="line">        m = ptn.search(req.text)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(m, <span class="string">&#x27;group&#x27;</span>):</span><br><span class="line">            zip_url = m.group(<span class="string">&#x27;zip_url&#x27;</span>)</span><br><span class="line">            rom_info[<span class="string">&#x27;file_url&#x27;</span>] = zip_url</span><br><span class="line">        <span class="keyword">return</span> rom_info</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">write_url_map_csv</span>(<span class="params">self, my_type</span>):</span><br><span class="line">        csv_root = DOWNLOAD_ROOT + my_type + <span class="string">&#x27;/&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(csv_root):</span><br><span class="line">            os.makedirs(csv_root)</span><br><span class="line">        time_str = time.strftime(<span class="string">&#x27;%Y-%m-%d-%H%M%S&#x27;</span>, time.localtime())</span><br><span class="line">        log_path = <span class="string">&#x27;%surl-map-%s.csv&#x27;</span> % (csv_root, time_str)</span><br><span class="line">        csv_writer = codecs.<span class="built_in">open</span>(log_path, <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        csv_writer.write(<span class="string">&#x27;Name,Rom Url,Image Url,Referer Url\n&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> rom_info <span class="keyword">in</span> self.pool_rom_list:</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;simple_name&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> rom_info:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;no simple name[%s]&#x27;</span> % rom_info[<span class="string">&#x27;file_name&#x27;</span>]</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            csv_writer.write(<span class="string">&#x27;&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;\n&#x27;</span> % (rom_info[<span class="string">&#x27;simple_name&#x27;</span>] <span class="keyword">or</span> <span class="string">&#x27;&#x27;</span>, rom_info[<span class="string">&#x27;file_url&#x27;</span>],</span><br><span class="line">                                                        rom_info[<span class="string">&#x27;img_url&#x27;</span>], rom_info[<span class="string">&#x27;final_url&#x27;</span>]))</span><br><span class="line">        csv_writer.close()</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;write csv file ok[%s]&#x27;</span> % my_type</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_download_url_done</span>(<span class="params">self, req_args, rom_info</span>):</span><br><span class="line">        <span class="keyword">if</span> rom_info <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&#x27;get download url error!&#x27;</span></span><br><span class="line">        index = rom_info[<span class="string">&#x27;index&#x27;</span>]</span><br><span class="line">        file_name = rom_info[<span class="string">&#x27;file_name&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;get download url ok[%3d.%s]&#x27;</span> % (index, file_name)</span><br><span class="line">        self.pool_rom_list.append(rom_info)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_async</span>(<span class="params">self, my_type</span>):</span><br><span class="line">        self.img_root = DOWNLOAD_ROOT + my_type + <span class="string">&#x27;/images/&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(self.img_root):</span><br><span class="line">            os.makedirs(self.img_root)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;start download images, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line">        pool = ThreadPool(<span class="number">64</span>)</span><br><span class="line">        pool_requests = makeRequests(self.download_img_in_pool, self.pool_rom_list, self.download_img_done,</span><br><span class="line">                                     self.download_img_error)</span><br><span class="line">        [pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> pool_requests]</span><br><span class="line">        pool.wait()</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;download images ok, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_error</span>(<span class="params">req_args, error_info</span>):</span><br><span class="line">        args = req_args.args[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;img_url&#x27;</span> <span class="keyword">in</span> args:</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&#x27;download image error:[%s]&#x27;</span> % args[<span class="string">&#x27;img_url&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> error_info</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_in_pool</span>(<span class="params">self, rom_info</span>):</span><br><span class="line">        img_name = rom_info[<span class="string">&#x27;img_name&#x27;</span>]</span><br><span class="line">        img_url = rom_info[<span class="string">&#x27;img_url&#x27;</span>]</span><br><span class="line">        img_path = self.img_root + img_name</span><br><span class="line">        <span class="keyword">if</span> os.path.exists(img_path):</span><br><span class="line">            <span class="keyword">return</span> rom_info</span><br><span class="line">        r = requests.get(img_url, timeout=<span class="number">60</span>)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(img_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> code:</span><br><span class="line">            code.write(r.content)</span><br><span class="line">        <span class="keyword">return</span> rom_info</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_img_done</span>(<span class="params">req_args, rom_info</span>):</span><br><span class="line">        index = rom_info[<span class="string">&#x27;index&#x27;</span>]</span><br><span class="line">        img_name = rom_info[<span class="string">&#x27;img_name&#x27;</span>]</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;finish download image[%d][%s]&#x27;</span> % (index, img_name)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_roms_slowly</span>(<span class="params">self, my_type</span>):</span><br><span class="line">        roms_root = DOWNLOAD_ROOT + my_type + <span class="string">&#x27;/roms/&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(roms_root):</span><br><span class="line">            os.makedirs(roms_root)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;start download roms, count[%d]&#x27;</span> % <span class="built_in">len</span>(self.pool_rom_list)</span><br><span class="line">        <span class="keyword">for</span> rom_info <span class="keyword">in</span> self.pool_rom_list:</span><br><span class="line">            file_name = rom_info[<span class="string">&#x27;file_name&#x27;</span>]</span><br><span class="line">            rom_path = roms_root + file_name</span><br><span class="line">            <span class="keyword">if</span> os.path.exists(rom_path):</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;exists rom[%s]&#x27;</span> % file_name</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            final_url = rom_info[<span class="string">&#x27;final_url&#x27;</span>]</span><br><span class="line">            file_url = rom_info[<span class="string">&#x27;file_url&#x27;</span>]</span><br><span class="line">            headers = &#123;</span><br><span class="line">                <span class="string">&#x27;Referer&#x27;</span>: final_url,</span><br><span class="line">                <span class="string">&#x27;Accept - Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                r = requests.get(file_url, headers=headers, timeout=<span class="number">300</span>)</span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(rom_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> code:</span><br><span class="line">                    code.write(r.content)</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;download rom ok sleep 10s[%3d.%s]&#x27;</span> % (rom_info[<span class="string">&#x27;index&#x27;</span>], file_name)</span><br><span class="line">                time.sleep(<span class="number">6</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception, e:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;exception[%s][%s]&#x27;</span> % (rom_info[<span class="string">&#x27;file_name&#x27;</span>], e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;start fetch!!&#x27;</span>)</span><br><span class="line">    download_types = [</span><br><span class="line">        <span class="string">&#x27;gameboy-color&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;nintendo&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;game-gear&#x27;</span>,</span><br><span class="line">    ]</span><br><span class="line">    downloader = RomDownloader(download_types)</span><br><span class="line">    downloader.start_fetch()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>做的比较简单，如果需要稳定的话还要再加些空判断和异常处理，校验之类。我的目的只是几千个ROM一夜之间下载到手，其他的就不用管了。<br>完整项目：<a target="_blank" rel="noopener" href="https://github.com/huzongyao/EmuRomCrawler">https://github.com/huzongyao/EmuRomCrawler</a></p>
+
+                
+<p class="pink-link-context">
+    <a href="/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/" rel="next" title="AndroidStudio多模块编译之子模块的调试">
+    上一篇：AndroidStudio多模块编译之子模块的调试
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/2017/06/25/6.AndroidStudio%E4%BD%BF%E7%94%A8NDK%E7%BC%96%E8%AF%91%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81/" rel="next" title="AndroidStudio使用NDK编译本地代码">
+    下一篇：AndroidStudio使用NDK编译本地代码
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 github.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
