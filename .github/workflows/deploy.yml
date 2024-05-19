@@ -1,0 +1,30 @@
+name: GitHub Pages
+ 
+on:
+  push:
+    branches:
+      - main  # 更改为你的默认分支
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout  # 检出代码
+        uses: actions/checkout@v2
+ 
+      - name: Setup build  env  # 设置构建环境（如果需要）
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org
+ 
+      - name: Install dependencies  # 安装依赖
+        run: npm install
+ 
+      - name: Build  # 构建静态网站
+        run: npm run build
+ 
+      - name: Deploy  # 部署到gh-pages分支
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public  # 更改为你的构建输出目录
