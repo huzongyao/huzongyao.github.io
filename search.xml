@@ -933,7 +933,7 @@
 <h3 id="2-编写我们的extra-script-py，使用python语言"><a href="#2-编写我们的extra-script-py，使用python语言" class="headerlink" title="2. 编写我们的extra_script.py，使用python语言"></a>2. 编写我们的extra_script.py，使用python语言</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">env.AddPreAction(<span class="string">&quot;buildprog&quot;</span>, callback...)</span><br><span class="line">env.AddPostAction(<span class="string">&quot;buildprog&quot;</span>, callback...)</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-Post-Action与ESPTool结合，实现自动合并"><a href="#3-Post-Action与ESPTool结合，实现自动合并" class="headerlink" title="3. Post Action与ESPTool结合，实现自动合并"></a>3. Post Action与ESPTool结合，实现自动合并</h3><p>上述extra_script中，Pre &amp; Post Actions说白了就是指编译前和编译后，我们可以让编译器干一些事情。<br>因此把ESPTool合并ROM操作， 放到Post Actions当中即可。我用的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Import(<span class="string">&#x27;env&#x27;</span>)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">OUTPUT_DIR = <span class="string">&quot;$BUILD_DIR&#123;&#125;&quot;</span>.<span class="built_in">format</span>(os.path.sep)</span><br><span class="line">APP_BIN = <span class="string">&quot;$BUILD_DIR/$&#123;PROGNAME&#125;.bin&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">copy_merge_bins</span>(<span class="params">source, target, env</span>):</span><br><span class="line">    firmware_src = <span class="built_in">str</span>(target[<span class="number">0</span>])</span><br><span class="line">    flash_images = env.Flatten(env.get(<span class="string">&quot;FLASH_EXTRA_IMAGES&quot;</span>, [])) + [<span class="string">&quot;$ESP32_APP_OFFSET&quot;</span>, APP_BIN]</span><br><span class="line">    name = firmware_src.split(os.path.sep)[<span class="number">2</span>]</span><br><span class="line">    board = env.BoardConfig()</span><br><span class="line">    flash_size = board.get(<span class="string">&quot;upload.flash_size&quot;</span>, <span class="string">&quot;4MB&quot;</span>)</span><br><span class="line">    f_flash = board.get(<span class="string">&quot;build.f_flash&quot;</span>, <span class="string">&quot;40000000L&quot;</span>)</span><br><span class="line">    flash_freq = <span class="string">&#x27;40m&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> (f_flash == <span class="string">&#x27;80000000L&#x27;</span>):</span><br><span class="line">        flash_freq = <span class="string">&#x27;80m&#x27;</span></span><br><span class="line">    mcu = board.get(<span class="string">&quot;build.mcu&quot;</span>, <span class="string">&quot;esp32&quot;</span>)</span><br><span class="line">    firmware_dst = <span class="string">&quot;&#123;&#125;&#123;&#125;_&#123;&#125;_&#123;&#125;_0x0.bin&quot;</span>.<span class="built_in">format</span>(OUTPUT_DIR, mcu, name, flash_size)</span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(firmware_dst):</span><br><span class="line">        os.remove(firmware_dst)</span><br><span class="line">    cmd = <span class="string">&quot; &quot;</span>.join(</span><br><span class="line">        [<span class="string">&quot;$PYTHONEXE&quot;</span>, <span class="string">&quot;$OBJCOPY&quot;</span>, <span class="string">&#x27;--chip&#x27;</span>, mcu, <span class="string">&#x27;merge_bin&#x27;</span>, <span class="string">&#x27;--output&#x27;</span>, firmware_dst, <span class="string">&#x27;--flash_mode&#x27;</span>, <span class="string">&#x27;dio&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;--flash_size&#x27;</span>, flash_size, <span class="string">&#x27;--flash_freq&#x27;</span>, flash_freq] + flash_images)</span><br><span class="line">    env.Execute(cmd)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env.AddPostAction(<span class="string">&quot;$BUILD_DIR/$&#123;PROGNAME&#125;.bin&quot;</span>, [copy_merge_bins])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Import(<span class="string">&#x27;env&#x27;</span>)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">OUTPUT_DIR = <span class="string">&quot;$BUILD_DIR&#123;&#125;&quot;</span>.<span class="built_in">format</span>(os.path.sep)</span><br><span class="line">APP_BIN = <span class="string">&quot;$BUILD_DIR/$&#123;PROGNAME&#125;.bin&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">copy_merge_bins</span>(<span class="params">source, target, env</span>):</span><br><span class="line">    firmware_src = <span class="built_in">str</span>(target[<span class="number">0</span>])</span><br><span class="line">    flash_images = env.Flatten(env.get(<span class="string">&quot;FLASH_EXTRA_IMAGES&quot;</span>, [])) + [<span class="string">&quot;$ESP32_APP_OFFSET&quot;</span>, APP_BIN]</span><br><span class="line">    name = firmware_src.split(os.path.sep)[<span class="number">2</span>]</span><br><span class="line">    flash_size = env.GetProjectOption(<span class="string">&quot;board_upload.flash_size&quot;</span>)</span><br><span class="line">    board = env.BoardConfig()</span><br><span class="line">    f_flash = board.get(<span class="string">&quot;build.f_flash&quot;</span>, <span class="string">&quot;40000000L&quot;</span>)</span><br><span class="line">    flash_freq = <span class="string">&#x27;40m&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> (f_flash == <span class="string">&#x27;80000000L&#x27;</span>):</span><br><span class="line">        flash_freq = <span class="string">&#x27;80m&#x27;</span></span><br><span class="line">    mcu = board.get(<span class="string">&quot;build.mcu&quot;</span>, <span class="string">&quot;esp32&quot;</span>)</span><br><span class="line">    firmware_dst = <span class="string">&quot;&#123;&#125;&#123;&#125;_&#123;&#125;_&#123;&#125;_0x0.bin&quot;</span>.<span class="built_in">format</span>(OUTPUT_DIR, mcu, name, flash_size)</span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(firmware_dst):</span><br><span class="line">        os.remove(firmware_dst)</span><br><span class="line">    cmd = <span class="string">&quot; &quot;</span>.join(</span><br><span class="line">        [<span class="string">&quot;$PYTHONEXE&quot;</span>, <span class="string">&quot;$OBJCOPY&quot;</span>, <span class="string">&#x27;--chip&#x27;</span>, mcu, <span class="string">&#x27;merge_bin&#x27;</span>, <span class="string">&#x27;--output&#x27;</span>, firmware_dst, <span class="string">&#x27;--flash_mode&#x27;</span>, <span class="string">&#x27;dio&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;--flash_size&#x27;</span>, flash_size, <span class="string">&#x27;--flash_freq&#x27;</span>, flash_freq] + flash_images)</span><br><span class="line">    env.Execute(cmd)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">env.AddPostAction(<span class="string">&quot;$BUILD_DIR/$&#123;PROGNAME&#125;.bin&quot;</span>, [copy_merge_bins])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>附全量固件烧写命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">esptool.py write_flash 0x0 merged-flash.bin</span><br></pre></td></tr></table></figure>
@@ -949,6 +949,48 @@
         <tag>PlatformIO</tag>
         <tag>esp32</tag>
         <tag>Arduino</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>杜丫丫学习机Y1Max刷机ROOT笔记</title>
+    <url>/2024/05/24/23-%E6%9D%9C%E4%B8%AB%E4%B8%AB%E5%AD%A6%E4%B9%A0%E6%9C%BAY1Max%E5%88%B7%E6%9C%BAROOT%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>杜丫丫Y1Max刷机按照普通的MTK刷机流程来就行</p>
+<span id="more"></span>
+
+<h1 id="线刷救砖包"><a href="#线刷救砖包" class="headerlink" title="线刷救砖包"></a>线刷救砖包</h1><ol>
+<li>熟悉刷机方法的话，直接下载固件刷机吧，固件地址：<a href="https://www.123pan.com/s/Ea1uVv-oUem3.html%E6%8F%90%E5%8F%96%E7%A0%81:u61V">https://www.123pan.com/s/Ea1uVv-oUem3.html提取码:u61V</a></li>
+<li>固件包内容：<ul>
+<li>买机器备份的固件，用于救砖</li>
+<li>已ROOT固件，删除了无用APP</li>
+<li>Magisk Boot分区镜像</li>
+</ul>
+</li>
+</ol>
+<h1 id="刷机流程"><a href="#刷机流程" class="headerlink" title="刷机流程"></a>刷机流程</h1><h3 id="MTK线刷相关"><a href="#MTK线刷相关" class="headerlink" title="MTK线刷相关"></a>MTK线刷相关</h3><p>使用下面MTK刷机工具和方法，基本可以把固件线刷到机器上。</p>
+<ol>
+<li>MTK线刷工具SPFlashTool：<a href="https://spflashtool.com/">https://spflashtool.com/</a></li>
+<li>SPFlashTool另一个地址：<a href="https://androidmtk.com/smart-phone-flash-tool">https://androidmtk.com/smart-phone-flash-tool</a></li>
+<li>MTK刷机驱动下载地址：<a href="https://androidmtk.com/download-mtk-driver-auto-installer">https://androidmtk.com/download-mtk-driver-auto-installer</a></li>
+<li>MTK线刷教程：<a href="https://androidmtk.com/flash-stock-rom-using-smart-phone-flash-tool">https://androidmtk.com/flash-stock-rom-using-smart-phone-flash-tool</a></li>
+</ol>
+<h3 id="Fastboot刷机"><a href="#Fastboot刷机" class="headerlink" title="Fastboot刷机"></a>Fastboot刷机</h3><p>从安卓模式进入fastboot模式：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb reboot bootloader</span><br></pre></td></tr></table></figure>
+
+<p>fastboot模式刷入boot</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fastboot flash boot boot.img</span><br></pre></td></tr></table></figure>
+
+<p>fastboot模式刷入logo</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fastboot flash logo logo.bin</span><br></pre></td></tr></table></figure>
+
+<p>fastboot清空用户数据</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fastboot erase userdata</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -991,6 +1033,38 @@
         <tag>html</tag>
         <tag>python</tag>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Gradle发布Android类库到JCenter笔记</title>
+    <url>/2017/05/23/5.%E4%BD%BF%E7%94%A8Gradle%E5%8F%91%E5%B8%83Android%E7%B1%BB%E5%BA%93%E5%88%B0JCenter%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>如果你想在Android Studio中引入一个library到你的项目，只需添加一行compile代码到模块的build.gradle文件中，远程依赖可以节省工程文件大小，避免了大量本地jar包类库占据代码空间，而且类库版本更新也很方便。<br>如果我们有一个开源类库需要提供给别人来用，就可以采用下面的方式来发布。</p>
+<span id="more"></span>
+<h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p>首先要在<a href="https://bintray.com/">bintray</a>注册个账号，并在设置里获取API Key</p>
+<h3 id="修改Gradle脚本"><a href="#修改Gradle脚本" class="headerlink" title="修改Gradle脚本"></a>修改Gradle脚本</h3><ul>
+<li><p>修改根目录下build.gradle</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle:2.3.1&#x27;</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.novoda:bintray-release:0.3.4&#x27;</span> <span class="comment">//添加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">task</span> clean(type: <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> rootProject.buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改要上传的类库模块的build.gradle</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.novoda.bintray-release&#x27;</span><span class="comment">//添加</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;25.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        abortOnError <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加</span></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;huzongyao&#x27;</span><span class="comment">//bintray.com用户名</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.hzy&#x27;</span><span class="comment">//jcenter上的路径</span></span><br><span class="line">    artifactId = <span class="string">&#x27;nsgif&#x27;</span><span class="comment">//项目名称</span></span><br><span class="line">    publishVersion = <span class="string">&#x27;1.0.0&#x27;</span><span class="comment">//版本号</span></span><br><span class="line">    desc = <span class="string">&#x27;an android gif decoder based on libnsgif&#x27;</span><span class="comment">//描述</span></span><br><span class="line">    website = <span class="string">&#x27;http://huzongyao.github.io/&#x27;</span><span class="comment">//网站</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行编译上传脚本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=huzongyao -PbintrayKey=XXXXXXXXXXXXXXXXXXXXXXXXXX -PdryRun=true</span><br></pre></td></tr></table></figure>
+<p>dryRun参数说明只编译不上传，确定要上传的时候设置为false</p>
+</li>
+<li><p>添加到JCenter<br>上传成功以后到bintray网站就可以看到这个类库的信息了，用以下方式就可以在android studio中引用该类库，但是还是报错。<br>这是只需要在网页右边点Add to jcenter，审核通过以后就可以正常使用了。</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;com.hzy:nsgif:1.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样之后就大功告成了，之后版本更新，也采用同样的方式即可。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
       </tags>
   </entry>
   <entry>
@@ -1042,38 +1116,6 @@
         <tag>html</tag>
         <tag>python</tag>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Gradle发布Android类库到JCenter笔记</title>
-    <url>/2017/05/23/5.%E4%BD%BF%E7%94%A8Gradle%E5%8F%91%E5%B8%83Android%E7%B1%BB%E5%BA%93%E5%88%B0JCenter%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>如果你想在Android Studio中引入一个library到你的项目，只需添加一行compile代码到模块的build.gradle文件中，远程依赖可以节省工程文件大小，避免了大量本地jar包类库占据代码空间，而且类库版本更新也很方便。<br>如果我们有一个开源类库需要提供给别人来用，就可以采用下面的方式来发布。</p>
-<span id="more"></span>
-<h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p>首先要在<a href="https://bintray.com/">bintray</a>注册个账号，并在设置里获取API Key</p>
-<h3 id="修改Gradle脚本"><a href="#修改Gradle脚本" class="headerlink" title="修改Gradle脚本"></a>修改Gradle脚本</h3><ul>
-<li><p>修改根目录下build.gradle</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.android.tools.build:gradle:2.3.1&#x27;</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;com.novoda:bintray-release:0.3.4&#x27;</span> <span class="comment">//添加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">task</span> clean(type: <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> rootProject.buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改要上传的类库模块的build.gradle</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.novoda.bintray-release&#x27;</span><span class="comment">//添加</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;25.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        abortOnError <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加</span></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;huzongyao&#x27;</span><span class="comment">//bintray.com用户名</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.hzy&#x27;</span><span class="comment">//jcenter上的路径</span></span><br><span class="line">    artifactId = <span class="string">&#x27;nsgif&#x27;</span><span class="comment">//项目名称</span></span><br><span class="line">    publishVersion = <span class="string">&#x27;1.0.0&#x27;</span><span class="comment">//版本号</span></span><br><span class="line">    desc = <span class="string">&#x27;an android gif decoder based on libnsgif&#x27;</span><span class="comment">//描述</span></span><br><span class="line">    website = <span class="string">&#x27;http://huzongyao.github.io/&#x27;</span><span class="comment">//网站</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行编译上传脚本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=huzongyao -PbintrayKey=XXXXXXXXXXXXXXXXXXXXXXXXXX -PdryRun=true</span><br></pre></td></tr></table></figure>
-<p>dryRun参数说明只编译不上传，确定要上传的时候设置为false</p>
-</li>
-<li><p>添加到JCenter<br>上传成功以后到bintray网站就可以看到这个类库的信息了，用以下方式就可以在android studio中引用该类库，但是还是报错。<br>这是只需要在网页右边点Add to jcenter，审核通过以后就可以正常使用了。</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;com.hzy:nsgif:1.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>这样之后就大功告成了，之后版本更新，也采用同样的方式即可。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术博客</category>
-        <category>Android学习</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>gradle</tag>
       </tags>
   </entry>
   <entry>
