@@ -7,13 +7,15 @@
 
     
 
-    <title>TensorFlow学习 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <title>前端项目WebP格式图片替换与资源加载优化 | HuZongYao的博客-拥抱技术，享受生活</title>
     <meta name="author" content="John Doe">
+    
+    <meta name="description" content="WebP是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="前端项目WebP格式图片替换与资源加载优化"/>
     <meta property="og:site_name" content="HuZongYao的博客"/>
 
     
@@ -255,30 +257,87 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper green">
         <span class="breadcrumb">当前位置（分类目录）</span>
         
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/前端学习/">前端学习</a>
+
 
         
-            <a class="breadcrumb" href="/categories/技术博客/TensorFlow学习/">TensorFlow学习</a>
+
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>前端项目WebP格式图片替换与资源加载优化</h1>
+    
 
 
-    <div class="collection mt-0">
+            </div>
+            <time class="pink-link-context" datetime="2024-09-10T10:11:24.000Z"><a href="/2024/09/10/25-%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AEWebP%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%9B%BF%E6%8D%A2%E4%B8%8E%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96/">2024-09-10</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
         
-            <a href="/2018/12/02/14.TensorFlow%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="collection-item grey-text text-darken-1">
-                <time datetime="2018-12-02T10:57:20.000Z">2018-12-02</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                TensorFlow基础入门学习笔记
-            </a>
+            <a href="/tags/前端/" class="chip pink lighten-1">前端</a>
+        
+            <a href="/tags/vue/" class="chip pink lighten-1">vue</a>
         
     </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E5%B0%86%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%9B%BF%E6%8D%A2%E4%B8%BAWebP%E6%A0%BC%E5%BC%8F"><span class="section table-of-contents-text">将项目中的图片替换为WebP格式</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="section table-of-contents-text">其他相关资料</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>WebP是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，<br>是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。</p>
+<span id="more"></span>
+<p>WebP最初在2010年发布，目标是减少文件大小，但达到和JPEG格式相同的图片质量，希望能够减少图片档在网络上的发送时间。2011年11月8日，Google开始让WebP支持无损压缩和透明色（alpha通道）的功能，而在2012年8月16日的参考实做libwebp<br>0.2.0中正式支持。根据Google较早的测试，WebP的无损压缩比网络上找到的PNG档少了45%的文件大小，即使这些PNG档在使用pngcrush和PNGOUT处理过，WebP还是可以减少28%的文件大小。</p>
+<h1 id="将项目中的图片替换为WebP格式"><a href="#将项目中的图片替换为WebP格式" class="headerlink" title="将项目中的图片替换为WebP格式"></a>将项目中的图片替换为WebP格式</h1><p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for file in *.png; do</span><br><span class="line">  cwebp -q 80 &quot;$file&quot; -o &quot;$&#123;file%.png&#125;.webp&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>gif动图也可以用ffmpeg进行转换，输出文件可以循环动画：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.gif -loop 0 -c:v libwebp -an output.webp</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他相关资料"><a href="#其他相关资料" class="headerlink" title="其他相关资料"></a>其他相关资料</h1><p>webp浏览器支持情况：<a target="_blank" rel="noopener" href="https://caniuse.com/webp">https://caniuse.com/webp</a></p>
+
+                
+
+
+<p class="pink-link-context">
+    <a href="/2024/08/22/24-%E4%B9%90%E4%B8%B0-%E7%99%BE%E7%AB%8B%E4%B8%B0-V5%E8%80%81%E5%B9%B4%E6%89%8B%E6%9C%BA%E5%88%B7%E6%9C%BA%E7%8E%A9%E6%9C%BA%E7%AC%94%E8%AE%B0/" rel="next" title="乐丰(百立丰)-V5老年手机刷机玩机笔记">
+    下一篇：乐丰(百立丰)-V5老年手机刷机玩机笔记
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
 
 
 </div>

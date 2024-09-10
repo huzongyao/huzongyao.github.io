@@ -1024,45 +1024,25 @@
       </tags>
   </entry>
   <entry>
-    <title>Python开源Web框架Tornado学习笔记</title>
-    <url>/2016/07/12/3.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Tornado%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><a href="http://www.tornadoweb.org/">Tornado</a>是<a href="http://blog.friendfeed.com/">FriendFeed</a>使用的可扩展的非阻塞式 web 服务器及其相关工具的开源版本，能让python web服务器搭建变得更加简单快捷。</p>
+    <title>前端项目WebP格式图片替换与资源加载优化</title>
+    <url>/2024/09/10/25-%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AEWebP%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%9B%BF%E6%8D%A2%E4%B8%8E%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>WebP是一种同时提供了有损压缩与无损压缩（可逆压缩）的图片文件格式，派生自影像编码格式VP8，被认为是WebM多媒体格式的姊妹项目，<br>是由Google在购买On2 Technologies后发展出来，以BSD授权条款发布。</p>
 <span id="more"></span>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="http://www.tornadoweb.cn/">这里</a>是中文帮助文档。<br><a href="https://github.com/tornadoweb/tornado">这里</a>是项目GitHub地址。<br><a href="http://demo.pythoner.com/itt2zh/index.html">这里</a>是一个很好的教程</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="1-下载安装release下载页"><a href="#1-下载安装release下载页" class="headerlink" title="1.下载安装release下载页"></a>1.下载安装<a href="https://github.com/tornadoweb/tornado/releases">release下载页</a></h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf tornado-1.2.1.tar.gz</span><br><span class="line">cd tornado-1.2.1</span><br><span class="line">python setup.py build</span><br><span class="line">sudo python setup.py install</span><br></pre></td></tr></table></figure>
+<p>WebP最初在2010年发布，目标是减少文件大小，但达到和JPEG格式相同的图片质量，希望能够减少图片档在网络上的发送时间。2011年11月8日，Google开始让WebP支持无损压缩和透明色（alpha通道）的功能，而在2012年8月16日的参考实做libwebp<br>0.2.0中正式支持。根据Google较早的测试，WebP的无损压缩比网络上找到的PNG档少了45%的文件大小，即使这些PNG档在使用pngcrush和PNGOUT处理过，WebP还是可以减少28%的文件大小。</p>
+<h1 id="将项目中的图片替换为WebP格式"><a href="#将项目中的图片替换为WebP格式" class="headerlink" title="将项目中的图片替换为WebP格式"></a>将项目中的图片替换为WebP格式</h1><p>使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for file in *.png; do</span><br><span class="line">  cwebp -q 80 &quot;$file&quot; -o &quot;$&#123;file%.png&#125;.webp&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>gif动图也可以用ffmpeg进行转换，输出文件可以循环动画：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ffmpeg -i input.gif -loop 0 -c:v libwebp -an output.webp</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-通过-pip-或者-easy-install-来安装-如："><a href="#2-通过-pip-或者-easy-install-来安装-如：" class="headerlink" title="2.通过 pip 或者 easy_install 来安装,如："></a>2.通过 pip 或者 easy_install 来安装,如：</h3><ul>
-<li><p>使用pip安装命令，如果安装失败运行时引包会报错</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pip install tornado</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>但前提是机器里安装了pip，如果没有的话先安装pip再说：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>pip卸载&#x2F;更新命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pip uninstall tornado</span><br><span class="line">sudo pip install --upgrade tornado</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>编写Python代码比较习惯使用Jetbrains公司的<a href="https://www.jetbrains.com/pycharm/">PyCharm</a>,获取注册码可参考<a href="http://idea.qinxi1992.cn/">http://idea.qinxi1992.cn/</a></br><br>GitHub上源代码里包含了<a href="https://github.com/tornadoweb/tornado/tree/stable/demos">示例代码</a></p>
-<h3 id="HelloWorld代码："><a href="#HelloWorld代码：" class="headerlink" title="HelloWorld代码："></a>HelloWorld代码：</h3><p>访问<a href="http://localhost:8888/">http://localhost:8888/</a> 就可以在浏览器打印出Hello, world</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tornado.ioloop</span><br><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;Hello, world&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app = make_app()</span><br><span class="line">    app.listen(<span class="number">8888</span>)</span><br><span class="line">    tornado.ioloop.IOLoop.current().start()</span><br></pre></td></tr></table></figure>
-
-<p>使用Tornado的程序结构清晰易懂，程序定义了一个类，一个函数，一些全局代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br></pre></td></tr></table></figure>
-<p>这里是代码执行的入口，这个判断语句判断该模块是否是主模块，里面一般写一些对该模块的测试代码，只有把该模块作为主模块执行的时候，才运行这些测试代码，否则当它作为类库被其他模块引用时，就不必手动来注释这些测试代码了。<br>普通Tornado程序的执行，就是一个tornado.web.Application对象通过listen()监听一个端口，在使用tornado.ioloop.IOLoop.current().start()开启IOLoop。</p>
-<h3 id="Handler与请求映射"><a href="#Handler与请求映射" class="headerlink" title="Handler与请求映射"></a>Handler与请求映射</h3><p>光有监听，没有指定服务器接受请求后的操作，也不能完成请求，Tornado通过继承tornado.web.RequestHandler，重写get(), post()等方法来指定相应的操作，Handler数组作为Application构造参数与之关联。<br>因此一个Application可以有多个Handler，对应不同的次级url，例如</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FirstHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;FirstHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SecondHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;SecondHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/first&quot;</span>, FirstHandler),</span><br><span class="line">        (<span class="string">r&quot;/second&quot;</span>, SecondHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
-<p>定义了两个Handler类，在Application构造方法参数中如(r”&#x2F;first”, FirstHandler)指定子URL &#x2F;first对应到FirstHandler，字符串”&#x2F;first”前面的r作用是声明字符串中的所有字符不做转义操作，因此通过访问<a href="http://localhost:8888/first">http://localhost:8888/first</a> 和<a href="http://localhost:8888/second">http://localhost:8888/second</a> 可以映射到不同的操作。</p>
-<p>也可以使用通配符，这时匹配的参数还会作为参数传递到Handler请求中</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, arg</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;Page&quot;</span> + arg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/page/([0-9]+)&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
-<p>这时访问<a href="http://localhost:8888/page/789">http://localhost:8888/page/789</a> ，页面打印出Page789。但如果传入不匹配的url如<a href="http://localhost:8888/page/789aa">http://localhost:8888/page/789aa</a> ，将会返回404错误。<br>如此以后，如果网站需要增加一个页面或模块，只需要在项目中添加对应的Handler并注册即可。</p>
+<h1 id="其他相关资料"><a href="#其他相关资料" class="headerlink" title="其他相关资料"></a>其他相关资料</h1><p>webp浏览器支持情况：<a href="https://caniuse.com/webp">https://caniuse.com/webp</a></p>
 ]]></content>
       <categories>
         <category>技术博客</category>
-        <category>Python学习</category>
+        <category>前端学习</category>
       </categories>
       <tags>
-        <tag>html</tag>
-        <tag>python</tag>
-        <tag>web</tag>
+        <tag>前端</tag>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1105,6 +1085,48 @@
 访问&#x2F;index时，加了个延时，请求十秒以后才会响应，但是访问&#x2F;test1时不会被阻塞，说明请求可以并发了。</li>
 </ol>
 <p>有了这些框架，搭建简单的web应用便可以非常迅速了。</p>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Python学习</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
+        <tag>python</tag>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python开源Web框架Tornado学习笔记</title>
+    <url>/2016/07/12/3.Python%E5%BC%80%E6%BA%90Web%E6%A1%86%E6%9E%B6Tornado%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p><a href="http://www.tornadoweb.org/">Tornado</a>是<a href="http://blog.friendfeed.com/">FriendFeed</a>使用的可扩展的非阻塞式 web 服务器及其相关工具的开源版本，能让python web服务器搭建变得更加简单快捷。</p>
+<span id="more"></span>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="http://www.tornadoweb.cn/">这里</a>是中文帮助文档。<br><a href="https://github.com/tornadoweb/tornado">这里</a>是项目GitHub地址。<br><a href="http://demo.pythoner.com/itt2zh/index.html">这里</a>是一个很好的教程</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="1-下载安装release下载页"><a href="#1-下载安装release下载页" class="headerlink" title="1.下载安装release下载页"></a>1.下载安装<a href="https://github.com/tornadoweb/tornado/releases">release下载页</a></h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf tornado-1.2.1.tar.gz</span><br><span class="line">cd tornado-1.2.1</span><br><span class="line">python setup.py build</span><br><span class="line">sudo python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通过-pip-或者-easy-install-来安装-如："><a href="#2-通过-pip-或者-easy-install-来安装-如：" class="headerlink" title="2.通过 pip 或者 easy_install 来安装,如："></a>2.通过 pip 或者 easy_install 来安装,如：</h3><ul>
+<li><p>使用pip安装命令，如果安装失败运行时引包会报错</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pip install tornado</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但前提是机器里安装了pip，如果没有的话先安装pip再说：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pip卸载&#x2F;更新命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pip uninstall tornado</span><br><span class="line">sudo pip install --upgrade tornado</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>编写Python代码比较习惯使用Jetbrains公司的<a href="https://www.jetbrains.com/pycharm/">PyCharm</a>,获取注册码可参考<a href="http://idea.qinxi1992.cn/">http://idea.qinxi1992.cn/</a></br><br>GitHub上源代码里包含了<a href="https://github.com/tornadoweb/tornado/tree/stable/demos">示例代码</a></p>
+<h3 id="HelloWorld代码："><a href="#HelloWorld代码：" class="headerlink" title="HelloWorld代码："></a>HelloWorld代码：</h3><p>访问<a href="http://localhost:8888/">http://localhost:8888/</a> 就可以在浏览器打印出Hello, world</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tornado.ioloop</span><br><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;Hello, world&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app = make_app()</span><br><span class="line">    app.listen(<span class="number">8888</span>)</span><br><span class="line">    tornado.ioloop.IOLoop.current().start()</span><br></pre></td></tr></table></figure>
+
+<p>使用Tornado的程序结构清晰易懂，程序定义了一个类，一个函数，一些全局代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br></pre></td></tr></table></figure>
+<p>这里是代码执行的入口，这个判断语句判断该模块是否是主模块，里面一般写一些对该模块的测试代码，只有把该模块作为主模块执行的时候，才运行这些测试代码，否则当它作为类库被其他模块引用时，就不必手动来注释这些测试代码了。<br>普通Tornado程序的执行，就是一个tornado.web.Application对象通过listen()监听一个端口，在使用tornado.ioloop.IOLoop.current().start()开启IOLoop。</p>
+<h3 id="Handler与请求映射"><a href="#Handler与请求映射" class="headerlink" title="Handler与请求映射"></a>Handler与请求映射</h3><p>光有监听，没有指定服务器接受请求后的操作，也不能完成请求，Tornado通过继承tornado.web.RequestHandler，重写get(), post()等方法来指定相应的操作，Handler数组作为Application构造参数与之关联。<br>因此一个Application可以有多个Handler，对应不同的次级url，例如</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FirstHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;FirstHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SecondHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;SecondHandler&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/first&quot;</span>, FirstHandler),</span><br><span class="line">        (<span class="string">r&quot;/second&quot;</span>, SecondHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p>定义了两个Handler类，在Application构造方法参数中如(r”&#x2F;first”, FirstHandler)指定子URL &#x2F;first对应到FirstHandler，字符串”&#x2F;first”前面的r作用是声明字符串中的所有字符不做转义操作，因此通过访问<a href="http://localhost:8888/first">http://localhost:8888/first</a> 和<a href="http://localhost:8888/second">http://localhost:8888/second</a> 可以映射到不同的操作。</p>
+<p>也可以使用通配符，这时匹配的参数还会作为参数传递到Handler请求中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainHandler</span>(tornado.web.RequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, arg</span>):</span><br><span class="line">        <span class="variable language_">self</span>.write(<span class="string">&quot;Page&quot;</span> + arg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_app</span>():</span><br><span class="line">    <span class="keyword">return</span> tornado.web.Application([</span><br><span class="line">        (<span class="string">r&quot;/page/([0-9]+)&quot;</span>, MainHandler),</span><br><span class="line">    ])</span><br></pre></td></tr></table></figure>
+<p>这时访问<a href="http://localhost:8888/page/789">http://localhost:8888/page/789</a> ，页面打印出Page789。但如果传入不匹配的url如<a href="http://localhost:8888/page/789aa">http://localhost:8888/page/789aa</a> ，将会返回404错误。<br>如此以后，如果网站需要增加一个页面或模块，只需要在项目中添加对应的Handler并注册即可。</p>
 ]]></content>
       <categories>
         <category>技术博客</category>
@@ -1183,6 +1205,42 @@
       </tags>
   </entry>
   <entry>
+    <title>AndroidStudio多模块编译之子模块的调试</title>
+    <url>/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/</url>
+    <content><![CDATA[<p>我们构建规模较大的Android工程时为了复用和分工协作，会使用到多模块构建应用程序。有时候一个App的编译也依赖于多个子模块，这样的App通常由一个app模块和若干个library模块组成。我们通过compile project(‘:library’)的方式就可以引入子模块供我们所用。但这种情况下有个问题，主模块引入的library默认情况下总是以release方式编译。</p>
+<span id="more"></span>
+
+<h2 id="子模块无法调试和打印LOG"><a href="#子模块无法调试和打印LOG" class="headerlink" title="子模块无法调试和打印LOG"></a>子模块无法调试和打印LOG</h2><p>这就意味着，不管app模块是以debug还是release方式编译，子模块的BuildConfig.DEBUG的值永远是false，且log不得输出，更重要的是release版本中本地代码无法断点调试。<br>相关现象的英文描述引用：<br>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. </p>
+<h3 id="1-子模块发布debug版本"><a href="#1-子模块发布debug版本" class="headerlink" title="1.子模块发布debug版本"></a>1.子模块发布debug版本</h3><p>要解决这个问题，最直接的就是指定子模块固定发布debug版本供其他模块引用，You can control which variant gets published:</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">      defaultPublishConfig <span class="string">&quot;debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有Flavor，也需要指定Flavor：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">&quot;flavor1Debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样以后，子模块发布的版本总是被指定为debug版本，调试也可以正常进行了。</p>
+<h3 id="2-根据主模块切换编译方式"><a href="#2-根据主模块切换编译方式" class="headerlink" title="2.根据主模块切换编译方式"></a>2.根据主模块切换编译方式</h3><p>上一种办法，通过添加 defaultPublishConfig “debug” 解决了调试问题，这样虽然再debug状态下好使了，但是在发release版本的时候会导致DEBUG仍然为true。<br>除非手动修改defaultPublishConfig “release”，我们想实现其随app模块的切换自动切换呢。</p>
+<ul>
+<li>Library</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    publishNonDefault <span class="keyword">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>App</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    releaseCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;release&#x27;</span>)</span><br><span class="line">    debugCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些配置也很容易理解，就是让子模块生成多个arr包，主模块根据需要来决定编译时引用哪一个。</p>
+<h3 id="3-更多参考资料"><a href="#3-更多参考资料" class="headerlink" title="3.更多参考资料"></a>3.更多参考资料</h3><ul>
+<li><a href="https://github.com/akaita/AndroidNativeLibrary">https://github.com/akaita/AndroidNativeLibrary</a></li>
+<li><a href="http://www.akaita.com/post/android-native-library-module-debug/">http://www.akaita.com/post/android-native-library-module-debug/</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术博客</category>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>gradle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用python开发completeroms网站爬虫</title>
     <url>/2017/10/17/7.%E4%BD%BF%E7%94%A8python%E5%BC%80%E5%8F%91completeroms%E7%BD%91%E7%AB%99%E7%88%AC%E8%99%AB/</url>
     <content><![CDATA[<p>使用Python开发爬虫是很快速简单灵活的。我在<a href="http://www.completeroms.com/">completeroms</a>这个网站看到了很全的模拟器游戏下载，包括NES，GBA，GBC等等，偶尔下载几个ROM回味一下童年时代红白机的乐趣也不失为一件很有情调的事。然而该网站没有一个批量下载的功能，只能一个个自己下载，下载一个ROM得点开两个页面，即便手速再快，每次下载之前还得等待10秒。于是，对于想批量下载的羊毛党来说，得弄个爬虫才是真爱了。</p>
@@ -1223,42 +1281,6 @@
         <tag>html</tag>
         <tag>python</tag>
         <tag>dom</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AndroidStudio多模块编译之子模块的调试</title>
-    <url>/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/</url>
-    <content><![CDATA[<p>我们构建规模较大的Android工程时为了复用和分工协作，会使用到多模块构建应用程序。有时候一个App的编译也依赖于多个子模块，这样的App通常由一个app模块和若干个library模块组成。我们通过compile project(‘:library’)的方式就可以引入子模块供我们所用。但这种情况下有个问题，主模块引入的library默认情况下总是以release方式编译。</p>
-<span id="more"></span>
-
-<h2 id="子模块无法调试和打印LOG"><a href="#子模块无法调试和打印LOG" class="headerlink" title="子模块无法调试和打印LOG"></a>子模块无法调试和打印LOG</h2><p>这就意味着，不管app模块是以debug还是release方式编译，子模块的BuildConfig.DEBUG的值永远是false，且log不得输出，更重要的是release版本中本地代码无法断点调试。<br>相关现象的英文描述引用：<br>By default a library only publishes its release variant. This variant will be used by all projects referencing the library, no matter which variant they build themselves. This is a temporary limitation due to Gradle limitations that we are working towards removing. </p>
-<h3 id="1-子模块发布debug版本"><a href="#1-子模块发布debug版本" class="headerlink" title="1.子模块发布debug版本"></a>1.子模块发布debug版本</h3><p>要解决这个问题，最直接的就是指定子模块固定发布debug版本供其他模块引用，You can control which variant gets published:</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">      defaultPublishConfig <span class="string">&quot;debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果有Flavor，也需要指定Flavor：</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultPublishConfig <span class="string">&quot;flavor1Debug&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样以后，子模块发布的版本总是被指定为debug版本，调试也可以正常进行了。</p>
-<h3 id="2-根据主模块切换编译方式"><a href="#2-根据主模块切换编译方式" class="headerlink" title="2.根据主模块切换编译方式"></a>2.根据主模块切换编译方式</h3><p>上一种办法，通过添加 defaultPublishConfig “debug” 解决了调试问题，这样虽然再debug状态下好使了，但是在发release版本的时候会导致DEBUG仍然为true。<br>除非手动修改defaultPublishConfig “release”，我们想实现其随app模块的切换自动切换呢。</p>
-<ul>
-<li>Library</li>
-</ul>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    publishNonDefault <span class="keyword">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>App</li>
-</ul>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    releaseCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;release&#x27;</span>)</span><br><span class="line">    debugCompile <span class="keyword">project</span>(path: <span class="string">&#x27;:library&#x27;</span>, configuration: <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这些配置也很容易理解，就是让子模块生成多个arr包，主模块根据需要来决定编译时引用哪一个。</p>
-<h3 id="3-更多参考资料"><a href="#3-更多参考资料" class="headerlink" title="3.更多参考资料"></a>3.更多参考资料</h3><ul>
-<li><a href="https://github.com/akaita/AndroidNativeLibrary">https://github.com/akaita/AndroidNativeLibrary</a></li>
-<li><a href="http://www.akaita.com/post/android-native-library-module-debug/">http://www.akaita.com/post/android-native-library-module-debug/</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术博客</category>
-        <category>Android学习</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>gradle</tag>
       </tags>
   </entry>
   <entry>
