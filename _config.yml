@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: HuZongYao的博客
-subtitle: 'HuZongYao的博客-拥抱技术，享受生活'
+title: 胡宗尧的博客
+subtitle: '胡宗尧的博客-拥抱技术，享受生活'
 description: ''
 keywords:
 author: John Doe
@@ -108,3 +108,5 @@ theme: raytaylorism
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+# PWA (Manual and hexo-offline)
