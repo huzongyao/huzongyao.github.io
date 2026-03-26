@@ -7,7 +7,7 @@
 
     
 
-    <title>Java基础学习笔记之多线程 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <title>Java基础学习笔记之多线程 | 胡宗尧的博客-拥抱技术，享受生活</title>
     <meta name="author" content="John Doe">
     
     <meta name="description" content="用多线程只有一个目的，那就是更好的利用cpu的资源，因为所有的多线程代码都可以用单线程来实现。说这个话其实只有一半对，因为反应“多角色”的程序代码，最起码每个角色要给他一个线程吧，否则连实际场景都无法模拟，当然也没法说能用单线程来实现：比如最常见的“生产者，消费者模型”。">
@@ -16,14 +16,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <meta property="og:title" content="Java基础学习笔记之多线程"/>
-    <meta property="og:site_name" content="HuZongYao的博客"/>
+    <meta property="og:site_name" content="胡宗尧的博客"/>
 
     
     <meta property="og:image" content=""/>
     
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="胡宗尧的博客" type="application/atom+xml">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/materialize-css@0.97.6/dist/css/materialize.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
@@ -31,8 +31,23 @@
     
         <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
     
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -44,7 +59,7 @@
             <i class="fa fa-navicon"></i>
         </a>
         <div class="">
-            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <a href="/" class="brand-logo hide-on-med-and-down">胡宗尧的博客</a>
             <ul class="right hide-on-med-and-down">
                 
                     <li>
@@ -98,8 +113,8 @@
                 </div>
                 <div class="info col s8 valign-wrapper no-padding">
                     <div class="valign">
-                        <p class="name">HuZongYao</p>
-                        <p class="desc">Web前端/安卓/旅行</p>
+                        <p class="name">胡宗尧</p>
+                        <p class="desc">独立全栈/嵌入式/旅行</p>
                     </div>
                 </div>
             </div>
@@ -187,22 +202,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
-                    PlatformIO学习 <span class="right">3 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
                     SpringBoot学习 <span class="right">1 篇</span></a>
                 </a>
@@ -211,8 +210,24 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -435,18 +450,25 @@
 </tbody></table>
 <h2 id="线程的同步"><a href="#线程的同步" class="headerlink" title="线程的同步"></a>线程的同步</h2><p>线程同步采用关键字synchronized，意味着对代码块或者方法加锁，使用场景有：</p>
 <ul>
-<li><p>1.对实例t使用同步锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (t) &#123;</span><br><span class="line">    <span class="comment">// Block body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>2.对实例this使用同步锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">    <span class="comment">// Block body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>3.对成员方法raise()使用同步锁,两种方法等效</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Equivalent code segment 1</span></span><br><span class="line"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">raise</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// Method Body</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Equivalent code segment 2</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">raise</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">        <span class="comment">// Method body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>4.对静态方法calibrate()使用同步锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Telescope</span> &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">calibrate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Method body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>1.对实例t使用同步锁</li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (t) &#123;</span><br><span class="line">    <span class="comment">// Block body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2.对实例this使用同步锁</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">    <span class="comment">// Block body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>3.对成员方法raise()使用同步锁,两种方法等效</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Equivalent code segment 1</span></span><br><span class="line"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">raise</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// Method Body</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Equivalent code segment 2</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">raise</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">        <span class="comment">// Method body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4.对静态方法calibrate()使用同步锁</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Telescope</span> &#123;</span><br><span class="line">    <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">calibrate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Method body</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="多线程工具包"><a href="#多线程工具包" class="headerlink" title="多线程工具包"></a>多线程工具包</h2><p>java对多线程提供了工具包java.util.concurrent</p>
 <h3 id="线程池-Executors"><a href="#线程池-Executors" class="headerlink" title="线程池 Executors"></a>线程池 Executors</h3><p>Executors提供了工厂方法来创建线程池</p>
 <table>
@@ -650,7 +672,7 @@
             <div class="social-group col m4 s12">
                 <h5 class="white-text">社交</h5>
                 
-                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                    <a class="social-link" href="https://weibo.com/hzy3774" target="_blank">
                         <i class="fa fa-2x fa-weibo"></i>
                     </a>
                 
@@ -684,8 +706,7 @@
 
     <div class="footer-copyright pink-link-context">
         <div class="container">
-            © 2016 github.com, All rights reserved.
-            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+            © 2026 github.com, All rights reserved.
         </div>
     </div>
 </footer>
@@ -795,7 +816,7 @@
                     }
                 }
             });
-            var searchXml = "search.xml";
+            var searchXml = "search.json";
             if (searchXml.length == 0) {
              	searchXml = "search.xml";
             }

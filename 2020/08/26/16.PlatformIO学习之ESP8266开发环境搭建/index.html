@@ -7,7 +7,7 @@
 
     
 
-    <title>PlatformIO学习之ESP8266开发环境搭建 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <title>PlatformIO学习之ESP8266开发环境搭建 | 胡宗尧的博客-拥抱技术，享受生活</title>
     <meta name="author" content="John Doe">
     
     <meta name="description" content="PlatformIO 是开源的物联网开发生态系统。提供跨平台的代码构建器、集成开发环境（IDE），兼容 Arduino，ESP8266和mbed等。支持在Windows、Linux、macOS上使用预编译好的工具链，调试器和框架进行开发。">
@@ -16,14 +16,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <meta property="og:title" content="PlatformIO学习之ESP8266开发环境搭建"/>
-    <meta property="og:site_name" content="HuZongYao的博客"/>
+    <meta property="og:site_name" content="胡宗尧的博客"/>
 
     
     <meta property="og:image" content=""/>
     
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="胡宗尧的博客" type="application/atom+xml">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/materialize-css@0.97.6/dist/css/materialize.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
@@ -31,8 +31,23 @@
     
         <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
     
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -44,7 +59,7 @@
             <i class="fa fa-navicon"></i>
         </a>
         <div class="">
-            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <a href="/" class="brand-logo hide-on-med-and-down">胡宗尧的博客</a>
             <ul class="right hide-on-med-and-down">
                 
                     <li>
@@ -98,8 +113,8 @@
                 </div>
                 <div class="info col s8 valign-wrapper no-padding">
                     <div class="valign">
-                        <p class="name">HuZongYao</p>
-                        <p class="desc">Web前端/安卓/旅行</p>
+                        <p class="name">胡宗尧</p>
+                        <p class="desc">独立全栈/嵌入式/旅行</p>
                     </div>
                 </div>
             </div>
@@ -187,22 +202,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
-                    PlatformIO学习 <span class="right">3 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
                     SpringBoot学习 <span class="right">1 篇</span></a>
                 </a>
@@ -211,8 +210,24 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -319,21 +334,23 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;Arduino.h&quot;</span><br><span class="line">#include &quot;ESP8266WiFi.h&quot;</span><br><span class="line"></span><br><span class="line">void setup() &#123;</span><br><span class="line">    // initialize LED digital pin as an output.</span><br><span class="line">    pinMode(LED_BUILTIN, OUTPUT);</span><br><span class="line">    // 初始化串口</span><br><span class="line">    Serial.begin(115200);</span><br><span class="line">    Serial.println(&quot;Arduino Begin!!&quot;);</span><br><span class="line"></span><br><span class="line">    WiFi.mode(WIFI_STA);</span><br><span class="line">    WiFi.disconnect();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">    // turn the LED on (HIGH is the voltage level)</span><br><span class="line">    digitalWrite(LED_BUILTIN, HIGH);</span><br><span class="line">    Serial.println(&quot;\n\n---Scan Wifi-------------&quot;);</span><br><span class="line">    int n = WiFi.scanNetworks();</span><br><span class="line">    for (int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">        Serial.printf(&quot;%02d: %s, Ch:%d (%ddBm) %s\n&quot;, i + 1,</span><br><span class="line">                      WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i),</span><br><span class="line">                      WiFi.encryptionType(i) == ENC_TYPE_NONE ? &quot;&quot; : &quot;*&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    Serial.println(&quot;---Wifi End-------------\n\n&quot;);</span><br><span class="line">    // wait for a second</span><br><span class="line">    delay(6000);</span><br><span class="line">    // turn the LED off by making the voltage LOW</span><br><span class="line">    digitalWrite(LED_BUILTIN, LOW);</span><br><span class="line">    // wait for a second</span><br><span class="line">    delay(20);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h4 id="5-使用技巧"><a href="#5-使用技巧" class="headerlink" title="5. 使用技巧"></a>5. 使用技巧</h4><ul>
-<li><p>每个项目的重要配置，主要保存在platformio.ini文件中，可以指定平台，板卡，软件框架，串口烧写速率，串口终端波特率等，例如：</p>
+<li>每个项目的重要配置，主要保存在platformio.ini文件中，可以指定平台，板卡，软件框架，串口烧写速率，串口终端波特率等，例如：</li>
+</ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[env:nodemcuv2]</span><br><span class="line">platform = espressif8266</span><br><span class="line">board = nodemcuv2</span><br><span class="line">framework = arduino</span><br><span class="line">upload_speed = 921600</span><br><span class="line">monitor_speed = 115200</span><br></pre></td></tr></table></figure>
-</li>
+
+<ul>
 <li><p>代码写完后需要运行只需要点下方的向右箭头→，即可完成编译和烧写，和Arduino IDE类似。点下方插头图标🔌，即可打开串口终端查看消息</p>
 </li>
 <li><p>VSCode代码格式化样式设置：默认的代码格式化是VS样式，如下：</p>
+</li>
+</ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int test()</span><br><span class="line">&#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3)</span><br><span class="line">    &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125;</span><br><span class="line">    else if (i == 4)</span><br><span class="line">    &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样子比较占行数，我们一般习惯LLVM样式，只要在设置 &gt; 扩展 &gt; C&#x2F;C++ &gt; C_Cpp: Clang_format_style<br>修改设置位LLVM即可，再使用Alt + Shift + F 格式化代码，即可变成紧凑型。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">  int i = 3;</span><br><span class="line">  if (i == 3) &#123;</span><br><span class="line">    i = 4;</span><br><span class="line">  &#125; else if (i == 4) &#123;</span><br><span class="line">    i = 3;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果嫌这样TAB空格太短，可以指定为下面代码：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; BasedOnStyle: LLVM, IndentWidth: 4 &#125;</span><br></pre></td></tr></table></figure>
 <p>空格长一点了，代码较短的话看起来舒服一些</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3) &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125; else if (i == 4) &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int test() &#123;</span><br><span class="line">    int i = 3;</span><br><span class="line">    if (i == 3) &#123;</span><br><span class="line">        i = 4;</span><br><span class="line">    &#125; else if (i == 4) &#123;</span><br><span class="line">        i = 3;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
                 
 <p class="pink-link-context">
     <a href="/2023/05/12/17-%E5%9F%BA%E4%BA%8EWebAssembly%E7%9A%84%E5%89%8D%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5/" rel="next" title="基于WebAssembly的前端网络安全实践">
@@ -382,7 +399,7 @@
             <div class="social-group col m4 s12">
                 <h5 class="white-text">社交</h5>
                 
-                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                    <a class="social-link" href="https://weibo.com/hzy3774" target="_blank">
                         <i class="fa fa-2x fa-weibo"></i>
                     </a>
                 
@@ -416,8 +433,7 @@
 
     <div class="footer-copyright pink-link-context">
         <div class="container">
-            © 2016 github.com, All rights reserved.
-            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+            © 2026 github.com, All rights reserved.
         </div>
     </div>
 </footer>
@@ -527,7 +543,7 @@
                     }
                 }
             });
-            var searchXml = "search.xml";
+            var searchXml = "search.json";
             if (searchXml.length == 0) {
              	searchXml = "search.xml";
             }

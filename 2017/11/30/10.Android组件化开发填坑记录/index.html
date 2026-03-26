@@ -7,7 +7,7 @@
 
     
 
-    <title>Android组件化开发填坑记录 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <title>Android组件化开发填坑记录 | 胡宗尧的博客-拥抱技术，享受生活</title>
     <meta name="author" content="John Doe">
     
     <meta name="description" content="Android组件化开发通常也说模块化开发，使用Android Studio做开发时，通常组件化的实现就是在一个工程项目中同时包含若干个application模块和若干个library模块，还会引用一些第三方类库或者依赖。每一个application模块通常可以编译成一个应用，而library模块一般不用于生成可执行的应用，而是生成jar&amp;#x2F;aar类库，或者被同一项目下其他的library或application模块引用。">
@@ -16,14 +16,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <meta property="og:title" content="Android组件化开发填坑记录"/>
-    <meta property="og:site_name" content="HuZongYao的博客"/>
+    <meta property="og:site_name" content="胡宗尧的博客"/>
 
     
     <meta property="og:image" content=""/>
     
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="胡宗尧的博客" type="application/atom+xml">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/materialize-css@0.97.6/dist/css/materialize.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
@@ -31,8 +31,23 @@
     
         <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
     
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -44,7 +59,7 @@
             <i class="fa fa-navicon"></i>
         </a>
         <div class="">
-            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <a href="/" class="brand-logo hide-on-med-and-down">胡宗尧的博客</a>
             <ul class="right hide-on-med-and-down">
                 
                     <li>
@@ -98,8 +113,8 @@
                 </div>
                 <div class="info col s8 valign-wrapper no-padding">
                     <div class="valign">
-                        <p class="name">HuZongYao</p>
-                        <p class="desc">Web前端/安卓/旅行</p>
+                        <p class="name">胡宗尧</p>
+                        <p class="desc">独立全栈/嵌入式/旅行</p>
                     </div>
                 </div>
             </div>
@@ -187,22 +202,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
-                    PlatformIO学习 <span class="right">3 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
                     SpringBoot学习 <span class="right">1 篇</span></a>
                 </a>
@@ -211,8 +210,24 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -330,10 +345,16 @@
 
 <p>但如果要在library模块中使用，不但要修改gradle，java代码也要修改如下，这些github上都有说明：<br><a target="_blank" rel="noopener" href="https://github.com/JakeWharton/butterknife">https://github.com/JakeWharton/butterknife</a> </p>
 <ul>
-<li>需要使用gradle插件做一些预处理：<br>插件声明<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">   &#125;</span><br><span class="line">  dependencies &#123;</span><br><span class="line">    classpath &#x27;com.jakewharton:butterknife-gradle-plugin:8.8.1&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-在library模块中使用插件：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.library&#x27;</span><br><span class="line">apply plugin: &#x27;com.jakewharton.butterknife&#x27;</span><br></pre></td></tr></table></figure></li>
-<li>把R改成R2：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ExampleActivity extends Activity &#123;</span><br><span class="line">  @BindView(R2.id.user) EditText username;</span><br><span class="line">  @BindView(R2.id.pass) EditText password;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>需要使用gradle插件做一些预处理：<br>插件声明</li>
 </ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">   &#125;</span><br><span class="line">  dependencies &#123;</span><br><span class="line">    classpath &#x27;com.jakewharton:butterknife-gradle-plugin:8.8.1&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在library模块中使用插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.library&#x27;</span><br><span class="line">apply plugin: &#x27;com.jakewharton.butterknife&#x27;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>把R改成R2：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ExampleActivity extends Activity &#123;</span><br><span class="line">  @BindView(R2.id.user) EditText username;</span><br><span class="line">  @BindView(R2.id.pass) EditText password;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="三-资源ID常量的变化"><a href="#三-资源ID常量的变化" class="headerlink" title="三.资源ID常量的变化"></a>三.资源ID常量的变化</h3><p>在library模块中声明的资源ID，不能使用switch&#x2F;case来判断，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public void onClick(View src)&#123;</span><br><span class="line">    switch(src.getId()) &#123;</span><br><span class="line">    case R.id.playbtn:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line"></span><br><span class="line">    case R.id.stopbtn:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line"></span><br><span class="line">    case R.id.btnmenu:</span><br><span class="line">        ...</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -398,7 +419,7 @@
             <div class="social-group col m4 s12">
                 <h5 class="white-text">社交</h5>
                 
-                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                    <a class="social-link" href="https://weibo.com/hzy3774" target="_blank">
                         <i class="fa fa-2x fa-weibo"></i>
                     </a>
                 
@@ -432,8 +453,7 @@
 
     <div class="footer-copyright pink-link-context">
         <div class="container">
-            © 2016 github.com, All rights reserved.
-            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+            © 2026 github.com, All rights reserved.
         </div>
     </div>
 </footer>
@@ -543,7 +563,7 @@
                     }
                 }
             });
-            var searchXml = "search.xml";
+            var searchXml = "search.json";
             if (searchXml.length == 0) {
              	searchXml = "search.xml";
             }

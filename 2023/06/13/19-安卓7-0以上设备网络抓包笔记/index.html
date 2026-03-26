@@ -7,7 +7,7 @@
 
     
 
-    <title>安卓7.0以上设备网络抓包笔记 | HuZongYao的博客-拥抱技术，享受生活</title>
+    <title>安卓7.0以上设备网络抓包笔记 | 胡宗尧的博客-拥抱技术，享受生活</title>
     <meta name="author" content="John Doe">
     
     <meta name="description" content="fiddler是位于客户端和服务器端之间的代理，也是目前最常用的抓包工具之一">
@@ -16,14 +16,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <meta property="og:title" content="安卓7.0以上设备网络抓包笔记"/>
-    <meta property="og:site_name" content="HuZongYao的博客"/>
+    <meta property="og:site_name" content="胡宗尧的博客"/>
 
     
     <meta property="og:image" content=""/>
     
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="alternate" href="/atom.xml" title="HuZongYao的博客" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="胡宗尧的博客" type="application/atom+xml">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/materialize-css@0.97.6/dist/css/materialize.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
@@ -31,8 +31,23 @@
     
         <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
     
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -44,7 +59,7 @@
             <i class="fa fa-navicon"></i>
         </a>
         <div class="">
-            <a href="/" class="brand-logo hide-on-med-and-down">HuZongYao的博客</a>
+            <a href="/" class="brand-logo hide-on-med-and-down">胡宗尧的博客</a>
             <ul class="right hide-on-med-and-down">
                 
                     <li>
@@ -98,8 +113,8 @@
                 </div>
                 <div class="info col s8 valign-wrapper no-padding">
                     <div class="valign">
-                        <p class="name">HuZongYao</p>
-                        <p class="desc">Web前端/安卓/旅行</p>
+                        <p class="name">胡宗尧</p>
+                        <p class="desc">独立全栈/嵌入式/旅行</p>
                     </div>
                 </div>
             </div>
@@ -187,22 +202,6 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
-                    TensorFlow学习 <span class="right">1 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
-                    PlatformIO学习 <span class="right">3 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
                     SpringBoot学习 <span class="right">1 篇</span></a>
                 </a>
@@ -211,8 +210,24 @@
         
 
             <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
                 <a class="no-padding" href="/categories/技术博客/前端学习/">
                     前端学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -331,20 +346,20 @@
 <p>当然修改已存在的app，将涉及到反编译，回编，签名等步骤</p>
 <h4 id="Root用户添加系统证书"><a href="#Root用户添加系统证书" class="headerlink" title="Root用户添加系统证书"></a>Root用户添加系统证书</h4><p>第二种方式是修改系统文件，把fiddler证书变成系统证书</p>
 <ol>
-<li><p>下载抓包证书（常规抓包也需要这个）如：FiddlerRoot.cer</p>
-</li>
-<li><p>转换成pem格式：</p>
+<li>下载抓包证书（常规抓包也需要这个）如：FiddlerRoot.cer</li>
+<li>转换成pem格式：</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取新的证书HASH值(命令输出第一行会显示文件hash，如：e5c3944b)：</p>
+
+<ol start="3">
+<li>获取新的证书HASH值(命令输出第一行会显示文件hash，如：e5c3944b)：</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>把pem证书文件用hash命名如（e5c3944b.pem）</p>
-</li>
-<li><p>把新证书拷贝到系统证书目录（需root）：&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F;</p>
-</li>
-<li><p>文件权限改成664，重启手机即可</p>
-</li>
+
+<ol start="4">
+<li>把pem证书文件用hash命名如（e5c3944b.pem）</li>
+<li>把新证书拷贝到系统证书目录（需root）：&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F;</li>
+<li>文件权限改成664，重启手机即可</li>
 </ol>
 <p>一般情况下经过这些修改，就可以正常进行https抓包了</p>
 
@@ -396,7 +411,7 @@
             <div class="social-group col m4 s12">
                 <h5 class="white-text">社交</h5>
                 
-                    <a class="social-link" href="http://weibo.com/hzy3774" target="_blank">
+                    <a class="social-link" href="https://weibo.com/hzy3774" target="_blank">
                         <i class="fa fa-2x fa-weibo"></i>
                     </a>
                 
@@ -430,8 +445,7 @@
 
     <div class="footer-copyright pink-link-context">
         <div class="container">
-            © 2016 github.com, All rights reserved.
-            <p class="right" style="margin-top: 0;">本博客由 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a target="_blank" rel="noopener" href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+            © 2026 github.com, All rights reserved.
         </div>
     </div>
 </footer>
@@ -541,7 +555,7 @@
                     }
                 }
             });
-            var searchXml = "search.xml";
+            var searchXml = "search.json";
             if (searchXml.length == 0) {
              	searchXml = "search.xml";
             }
