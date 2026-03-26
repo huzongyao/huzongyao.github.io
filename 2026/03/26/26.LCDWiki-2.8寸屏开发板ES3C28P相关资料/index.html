@@ -1,0 +1,1362 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>LCDWiki-2.8寸屏开发板ES3C28P相关资料 | 胡宗尧的博客-拥抱技术，享受生活</title>
+    <meta name="author" content="John Doe">
+    
+    <meta name="description" content="本文总结了LCD Wiki网站上关于2.8寸ESP32-S3 Display开发板的相关资料，主要包括产品介绍、参数规格、接口定义等信息。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="LCDWiki-2.8寸屏开发板ES3C28P相关资料"/>
+    <meta property="og:site_name" content="胡宗尧的博客"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="胡宗尧的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/materialize-css@0.97.6/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">胡宗尧的博客</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/weixin_favicon.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">胡宗尧</p>
+                        <p class="desc">独立全栈/嵌入式/旅行</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术博客/">
+                    技术博客 <span class="right">27 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Android学习/">
+                    Android学习 <span class="right">12 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/综合学习/">
+                    综合学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/TensorFlow学习/">
+                    TensorFlow学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/SpringBoot学习/">
+                    SpringBoot学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/前端学习/">
+                    前端学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/OpenCV学习/">
+                    OpenCV学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/PlatformIO学习/">
+                    PlatformIO学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Java学习/">
+                    Java学习 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/嵌入式开发/">
+                    嵌入式开发 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术博客/Python学习/">
+                    Python学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术博客/">技术博客</a><a class="breadcrumb" href="/categories/技术博客/嵌入式开发/">嵌入式开发</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>LCDWiki-2.8寸屏开发板ES3C28P相关资料</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2026-03-26T00:00:00.000Z"><a href="/2026/03/26/26.LCDWiki-2.8%E5%AF%B8%E5%B1%8F%E5%BC%80%E5%8F%91%E6%9D%BFES3C28P%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99/">2026-03-26</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/ESP32/" class="chip pink lighten-1">ESP32</a>
+        
+            <a href="/tags/开发板/" class="chip pink lighten-1">开发板</a>
+        
+            <a href="/tags/LCD/" class="chip pink lighten-1">LCD</a>
+        
+            <a href="/tags/嵌入式/" class="chip pink lighten-1">嵌入式</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D"><span class="section table-of-contents-text">产品介绍</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E4%BA%A7%E5%93%81%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">产品参数</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#ESP32%E4%B8%BB%E6%8E%A7%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">ESP32主控参数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E6%B6%B2%E6%99%B6%E5%B1%8F%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">液晶屏参数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E8%A7%A6%E6%91%B8%E5%B1%8F%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">触摸屏参数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E5%B0%BA%E5%AF%B8%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">尺寸参数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E7%94%B5%E6%B1%A0%E5%85%85%E7%94%B5%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">电池充电参数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E7%94%B5%E6%B0%94%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">电气参数</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E5%9F%BA%E6%9C%AC%E5%8F%82%E6%95%B0"><span class="section table-of-contents-text">基本参数</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89"><span class="section table-of-contents-text">接口定义</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#%E6%8E%A5%E5%8F%A3%E5%8A%9F%E8%83%BD%E8%AF%B4%E6%98%8E"><span class="section table-of-contents-text">接口功能说明</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#ESP32%E5%BC%95%E8%84%9A%E5%88%86%E9%85%8D"><span class="section table-of-contents-text">ESP32引脚分配</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E6%B6%B2%E6%99%B6%E5%B1%8F"><span class="section table-of-contents-text">液晶屏</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E7%94%B5%E5%AE%B9%E8%A7%A6%E6%91%B8%E5%B1%8F"><span class="section table-of-contents-text">电容触摸屏</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#RGB%E4%B8%89%E8%89%B2%E7%81%AF"><span class="section table-of-contents-text">RGB三色灯</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#MicroSD%E5%8D%A1"><span class="section table-of-contents-text">MicroSD卡</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E5%A4%96%E9%83%A8Flash"><span class="section table-of-contents-text">外部Flash</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#I2C%E6%89%A9%E5%B1%95"><span class="section table-of-contents-text">I2C扩展</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E6%89%A9%E5%B1%95%E5%BC%95%E8%84%9A"><span class="section table-of-contents-text">扩展引脚</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E7%94%B5%E6%B1%A0"><span class="section table-of-contents-text">电池</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E9%9F%B3%E9%A2%91"><span class="section table-of-contents-text">音频</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E6%8C%89%E9%94%AE"><span class="section table-of-contents-text">按键</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#USB"><span class="section table-of-contents-text">USB</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E4%B8%B2%E5%8F%A3"><span class="section table-of-contents-text">串口</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#%E5%86%85%E9%83%A8PSRAM"><span class="section table-of-contents-text">内部PSRAM</span></a></li></ol></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="section table-of-contents-text">参考资料</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#%E6%80%BB%E7%BB%93"><span class="section table-of-contents-text">总结</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>本文总结了LCD Wiki网站上关于2.8寸ESP32-S3 Display开发板的相关资料，主要包括产品介绍、参数规格、接口定义等信息。</p>
+<span id="more"></span>
+
+<h2 id="产品介绍"><a href="#产品介绍" class="headerlink" title="产品介绍"></a>产品介绍</h2><ul>
+<li>自带ESP32-S3，性能强大，开发方便，开发资源充足</li>
+<li>2.8寸彩屏，240x320分辨率，最大支持262K色（RGB666）,显示色彩丰富</li>
+<li>接口丰富，方便连接各种外设（IIC、UART等外设）</li>
+<li>支持外接喇叭，自带麦克风，可以播放接收音频</li>
+<li>自带RGB三色指示灯，指示状态丰富</li>
+<li>自带电容触摸屏，方便人机交互</li>
+<li>标准的TYPE-C接口，方便程序下载和供电</li>
+<li>自带micro TF卡槽，方便扩展存储</li>
+<li>支持外接锂电池，轻巧便携</li>
+<li>自带电池充电管理电路，可确保电池安全充放电</li>
+<li>提供丰富的示例程序，方便学习</li>
+<li>提供底层驱动技术支持,WIKI资料在线更新</li>
+<li>模块老化测试多重检测可达军工级标准，支持长期稳定工作</li>
+<li>支持小智AI语音聊天</li>
+</ul>
+<h2 id="产品参数"><a href="#产品参数" class="headerlink" title="产品参数"></a>产品参数</h2><h3 id="ESP32主控参数"><a href="#ESP32主控参数" class="headerlink" title="ESP32主控参数"></a>ESP32主控参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模组</td>
+<td>ESP32-S3</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Xtensa LX7 32 位双核处理器</td>
+</tr>
+<tr>
+<td>主频</td>
+<td>240MHz（最大）</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>384 KB ROM + 512KB SRAM +16 KB RTC SRAM + 8M 内置OPI PSRAM + 16M 外接QSPI Flash（N16R8）</td>
+</tr>
+<tr>
+<td>WIFI</td>
+<td>2.4GHz、802.11b&#x2F;g&#x2F;n 模式</td>
+</tr>
+<tr>
+<td>蓝牙</td>
+<td>蓝牙V5.0 BR&#x2F;EDR和蓝牙LE标准</td>
+</tr>
+<tr>
+<td>工作电压</td>
+<td>3.0~3.6(V)</td>
+</tr>
+</tbody></table>
+<h3 id="液晶屏参数"><a href="#液晶屏参数" class="headerlink" title="液晶屏参数"></a>液晶屏参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>屏幕尺寸</td>
+<td>2.8 inch</td>
+</tr>
+<tr>
+<td>屏幕类型</td>
+<td>IPS TFT</td>
+</tr>
+<tr>
+<td>分辨率</td>
+<td>240xRGBx320(pixels)</td>
+</tr>
+<tr>
+<td>有效显示区</td>
+<td>43.20(W)x57.60(H)(mm)</td>
+</tr>
+<tr>
+<td>颜色数目</td>
+<td>最大：262K(RGB666)，常用：65K(RGB565)</td>
+</tr>
+<tr>
+<td>驱动IC</td>
+<td>ILI9341V</td>
+</tr>
+<tr>
+<td>显示接口</td>
+<td>4-Line SPI(接到ESP32上)</td>
+</tr>
+<tr>
+<td>像素尺寸</td>
+<td>0.153(H)x0.153(mm)</td>
+</tr>
+<tr>
+<td>可视角度</td>
+<td>ALL 0’CLOCK</td>
+</tr>
+<tr>
+<td>背光亮度(典型值)</td>
+<td>280 cd&#x2F;m2</td>
+</tr>
+<tr>
+<td>背光灯类型</td>
+<td>White LED*4</td>
+</tr>
+<tr>
+<td>工作温度</td>
+<td>-30~80(℃)</td>
+</tr>
+<tr>
+<td>存储温度</td>
+<td>-30~80(℃)</td>
+</tr>
+</tbody></table>
+<h3 id="触摸屏参数"><a href="#触摸屏参数" class="headerlink" title="触摸屏参数"></a>触摸屏参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有效区尺寸</td>
+<td>2.8 inch</td>
+</tr>
+<tr>
+<td>触摸屏类型</td>
+<td>电容触摸屏</td>
+</tr>
+<tr>
+<td>触摸屏分辨率</td>
+<td>240x320(pixels)</td>
+</tr>
+<tr>
+<td>驱动IC</td>
+<td>D-FT6336G</td>
+</tr>
+<tr>
+<td>可视窗口尺寸</td>
+<td>45.20(W)x59.45(H)(mm)</td>
+</tr>
+<tr>
+<td>通信接口</td>
+<td>IIC</td>
+</tr>
+<tr>
+<td>结构材质</td>
+<td>ITO膜+ITO玻璃</td>
+</tr>
+<tr>
+<td>工作温度</td>
+<td>-30~80(℃)</td>
+</tr>
+<tr>
+<td>存储温度</td>
+<td>-30~80(℃)</td>
+</tr>
+</tbody></table>
+<h3 id="尺寸参数"><a href="#尺寸参数" class="headerlink" title="尺寸参数"></a>尺寸参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>液晶屏外形尺寸</td>
+<td>50.00±0.2(W)x69.20±0.2(H)x2.3±0.1(D)(不包含排线和背胶)</td>
+</tr>
+<tr>
+<td>触摸屏外形尺寸</td>
+<td>50.00±0.2(W)x69.20±0.2(H)x1.20 (D) ±0.1(D)(不包含排线和背胶)</td>
+</tr>
+<tr>
+<td>模块外形尺寸</td>
+<td>有触摸屏：50.00(W)x86.00(H)x10.60(D)，无触摸屏：50.00(W)x86.00(H)x9.10(D)</td>
+</tr>
+</tbody></table>
+<h3 id="电池充电参数"><a href="#电池充电参数" class="headerlink" title="电池充电参数"></a>电池充电参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>充电电压</td>
+<td>范围：4.2~6.5(V)，典型值：5V</td>
+</tr>
+<tr>
+<td>充电电流</td>
+<td>最大值：500mA，模块实际值：290mA</td>
+</tr>
+<tr>
+<td>充电饱和电压</td>
+<td>4.24V</td>
+</tr>
+<tr>
+<td>充电温度</td>
+<td>模块实际最大值：62℃</td>
+</tr>
+<tr>
+<td>充电电池规格</td>
+<td>3.7V聚合锂电池</td>
+</tr>
+</tbody></table>
+<h3 id="电气参数"><a href="#电气参数" class="headerlink" title="电气参数"></a>电气参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工作电压</td>
+<td>5.0V</td>
+</tr>
+<tr>
+<td>背光电流</td>
+<td>79mA</td>
+</tr>
+<tr>
+<td>背光亮度(实际值)</td>
+<td>有触摸屏：230cd&#x2F;m2，无触摸屏：270cd&#x2F;m2</td>
+</tr>
+<tr>
+<td>总电流</td>
+<td>ESP32复位：0，只有显示屏工作：140mA，显示屏、喇叭、电池充电都工作：560mA</td>
+</tr>
+<tr>
+<td>功耗</td>
+<td>0.7（只有显示屏工作），2.8（显示屏，喇叭，电池充电都工作）</td>
+</tr>
+</tbody></table>
+<h3 id="基本参数"><a href="#基本参数" class="headerlink" title="基本参数"></a>基本参数</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SKU</td>
+<td>有触摸屏：ES3C28P，无触摸屏：ES3N28P</td>
+</tr>
+<tr>
+<td>供电接口</td>
+<td>USB(Type-C)</td>
+</tr>
+<tr>
+<td>重量（包含包装）</td>
+<td>ES3C28P:111g，ES3N28P:100g</td>
+</tr>
+</tbody></table>
+<h2 id="接口定义"><a href="#接口定义" class="headerlink" title="接口定义"></a>接口定义</h2><h3 id="接口功能说明"><a href="#接口功能说明" class="headerlink" title="接口功能说明"></a>接口功能说明</h3><table>
+<thead>
+<tr>
+<th>接口</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ESP32-S3</td>
+<td>显示模块主控，控制板载外设和外接外设。</td>
+</tr>
+<tr>
+<td>MicroSD卡槽</td>
+<td>插入Micro SD卡，用来扩展存储空间，例如存放字库、图片、音频文件等大数据内容。</td>
+</tr>
+<tr>
+<td>RGB三色灯</td>
+<td>包含红、绿、蓝三种颜色的LED灯，只需一个IO控制，用来指示状态。</td>
+</tr>
+<tr>
+<td>串口</td>
+<td>1.25mm 4P座子。可用于串口调试、下载以及通信。需外接USB转串口模块。</td>
+</tr>
+<tr>
+<td>电池接口</td>
+<td>1.25mm 2P座子，用于接入3.7V聚合锂电池，通过电池充电管理电路对电池进行充电，也可用于电池供电。 注意接口正、负极。</td>
+</tr>
+<tr>
+<td>BOOT按键</td>
+<td>用于进入下载模式或者按键测试。按住此按键上电，然后松开可进入下载模式，或者上电后，按住此按键，再按RESET键，松开RESET键后，再松开此按键，也可以进下载模式。不需要进入下载模式时，此按键可做普通按键使用。</td>
+</tr>
+<tr>
+<td>TYPE-C接口</td>
+<td>用于模块供电和下载程序。此接口和模块上的一键下载电路相连，可实现自动进入下载模式（无需按BOOT键）。</td>
+</tr>
+<tr>
+<td>RESET按键</td>
+<td>用于ESP32主控以及LCD复位，按下后电平复位。</td>
+</tr>
+<tr>
+<td>扩展输入引脚</td>
+<td>1.25mm 4P座子。引出GPIO2&#x2F;3&#x2F;14&#x2F;21引脚</td>
+</tr>
+<tr>
+<td>喇叭接口</td>
+<td>1.25mm 2P座子。用于接入喇叭播放音频。</td>
+</tr>
+<tr>
+<td>IIC外设接口</td>
+<td>1.25mm 4P座子。用于外接IIC通信设备，此IIC接口和电容触摸屏共用。可做普通IO使用。</td>
+</tr>
+</tbody></table>
+<h3 id="ESP32引脚分配"><a href="#ESP32引脚分配" class="headerlink" title="ESP32引脚分配"></a>ESP32引脚分配</h3><h4 id="液晶屏"><a href="#液晶屏" class="headerlink" title="液晶屏"></a>液晶屏</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>液晶屏</td>
+<td>GPIO10</td>
+<td>液晶屏片选控制信号，低电平有效</td>
+</tr>
+<tr>
+<td>液晶屏</td>
+<td>GPIO46</td>
+<td>液晶屏命令&#x2F;数据选择控制信号，高电平：数据，低电平：命令</td>
+</tr>
+<tr>
+<td>液晶屏</td>
+<td>GPIO12</td>
+<td>液晶屏SPI总线时钟信号</td>
+</tr>
+<tr>
+<td>液晶屏</td>
+<td>GPIO11</td>
+<td>液晶屏SPI总线写数据信号</td>
+</tr>
+<tr>
+<td>液晶屏</td>
+<td>GPIO13</td>
+<td>液晶屏SPI总线读数据信号</td>
+</tr>
+<tr>
+<td>液晶屏</td>
+<td>CHIP_PU</td>
+<td>液晶屏复位控制信号，低电平复位（和ESP32-S3主控共用复位引脚）</td>
+</tr>
+<tr>
+<td>液晶屏</td>
+<td>GPIO45</td>
+<td>液晶屏背光控制信号（高电平点亮背光，低电平关闭背光）</td>
+</tr>
+</tbody></table>
+<h4 id="电容触摸屏"><a href="#电容触摸屏" class="headerlink" title="电容触摸屏"></a>电容触摸屏</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电容触摸屏</td>
+<td>GPIO16</td>
+<td>电容触摸屏I2C总线数据信号（和音频编解码IC以及扩展I2C共用）</td>
+</tr>
+<tr>
+<td>电容触摸屏</td>
+<td>GPIO15</td>
+<td>电容触摸屏I2C总线时钟信号（和音频编解码IC以及扩展I2C共用）</td>
+</tr>
+<tr>
+<td>电容触摸屏</td>
+<td>GPIO18</td>
+<td>电容触摸屏复位控制信号，低电平复位</td>
+</tr>
+<tr>
+<td>电容触摸屏</td>
+<td>GPIO17</td>
+<td>电容触摸屏中断输入信号，发生触摸事件时，输入低电平</td>
+</tr>
+</tbody></table>
+<h4 id="RGB三色灯"><a href="#RGB三色灯" class="headerlink" title="RGB三色灯"></a>RGB三色灯</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RGB三色灯</td>
+<td>GPIO42</td>
+<td>自带控制IC的RGB三色LED灯控制信号。可以输入不同的时序波形分别控制内部红绿蓝三种灯珠</td>
+</tr>
+</tbody></table>
+<h4 id="MicroSD卡"><a href="#MicroSD卡" class="headerlink" title="MicroSD卡"></a>MicroSD卡</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MicroSD卡</td>
+<td>GPIO38</td>
+<td>SD卡SDIO总线时钟信号</td>
+</tr>
+<tr>
+<td>MicroSD卡</td>
+<td>GPIO40</td>
+<td>SD卡SDIO总线命令信号</td>
+</tr>
+<tr>
+<td>MicroSD卡</td>
+<td>GPIO39</td>
+<td>SD卡SDIO总线数据信号DATA0</td>
+</tr>
+<tr>
+<td>MicroSD卡</td>
+<td>GPIO41</td>
+<td>SD卡SDIO总线数据信号DATA1</td>
+</tr>
+<tr>
+<td>MicroSD卡</td>
+<td>GPIO48</td>
+<td>SD卡SDIO总线数据信号DATA2</td>
+</tr>
+<tr>
+<td>MicroSD卡</td>
+<td>GPIO47</td>
+<td>SD卡SDIO总线数据信号DATA3</td>
+</tr>
+</tbody></table>
+<h4 id="外部Flash"><a href="#外部Flash" class="headerlink" title="外部Flash"></a>外部Flash</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>外部Flash</td>
+<td>GPIO29</td>
+<td>外部QSPI FLASH的片选引脚，低电平使能</td>
+</tr>
+<tr>
+<td>外部Flash</td>
+<td>GPIO30</td>
+<td>外部QSPI FLASH的时钟引脚（和内部PSRAM共用）</td>
+</tr>
+<tr>
+<td>外部Flash</td>
+<td>GPIO32</td>
+<td>外部QSPI FLASH的DATA0引脚（和内部PSRAM共用）</td>
+</tr>
+<tr>
+<td>外部Flash</td>
+<td>GPIO31</td>
+<td>外部QSPI FLASH的DATA1引脚（和内部PSRAM共用）</td>
+</tr>
+<tr>
+<td>外部Flash</td>
+<td>GPIO28</td>
+<td>外部QSPI FLASH的DATA2引脚（和内部PSRAM共用）</td>
+</tr>
+<tr>
+<td>外部Flash</td>
+<td>GPIO27</td>
+<td>外部QSPI FLASH的DATA3引脚（和内部PSRAM共用）</td>
+</tr>
+</tbody></table>
+<h4 id="I2C扩展"><a href="#I2C扩展" class="headerlink" title="I2C扩展"></a>I2C扩展</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I2C扩展</td>
+<td>GPIO16</td>
+<td>扩展接口I2C总线数据信号（和电容触摸屏以及音频编解码IC共用，不使用触摸和音频功能时，可做普通IO使用，否则只能用作I2C接口）</td>
+</tr>
+<tr>
+<td>I2C扩展</td>
+<td>GPIO15</td>
+<td>扩展接口I2C总线时钟信号（和电容触摸屏以及音频编解码IC共用，不使用触摸和音频功能时，可做普通IO使用，否则只能用作I2C接口）</td>
+</tr>
+</tbody></table>
+<h4 id="扩展引脚"><a href="#扩展引脚" class="headerlink" title="扩展引脚"></a>扩展引脚</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>扩展引脚</td>
+<td>GPIO2</td>
+<td>此为4个空闲的IO口，可接外设使用，还可用作SPI接口</td>
+</tr>
+<tr>
+<td>扩展引脚</td>
+<td>GPIO3</td>
+<td>此为4个空闲的IO口，可接外设使用，还可用作SPI接口</td>
+</tr>
+<tr>
+<td>扩展引脚</td>
+<td>GPIO14</td>
+<td>此为4个空闲的IO口，可接外设使用，还可用作SPI接口</td>
+</tr>
+<tr>
+<td>扩展引脚</td>
+<td>GPIO21</td>
+<td>此为4个空闲的IO口，可接外设使用，还可用作SPI接口</td>
+</tr>
+</tbody></table>
+<h4 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电池</td>
+<td>GPIO9</td>
+<td>电池电压ADC值获取输入信号</td>
+</tr>
+</tbody></table>
+<h4 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>音频</td>
+<td>GPIO1</td>
+<td>音频功放IC使能引脚，低电平使能</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO4</td>
+<td>音频I2S总线主时钟信号</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO5</td>
+<td>音频I2S总线位时钟信号</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO6</td>
+<td>音频I2S总线位输出数据信号</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO7</td>
+<td>音频I2S总线左右声道选择信号。高电平：右声道；低电平：左声道</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO8</td>
+<td>音频I2S总线位输入数据信号</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO16</td>
+<td>音频编解码IC的I2C总线数据信号（和电容触摸屏以及扩展I2C共用）</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>GPIO15</td>
+<td>音频编解码IC的I2C总线时钟信号（和电容触摸屏以及扩展I2C共用）</td>
+</tr>
+</tbody></table>
+<h4 id="按键"><a href="#按键" class="headerlink" title="按键"></a>按键</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>按键</td>
+<td>IO0</td>
+<td>下载模式选择按键（按住该按键上电，然后松开就会进入下载模式）</td>
+</tr>
+<tr>
+<td>按键</td>
+<td>CHIP_PU</td>
+<td>ESP32-S3复位按键，低电平复位（和液晶屏复位共用）</td>
+</tr>
+</tbody></table>
+<h4 id="USB"><a href="#USB" class="headerlink" title="USB"></a>USB</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>USB</td>
+<td>GPIO19</td>
+<td>USB总线差分信号数据线负极</td>
+</tr>
+<tr>
+<td>USB</td>
+<td>GPIO20</td>
+<td>USB总线差分信号数据线正极</td>
+</tr>
+</tbody></table>
+<h4 id="串口"><a href="#串口" class="headerlink" title="串口"></a>串口</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>串口</td>
+<td>GPIO43(TX0)</td>
+<td>ESP32-S3串口发送信号接口（如果不使用串口通信功能，可做普通IO口使用）</td>
+</tr>
+<tr>
+<td>串口</td>
+<td>GPIO44(RX0)</td>
+<td>ESP32-S3串口接收信号接口（如果不使用串口通信功能，可做普通IO口使用）</td>
+</tr>
+</tbody></table>
+<h4 id="内部PSRAM"><a href="#内部PSRAM" class="headerlink" title="内部PSRAM"></a>内部PSRAM</h4><table>
+<thead>
+<tr>
+<th>板载设备</th>
+<th>ESP32连接引脚</th>
+<th>板载设备引脚说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内部PSRAM</td>
+<td>GPIO26</td>
+<td>内部OPI PSRAM片选引脚，低电平使能</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO30</td>
+<td>内部OPI PSRAM的时钟引脚(和外部Flash共用)</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO32</td>
+<td>内部OPI PSRAM的DATA0引脚(和外部Flash共用)</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO31</td>
+<td>内部OPI PSRAM的DATA1引脚(和外部Flash共用)</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO28</td>
+<td>内部OPI PSRAM的DATA2引脚(和外部Flash共用)</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO27</td>
+<td>内部OPI PSRAM的DATA3引脚(和外部Flash共用)</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO33</td>
+<td>内部OPI PSRAM的DATA4引脚</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO34</td>
+<td>内部OPI PSRAM的DATA5引脚</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO35</td>
+<td>内部OPI PSRAM的DATA6引脚</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO36</td>
+<td>内部OPI PSRAM的DATA7引脚</td>
+</tr>
+<tr>
+<td>内部PSRAM</td>
+<td>GPIO37</td>
+<td>内部OPI PSRAM的数据掩码和数据时钟读取引脚</td>
+</tr>
+</tbody></table>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.lcdwiki.com/zh/2.8inch_ESP32-S3_Display">2.8inch ESP32-S3 Display - LCD wiki</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>ES3C28P是一款功能丰富的2.8寸屏开发板，基于ESP32-S3芯片，集成了显示屏、触摸屏、麦克风、RGB指示灯等多种外设，接口丰富，适合各种嵌入式和物联网应用开发。其强大的性能和丰富的功能使其成为DIY电子制作的理想选择。</p>
+
+                
+
+
+<p class="pink-link-context">
+    <a href="/2024/09/10/25-%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AEWebP%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E6%9B%BF%E6%8D%A2%E4%B8%8E%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96/" rel="next" title="前端项目WebP格式图片替换与资源加载优化">
+    下一篇：前端项目WebP格式图片替换与资源加载优化
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://weibo.com/hzy3774" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/huzongyao" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2026 github.com, All rights reserved.
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/materialize-css@0.97.6/dist/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.json";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
